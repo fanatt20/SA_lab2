@@ -13,12 +13,8 @@ namespace UI
         public Form1()
         {
             InitializeComponent();
-            _openFile = new OpenFileDialog();
-            _openFile.Multiselect = false;
-            _saveFile = new SaveFileDialog();
-            _saveFile.Filter = "Text File|*.txt";
-#warning раскомментировать фильтр для _openFile:OpenFileDialog
-            //_openFile.Filter = "Text File|*.txt";
+            _openFile = new OpenFileDialog { Multiselect = false, Filter = "Text File|*.txt" };
+            _saveFile = new SaveFileDialog { Filter = "Text File|*.txt" };
         }
 
         private void TextBoxOpenFileAction(object sender, MouseEventArgs e)
@@ -62,13 +58,14 @@ namespace UI
 
         private double[][] GetValuesFromFiles(string path)
         {
-            double[][] result=null;
+            double[][] result = null;
             try
             {
                 using (var sReader = new StreamReader(File.OpenRead(path)))
                 {
                     var buffer = sReader.ReadLine();
-                    if (buffer.Split('\t').Count() != 2)
+                    
+                    if (buffer == null || buffer.Split('\t').Count() != 2)
                         throw new FormatException();
 
                     result = new double[int.Parse(buffer.Split('\t')[1])][];
@@ -92,7 +89,8 @@ namespace UI
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Невозможно открыть файл\n"+exc.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Невозможно открыть файл\n" + exc.Message, "Ошибка", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
 
             return result;
