@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+﻿using System.IO;
 
 namespace Algorithms
 {
-    public static class DataSaver
+    public static class DataSaverExtensions
     {
         public static void SaveToFile(this string data, string path)
         {
@@ -24,7 +18,7 @@ namespace Algorithms
             {
                 if (name != null)
                     sWriter.WriteLine(name);
-                for (int i = 0; i < data[0].Length; i++)
+                for (var i = 0; i < data[0].Length; i++)
                 {
                     foreach (var array in data)
                     {
@@ -33,7 +27,6 @@ namespace Algorithms
                     sWriter.WriteLine();
                 }
             }
-
         }
     }
 }

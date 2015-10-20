@@ -5,12 +5,12 @@ using System.Windows.Forms;
 
 namespace UI
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private readonly OpenFileDialog _openFile;
         private readonly SaveFileDialog _saveFile;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             _openFile = new OpenFileDialog { Multiselect = false, Filter = "Text File|*.txt" };
