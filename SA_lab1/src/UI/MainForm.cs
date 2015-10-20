@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -74,12 +75,11 @@ namespace UI
                     {
                         result[i] = new double[length];
                     }
-                    var firstIndex = 0;
                     var secondIndex = 0;
                     while ((buffer = sReader.ReadLine()) != null)
                     {
-                        firstIndex = 0;
-                        foreach (var number in buffer.Split('\t').Select(double.Parse))
+                        var firstIndex = 0;
+                        foreach (var number in buffer.Split('\t').Select(s=>double.Parse(s,CultureInfo.InvariantCulture.NumberFormat)))
                         {
                             result[firstIndex++][secondIndex] = number;
                         }
