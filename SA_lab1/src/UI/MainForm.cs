@@ -79,7 +79,8 @@ namespace UI
                     while ((buffer = sReader.ReadLine()) != null)
                     {
                         var firstIndex = 0;
-                        foreach (var number in buffer.Split('\t').Select(s=>double.Parse(s,CultureInfo.InvariantCulture.NumberFormat)))
+                        foreach (var number in buffer.Split('\t').Select(s=>double.Parse(s.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator),
+  CultureInfo.InvariantCulture)))
                         {
                             result[firstIndex++][secondIndex] = number;
                         }
