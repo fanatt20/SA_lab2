@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SA_lab1
+namespace UI
 {
     public partial class Form1 : Form
     {
@@ -13,6 +13,7 @@ namespace SA_lab1
             InitializeComponent();
             _openFile = new OpenFileDialog();
             _openFile.Multiselect = false;
+            _saveFile=new SaveFileDialog();
             _saveFile.Filter = "Text File|*.txt";
 #warning раскомментировать фильтр для _openFile:OpenFileDialog
             //_openFile.Filter = "Text File|*.txt";

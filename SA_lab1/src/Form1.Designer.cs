@@ -1,4 +1,4 @@
-﻿namespace SA_lab1
+﻿namespace UI
 {
     partial class Form1
     {
@@ -114,6 +114,7 @@
             // 
             this.textBox5.Location = new System.Drawing.Point(7, 32);
             this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(207, 20);
             this.textBox5.TabIndex = 0;
             this.textBox5.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxSaveFileAction);
