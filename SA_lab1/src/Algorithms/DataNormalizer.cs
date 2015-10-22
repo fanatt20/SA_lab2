@@ -9,25 +9,11 @@ namespace Algorithms
     class DataNormalizer
     {
         private static double DELTA = 0.000000001;
-        public static double[][] Normalize(double[][] rawData)
+        public static double[] Normalize(double[] array)
         {
-            if (rawData == null)
-                return null;
-            double[][] result = (double[][])rawData.Clone();
-            int rows = rawData.GetLength(0);
-            int columns = rawData.GetLength(1);
-            if (rows == 0 || columns == 0)
-                return rawData;
-            for (int i = 0; i < columns; i++)
-            {
-                result[i] = NormalizeColumn(rawData[i]);
-            }
-            return result;
-        }
-
-        private static double[] NormalizeColumn(double[] array)
-        {
-            double[] result = (double[])array.Clone();
+            if (array == null || array.Length == 0)
+                return array;
+           double[] result = (double[])array.Clone();
             double min = array.Min();
             double max = array.Max();
             int i = 0;
