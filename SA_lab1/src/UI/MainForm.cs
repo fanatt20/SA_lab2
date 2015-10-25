@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Algorithms.Extensions;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,10 @@ namespace UI
     {
         private readonly OpenFileDialog _openFile;
         private readonly SaveFileDialog _saveFile;
+
+        private double[][] _variables;
+        private double[][] _functions;
+
 
         public MainForm()
         {
@@ -55,11 +60,16 @@ namespace UI
             try
             {
                 var fileReader = new MatrixFileReader();
-                var variables =fileReader.ReadAsMatrix(txtVariablePath.Text);
+                var variables = fileReader.ReadAsMatrix(txtVariablePath.Text);
                 var function1 = fileReader.ReadAsArray(txtFunction1Path.Text);
                 var function2 = fileReader.ReadAsArray(txtFunction2Path.Text);
                 var function3 = fileReader.ReadAsArray(txtFunction3Path.Text);
-                var tables = new InputDataInTables(variables, function1,function2,function3);
+
+                _variables = variables;
+                _functions = function1.CreateMatrix();
+
+
+                var tables = new InputDataInTables(variables, function1, function2, function3);
                 tables.ShowDialog();
             }
             catch (Exception exc)
@@ -68,7 +78,5 @@ namespace UI
                     MessageBoxIcon.Error);
             }
         }
-
-       
     }
 }
