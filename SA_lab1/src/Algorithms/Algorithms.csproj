@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataNormalizer.cs" />
-    <Compile Include="DataSaverExtensions.cs" />
+    <Compile Include="Extensions\DataSaverExtensions.cs" />
+    <Compile Include="Extensions\MatrixExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
