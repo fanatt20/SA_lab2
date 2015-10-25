@@ -13,9 +13,9 @@ namespace UI
         {
             InitializeComponent();
 
-            dataGridView1.DataSource = GetDataTableFromMatrix(variables,new string[] {"Variable 1", "Variable 2", "Variable 3", "Variable 4", "Variable 5" });
+            dataGridView1.DataSource = GetDataTableFromMatrix(variables, new string[] { "Переменная 1", "Переменная 2", "Переменная 3", "Переменная 4", "Переменная 5" }.Take(variables.Count()).ToArray());
             var functions = function1.CreateMatrix(function2, function3);
-            dataGridView3.DataSource = GetDataTableFromMatrix(functions, new string[] { "Function 1", "Function 2", "Function 3" });
+            dataGridView3.DataSource = GetDataTableFromMatrix(functions, new string[] { "Функция 1", "Функция 2", "Функция 3" });
         }
 
         private DataTable GetDataTableFromMatrix(double[][] matrix, string[] columnsName = null)

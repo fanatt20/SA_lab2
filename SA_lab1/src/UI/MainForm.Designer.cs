@@ -36,10 +36,10 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnShowInputInTables = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.txtFunction3Path = new System.Windows.Forms.TextBox();
+            this.txtFunction2Path = new System.Windows.Forms.TextBox();
             this.txtFunction1Path = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.txtFunction2Path = new System.Windows.Forms.TextBox();
-            this.txtFunction3Path = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -142,6 +142,26 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Значения функции";
             // 
+            // txtFunction3Path
+            // 
+            this.txtFunction3Path.Location = new System.Drawing.Point(8, 86);
+            this.txtFunction3Path.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFunction3Path.Name = "txtFunction3Path";
+            this.txtFunction3Path.ReadOnly = true;
+            this.txtFunction3Path.Size = new System.Drawing.Size(284, 22);
+            this.txtFunction3Path.TabIndex = 5;
+            this.txtFunction3Path.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
+            // 
+            // txtFunction2Path
+            // 
+            this.txtFunction2Path.Location = new System.Drawing.Point(8, 56);
+            this.txtFunction2Path.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFunction2Path.Name = "txtFunction2Path";
+            this.txtFunction2Path.ReadOnly = true;
+            this.txtFunction2Path.Size = new System.Drawing.Size(284, 22);
+            this.txtFunction2Path.TabIndex = 4;
+            this.txtFunction2Path.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
+            // 
             // txtFunction1Path
             // 
             this.txtFunction1Path.Location = new System.Drawing.Point(8, 23);
@@ -163,26 +183,6 @@
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Результат";
-            // 
-            // txtFunction2Path
-            // 
-            this.txtFunction2Path.Location = new System.Drawing.Point(8, 56);
-            this.txtFunction2Path.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFunction2Path.Name = "txtFunction2Path";
-            this.txtFunction2Path.ReadOnly = true;
-            this.txtFunction2Path.Size = new System.Drawing.Size(284, 22);
-            this.txtFunction2Path.TabIndex = 4;
-            this.txtFunction2Path.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
-            // 
-            // txtFunction3Path
-            // 
-            this.txtFunction3Path.Location = new System.Drawing.Point(8, 86);
-            this.txtFunction3Path.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFunction3Path.Name = "txtFunction3Path";
-            this.txtFunction3Path.ReadOnly = true;
-            this.txtFunction3Path.Size = new System.Drawing.Size(284, 22);
-            this.txtFunction3Path.TabIndex = 5;
-            this.txtFunction3Path.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
             // 
             // MainForm
             // 
