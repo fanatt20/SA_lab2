@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Algorithms.Extensions;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using UI.Properties;
 
 namespace UI
 {
@@ -10,6 +12,10 @@ namespace UI
     {
         private readonly OpenFileDialog _openFile;
         private readonly SaveFileDialog _saveFile;
+
+        private double[][] _variables;
+        private double[][] _functions;
+
 
         public MainForm()
         {
@@ -49,52 +55,28 @@ namespace UI
         {
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void OpenInputInTableForm(object sender, EventArgs e)
         {
-            var variables = GetValuesFromFiles(txtVariablePath.Text);
-            var functions = GetValuesFromFiles(txtFunctionPath.Text);
-            var tables = new InputDataInTables(variables, functions);
-            tables.ShowDialog();
-        }
-
-        private double[][] GetValuesFromFiles(string path)
-        {
-            double[][] result = null;
             try
             {
-                using (var sReader = new StreamReader(File.OpenRead(path)))
-                {
-                    var buffer = sReader.ReadLine();
-                    
-                    if (buffer == null || buffer.Split('\t').Count() != 2)
-                        throw new FormatException();
+                var fileReader = new MatrixFileReader();
+                var variables = fileReader.ReadAsMatrix(txtVariablePath.Text);
+                var function1 = fileReader.ReadAsArray(txtFunction1Path.Text);
+                var function2 = fileReader.ReadAsArray(txtFunction2Path.Text);
+                var function3 = fileReader.ReadAsArray(txtFunction3Path.Text);
 
-                    result = new double[int.Parse(buffer.Split('\t')[1])][];
-                    var length = int.Parse(buffer.Split('\t')[0]);
-                    for (var i = 0; i < result.Length; i++)
-                    {
-                        result[i] = new double[length];
-                    }
-                    var secondIndex = 0;
-                    while ((buffer = sReader.ReadLine()) != null)
-                    {
-                        var firstIndex = 0;
-                        foreach (var number in buffer.Split('\t').Select(s=>double.Parse(s.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator),
-  CultureInfo.InvariantCulture)))
-                        {
-                            result[firstIndex++][secondIndex] = number;
-                        }
-                        secondIndex++;
-                    }
-                }
+                _variables = variables;
+                _functions = function1.CreateMatrix();
+
+
+                var tables = new InputDataInTables(variables, function1, function2, function3);
+                tables.ShowDialog();
             }
             catch (Exception exc)
             {
                 MessageBox.Show("Невозможно открыть файл\n" + exc.Message, "Ошибка", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-
-            return result;
         }
     }
 }

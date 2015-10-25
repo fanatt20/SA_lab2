@@ -74,6 +74,7 @@
     <Compile Include="InputDataInTables.Designer.cs">
       <DependentUpon>InputDataInTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="MatrixFileReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -116,6 +117,23 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Functions.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Variables.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Algorithms\Algorithms.csproj">
+      <Project>{e3213b89-d15e-42c8-8ce8-6d16834c236c}</Project>
+      <Name>Algorithms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Func1.txt" />
+    <Content Include="Resources\Func2.txt" />
+    <Content Include="Resources\Func3.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
