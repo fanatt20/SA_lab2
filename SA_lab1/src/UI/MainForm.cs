@@ -134,5 +134,10 @@ namespace UI
             else
                 _meterageCount = (int)num.Value;
         }
+
+        private void chart1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            new OutputChart().ShowDialog();
+        }
     }
 }

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +76,12 @@
       <DependentUpon>InputDataInTables.cs</DependentUpon>
     </Compile>
     <Compile Include="MatrixFileReader.cs" />
+    <Compile Include="OutputChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutputChart.Designer.cs">
+      <DependentUpon>OutputChart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -82,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InputDataInTables.resx">
       <DependentUpon>InputDataInTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutputChart.resx">
+      <DependentUpon>OutputChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
