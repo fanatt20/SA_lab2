@@ -6,17 +6,17 @@ using System.Linq;
 
 namespace UI
 {
-    internal static  class MatrixFileReader
+    internal static class MatrixFileReader
     {
         internal static double[][] ReadAsMatrix(string path)
         {
             using (var sReader = new StreamReader(path))
             {
                 var resultInLst = new List<List<double>>();
-                var bufferStr = sReader.ReadLine()
-                    ?.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
-                    .Split('\t')
-                    .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
+                var bufferStr = sReader.ReadLine();
+                var collection = bufferStr.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
+                                            .Split('\t')
+                                            .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
                 if (bufferStr != null)
                 {
                     foreach (var num in bufferStr)
@@ -24,12 +24,12 @@ namespace UI
                         resultInLst.Add(new List<double> { num });
                     }
                     var index = 0;
-                    while ((bufferStr = sReader.ReadLine()
-                    ?.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
-                    .Split('\t')
-                    .Select(s => double.Parse(s, CultureInfo.InvariantCulture))) != null)
+                    while ((bufferStr = sReader.ReadLine()) != null)
                     {
-                        foreach (var item in bufferStr)
+                        collection = bufferStr.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
+                                                .Split('\t')
+                                                .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
+                        foreach (var item in collection)
                             resultInLst[index++].Add(item);
                         index = 0;
                     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Algorithms
 {
-   public class DataNormalizer
+    public class DataNormalizer
     {
         private static double DELTA = 0.000000001;
         public static double[][] Normalize(double[][] matrix)
@@ -33,7 +33,7 @@ namespace Algorithms
         {
             if (array == null || array.Length == 0)
                 return array;
-           double[] result = (double[])array.Clone();
+            double[] result = (double[])array.Clone();
             double min = array.Min();
             double max = array.Max();
             int i = 0;

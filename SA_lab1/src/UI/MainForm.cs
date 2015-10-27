@@ -134,7 +134,7 @@ namespace UI
             {
                 _normalizedFunctions =DataNormalizer.Normalize(_functions);
                 _normalizedVariables = DataNormalizer.Normalize(_variables);
-                var tables = new InputDataInTables(_variables, _normalizedFunctions[0], _normalizedFunctions[1], _normalizedFunctions[2]);
+                var tables = new InputDataInTables(_normalizedVariables, _normalizedFunctions[0], _normalizedFunctions[1], _normalizedFunctions[2]);
                 tables.ShowDialog();
             }
             catch (Exception exc)
