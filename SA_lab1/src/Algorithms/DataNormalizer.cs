@@ -41,12 +41,12 @@ namespace Algorithms
             if (IsDoubleValueZero(d))
                 foreach (double value in array)
                 {
-                    result[i] = value;
+                    result[i++] = value;
                 }
             else
                 foreach (double value in array)
                 {
-                    result[i] = (value - min) / d;
+                    result[i++] = (value - min) / d;
                 }
             return result;
         }
