@@ -36,26 +36,20 @@ namespace Algorithms
             return B;
         }
 
-        //public static double A_Create(int x1, int x2, int x3, int p_type, double[][] X1, double[][] X2, double[][] X3, double[][] Y)
-        //{
-        //    double[][] Rez = new double[Y.Length][];
-        //    for (int i = 0; i < Rez.Length; i++) Rez[i] = new double[(x1 + 1) * (X1[0].Length - 1) + (x2 + 1) * (X2[0].Length - 1) + (x3 + 1) * (X3[0].Length - 1)];
-        //    for (int i = 0; i < Rez.Length; i++)
-        //    {
-        //        for (int j = 0; j < X1[0].Length - 1; j++)
-        //        {
-        //            for (int k = 0; k < x1 + 1; k++) Rez[i][j * (x1 + 1) + k] = (new Polinom(p_type, k)).zn(X1[i][j + 1]);
-        //        }
-        //        for (int j = 0; j < X2[0].Length - 1; j++)
-        //        {
-        //            for (int k = 0; k < x2 + 1; k++) Rez[i][(x1 + 1) * (X1[0].Length - 1) + j * (x2 + 1) + k] = (new Polinom(p_type, k)).zn(X2[i][j + 1]);
-        //        }
-        //        for (int j = 0; j < X3[0].Length - 1; j++)
-        //        {
-        //            for (int k = 0; k < x3 + 1; k++) Rez[i][(x1 + 1) * (X1[0].Length - 1) + (x2 + 1) * (X2[0].Length - 1) + j * (x3 + 1) + k] = (new Polinom(p_type, k)).zn(X3[i][j + 1]);
-        //        }
-        //    }
-        //    return Rez;
-        //}
+        public static double[][] A_Create(int rang_1, int rang_2, int rang_3, int p_type, double[][] X1, double[][] X2, double[][] X3, double[][] Y)
+        {
+            double[][] A = new double[Y.Length][];
+            for (int i = 0; i < A.Length; i++) A[i] = new double[(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + (rang_3 + 1) * (X3[0].Length)];
+            for (int i = 0; i < A.Length; i++)
+            {
+                for (int j = 0; j < X1[0].Length; j++)
+                    for (int k = 0; k < rang_1 + 1; k++) A[i][j * (rang_1 + 1) + k] = new Polynom().Polynom(X1[i][j], k, p_type);
+                for (int j = 0; j < X2[0].Length; j++)
+                    for (int k = 0; k < rang_2 + 1; k++) A[i][(rang_1 + 1) * (X1[0].Length) + j * (rang_2 + 1) + k] = new Polynom().Polynom(X2[i][j], k, p_type);
+                for (int j = 0; j < X3[0].Length; j++)
+                    for (int k = 0; k < rang_3 + 1; k++) A[i][(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + j * (rang_3 + 1) + k] = new Polynom().Polynom(X3[i][j], k, p_type);
+            }
+            return A;
+        }
     }
 }

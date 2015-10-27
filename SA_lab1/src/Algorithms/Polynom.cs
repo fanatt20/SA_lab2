@@ -45,5 +45,26 @@ namespace Algorithms
             return 2 * x * Hermit(x, rang - 1) - 2 * (rang - 1) * Hermit(x, rang - 2);
         }
 
+        public double Polynom(double x, int rang, int type)
+        {
+            switch (type)
+            {
+                case 1:
+                    return Chebyshev(x, rang);
+                    break;
+                case 2:
+                    return Lejandr(x, rang);
+                    break;
+                case 3:
+                    return Lagger(x, rang);
+                    break;
+                case 4:
+                    return Hermit(x, rang);
+                    break;
+                default:
+                    return 0;
+                    break;
+            }
+        }
     }
 }
