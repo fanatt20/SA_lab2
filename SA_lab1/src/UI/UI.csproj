@@ -76,12 +76,6 @@
       <DependentUpon>InputDataInTables.cs</DependentUpon>
     </Compile>
     <Compile Include="MatrixFileReader.cs" />
-    <Compile Include="OutputChart.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OutputChart.Designer.cs">
-      <DependentUpon>OutputChart.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -89,9 +83,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InputDataInTables.resx">
       <DependentUpon>InputDataInTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OutputChart.resx">
-      <DependentUpon>OutputChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

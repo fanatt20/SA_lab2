@@ -18,7 +18,7 @@ namespace Algorithms.Extensions
             }
             return result;
         }
-        public static double[][] AsMatrix(this double[][][] data)
+        public static double[][] ToArrayOfArray(this double[][][] data)
         {
             var lst = new List<double[]>();
             foreach (var item in data)
@@ -26,7 +26,17 @@ namespace Algorithms.Extensions
                 lst.AddRange(item);
             }
             return lst.ToArray();
+        }
+        public static double[,] ToMatrix(this double[][] data)
+        {
+            int n = data.Count();
+            int m = data.First().Count();
+            var result = new double[n, m];
 
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < m; j++)
+                    result[i, j] = data[i][j];
+            return result;
         }
 
     }

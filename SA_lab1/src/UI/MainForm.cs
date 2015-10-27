@@ -21,7 +21,7 @@ namespace UI
         private readonly List<int> _variablesDimension = new List<int> { 2, 1, 2 };
         private int _meterageCount = 36;
         private int _maxMeterageCount = 36;
-   
+
 
         public MainForm()
         {
@@ -125,7 +125,7 @@ namespace UI
 
         private void numMeterageCount_ValueChanged(object sender, EventArgs e)
         {
-            var num=(NumericUpDown)sender;
+            var num = (NumericUpDown)sender;
             if (num.Value < 0 || num.Value > _maxMeterageCount)
                 if (num.Value < 0)
                     num.Value = 0;
@@ -135,10 +135,5 @@ namespace UI
                 _meterageCount = (int)num.Value;
         }
 
-        private void chart1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            
-            new OutputChart().ShowDialog();
-        }
     }
 }
