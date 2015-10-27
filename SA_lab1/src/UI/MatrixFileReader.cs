@@ -14,7 +14,7 @@ namespace UI
         {
             double[][] result = null;
 
-            using (var sReader = new StreamReader(File.OpenRead(path)))
+            using (var sReader = new StreamReader(path))
             {
                 var buffer = sReader.ReadLine();
 
@@ -47,7 +47,7 @@ namespace UI
         {
             double[] result = null;
 
-            using (var sReader = new StreamReader(File.OpenRead(path)))
+            using (var sReader = new StreamReader(path))
             {
                 var buffer = sReader.ReadLine();
 
