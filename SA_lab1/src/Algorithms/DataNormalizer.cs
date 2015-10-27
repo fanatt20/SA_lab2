@@ -6,9 +6,29 @@ using System.Threading.Tasks;
 
 namespace Algorithms
 {
-    class DataNormalizer
+   public class DataNormalizer
     {
         private static double DELTA = 0.000000001;
+        public static double[][] Normalize(double[][] matrix)
+        {
+            var result = new List<double[]>();
+            foreach (var array in matrix)
+            {
+                result.Add(Normalize(array));
+            }
+            return result.ToArray();
+        }
+
+        public static double[][][] Normalize(double[][][] setOfMatrix)
+        {
+            var result = new List<double[][]>();
+            foreach (var matrix in setOfMatrix)
+            {
+                result.Add(Normalize(matrix));
+            }
+            return result.ToArray();
+
+        }
         public static double[] Normalize(double[] array)
         {
             if (array == null || array.Length == 0)

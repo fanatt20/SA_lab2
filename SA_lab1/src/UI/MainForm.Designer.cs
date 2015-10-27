@@ -34,6 +34,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnShowNormalizeInputInTables = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -50,8 +51,6 @@
             this.txtVarCount = new System.Windows.Forms.TextBox();
             this.btnShowInputInTables = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.txtFunction3Path = new System.Windows.Forms.TextBox();
-            this.txtFunction2Path = new System.Windows.Forms.TextBox();
             this.txtFunction1Path = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -125,6 +124,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnShowNormalizeInputInTables);
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.btnShowInputInTables);
             this.groupBox3.Controls.Add(this.groupBox4);
@@ -133,10 +133,20 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(750, 357);
+            this.groupBox3.Size = new System.Drawing.Size(750, 264);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Входные данные";
+            // 
+            // btnShowNormalizeInputInTables
+            // 
+            this.btnShowNormalizeInputInTables.Location = new System.Drawing.Point(10, 207);
+            this.btnShowNormalizeInputInTables.Name = "btnShowNormalizeInputInTables";
+            this.btnShowNormalizeInputInTables.Size = new System.Drawing.Size(299, 44);
+            this.btnShowNormalizeInputInTables.TabIndex = 8;
+            this.btnShowNormalizeInputInTables.Text = "Показать в нормализированном виде";
+            this.btnShowNormalizeInputInTables.UseVisualStyleBackColor = true;
+            this.btnShowNormalizeInputInTables.Click += new System.EventHandler(this.btnShowNormalizeInputInTables_Click);
             // 
             // groupBox6
             // 
@@ -144,7 +154,7 @@
             this.groupBox6.Controls.Add(this.groupBox7);
             this.groupBox6.Location = new System.Drawing.Point(315, 22);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(427, 328);
+            this.groupBox6.Size = new System.Drawing.Size(427, 229);
             this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Настройка входных данных";
@@ -167,7 +177,7 @@
             this.groupBox7.Controls.Add(this.txtVarCount);
             this.groupBox7.Location = new System.Drawing.Point(6, 21);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(415, 193);
+            this.groupBox7.Size = new System.Drawing.Size(415, 208);
             this.groupBox7.TabIndex = 2;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Переменные";
@@ -274,7 +284,7 @@
             // 
             // btnShowInputInTables
             // 
-            this.btnShowInputInTables.Location = new System.Drawing.Point(8, 290);
+            this.btnShowInputInTables.Location = new System.Drawing.Point(10, 156);
             this.btnShowInputInTables.Margin = new System.Windows.Forms.Padding(4);
             this.btnShowInputInTables.Name = "btnShowInputInTables";
             this.btnShowInputInTables.Size = new System.Drawing.Size(300, 44);
@@ -285,37 +295,15 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.txtFunction3Path);
-            this.groupBox4.Controls.Add(this.txtFunction2Path);
             this.groupBox4.Controls.Add(this.txtFunction1Path);
-            this.groupBox4.Location = new System.Drawing.Point(8, 128);
+            this.groupBox4.Location = new System.Drawing.Point(8, 88);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(300, 116);
+            this.groupBox4.Size = new System.Drawing.Size(300, 60);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Значения функции";
-            // 
-            // txtFunction3Path
-            // 
-            this.txtFunction3Path.Location = new System.Drawing.Point(8, 86);
-            this.txtFunction3Path.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFunction3Path.Name = "txtFunction3Path";
-            this.txtFunction3Path.ReadOnly = true;
-            this.txtFunction3Path.Size = new System.Drawing.Size(284, 22);
-            this.txtFunction3Path.TabIndex = 5;
-            this.txtFunction3Path.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
-            // 
-            // txtFunction2Path
-            // 
-            this.txtFunction2Path.Location = new System.Drawing.Point(8, 56);
-            this.txtFunction2Path.Margin = new System.Windows.Forms.Padding(4);
-            this.txtFunction2Path.Name = "txtFunction2Path";
-            this.txtFunction2Path.ReadOnly = true;
-            this.txtFunction2Path.Size = new System.Drawing.Size(284, 22);
-            this.txtFunction2Path.TabIndex = 4;
-            this.txtFunction2Path.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
             // 
             // txtFunction1Path
             // 
@@ -325,12 +313,13 @@
             this.txtFunction1Path.ReadOnly = true;
             this.txtFunction1Path.Size = new System.Drawing.Size(284, 22);
             this.txtFunction1Path.TabIndex = 3;
+            this.txtFunction1Path.TextChanged += new System.EventHandler(this.txtFunction1Path_TextChanged);
             this.txtFunction1Path.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.groupBox2);
-            this.groupBox5.Location = new System.Drawing.Point(16, 436);
+            this.groupBox5.Location = new System.Drawing.Point(16, 364);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
@@ -341,7 +330,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(21, 377);
+            this.button2.Location = new System.Drawing.Point(13, 284);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(125, 52);
             this.button2.TabIndex = 8;
@@ -353,7 +342,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(776, 693);
+            this.ClientSize = new System.Drawing.Size(786, 640);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
@@ -390,8 +379,6 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox txtFunction1Path;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox txtFunction3Path;
-        private System.Windows.Forms.TextBox txtFunction2Path;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.GroupBox groupBox7;
@@ -407,6 +394,7 @@
         private System.Windows.Forms.TextBox txtVarCount;
         private System.Windows.Forms.NumericUpDown numMeterageCount;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnShowNormalizeInputInTables;
     }
 }
 

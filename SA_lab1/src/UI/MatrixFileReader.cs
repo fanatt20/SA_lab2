@@ -1,49 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 
 namespace UI
 {
-    internal class MatrixFileReader
+    internal static  class MatrixFileReader
     {
-        public MatrixFileReader()
+        internal static double[][] ReadAsMatrix(string path)
         {
-        }
-        internal double[][] ReadAsMatrix(string path)
-        {
-            double[][] result = null;
-
             using (var sReader = new StreamReader(path))
             {
-                var buffer = sReader.ReadLine();
-
-                if (buffer == null || buffer.Split('\t').Count() != 2)
-                    throw new FormatException();
-
-                result = new double[int.Parse(buffer.Split('\t')[1])][];
-                var length = int.Parse(buffer.Split('\t')[0]);
-                for (var i = 0; i < result.Length; i++)
+                var resultInLst = new List<List<double>>();
+                var bufferStr = sReader.ReadLine()
+                    ?.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
+                    .Split('\t')
+                    .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
+                if (bufferStr != null)
                 {
-                    result[i] = new double[length];
-                }
-                var secondIndex = 0;
-                while ((buffer = sReader.ReadLine()) != null)
-                {
-                    var firstIndex = 0;
-                    foreach (var number in buffer.Split('\t')
-                        .Select(s => double.Parse(s.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator),
-                                                                                                    CultureInfo.InvariantCulture)))
+                    foreach (var num in bufferStr)
                     {
-                        result[firstIndex++][secondIndex] = number;
+                        resultInLst.Add(new List<double> { num });
                     }
-                    secondIndex++;
+                    var index = 0;
+                    while ((bufferStr = sReader.ReadLine()
+                    ?.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
+                    .Split('\t')
+                    .Select(s => double.Parse(s, CultureInfo.InvariantCulture))) != null)
+                    {
+                        foreach (var item in bufferStr)
+                            resultInLst[index++].Add(item);
+                        index = 0;
+                    }
                 }
+                return resultInLst.Select(lst => lst.ToArray()).ToArray();
             }
-            return result;
         }
 
-        internal double[] ReadAsArray(string path)
+        internal static double[] ReadAsArray(string path)
         {
             double[] result = null;
 

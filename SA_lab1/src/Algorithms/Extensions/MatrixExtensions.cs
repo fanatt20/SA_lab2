@@ -18,7 +18,7 @@ namespace Algorithms.Extensions
             }
             return result;
         }
-        public static double[][] ToArrayOfArray(this double[][][] data)
+        public static double[][] AsMatrix(this double[][][] data)
         {
             var lst = new List<double[]>();
             foreach (var item in data)

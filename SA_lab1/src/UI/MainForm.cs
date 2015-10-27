@@ -1,4 +1,5 @@
-﻿using Algorithms.Extensions;
+﻿using Algorithms;
+using Algorithms.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,7 +16,9 @@ namespace UI
         private readonly SaveFileDialog _saveFile;
 
         private double[][][] _variables;
+        private double[][][] _normalizedVariables;
         private double[][] _functions;
+        private double[][] _normalizedFunctions;
 
         private int _variablesCount = 3;
         private readonly List<int> _variablesDimension = new List<int> { 2, 1, 2 };
@@ -31,7 +34,6 @@ namespace UI
             txtVar1Dim.Text = _variablesDimension[0].ToString();
             txtVar2Dim.Text = _variablesDimension[1].ToString();
             txtVar3Dim.Text = _variablesDimension[2].ToString();
-            txtVarCount.Text = "5";
             numMeterageCount.Value = _meterageCount;
 
         }
@@ -71,18 +73,7 @@ namespace UI
         {
             try
             {
-                var fileReader = new MatrixFileReader();
-
-                var function1 = fileReader.ReadAsArray(txtFunction1Path.Text);
-                var function2 = fileReader.ReadAsArray(txtFunction2Path.Text);
-                var function3 = fileReader.ReadAsArray(txtFunction3Path.Text);
-
-
-
-                _functions = function1.CreateMatrix(function2, function3);
-
-
-                var tables = new InputDataInTables(_variables, function1, function2, function3);
+                var tables = new InputDataInTables(_variables, _functions[0], _functions[1], _functions[2]);
                 tables.ShowDialog();
             }
             catch (Exception exc)
@@ -102,7 +93,8 @@ namespace UI
                 {
                     using (var sr = new StreamReader(path))
                     {
-                        var variables = (new MatrixFileReader()).ReadAsMatrix(txtVariablePath.Text);
+                        var variables = MatrixFileReader.ReadAsMatrix(txtVariablePath.Text);
+                        txtVarCount.Text = variables.Count().ToString();
                         _variables = new double[_variablesCount][][];
                         for (int i = 0; i < _variablesCount; i++)
                         {
@@ -135,5 +127,45 @@ namespace UI
                 _meterageCount = (int)num.Value;
         }
 
+        private void btnShowNormalizeInputInTables_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                _normalizedFunctions =DataNormalizer.Normalize(_functions);
+                _normalizedVariables = DataNormalizer.Normalize(_variables);
+                var tables = new InputDataInTables(_variables, _normalizedFunctions[0], _normalizedFunctions[1], _normalizedFunctions[2]);
+                tables.ShowDialog();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Невозможно открыть файл\n" + exc.Message, "Ошибка", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+
+
+
+        }
+
+        private void txtFunction1Path_TextChanged(object sender, EventArgs e)
+        {
+            var textBox = (sender as TextBox);
+            if (textBox != null)
+            {
+                var path = textBox.Text;
+                try
+                {
+                    using (var sr = new StreamReader(path))
+                    {
+                        _functions = MatrixFileReader.ReadAsMatrix(txtVariablePath.Text);
+                    }
+                }
+                catch (IOException exc)
+                {
+                    MessageBox.Show("Попробуйте другой файл\n" + exc.Message, "Ошибка при чтении", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
     }
 }
