@@ -25,6 +25,15 @@ namespace UI
         private int _meterageCount = 36;
         private int _maxMeterageCount = 36;
 
+        public double[][] X1 { get { return _variables[0]; } }
+        public double[][] X2 { get { return _variables[1]; } }
+        public double[][] X3 { get { return _variables[2]; } }
+        public double[][] Y { get { return _functions; } }
+
+        public double[][] X1Normalized { get { return _normalizedVariables[0]; } }
+        public double[][] X2Normalized { get { return _normalizedVariables[1]; } }
+        public double[][] X3Normalized { get { return _normalizedVariables[2]; } }
+        public double[][] YNormalized { get { return _normalizedFunctions; } }
 
         public MainForm()
         {
@@ -91,16 +100,16 @@ namespace UI
                 var path = textBox.Text;
                 try
                 {
-                    using (var sr = new StreamReader(path))
+
+                    var variables = MatrixFileReader.ReadAsMatrix(path);
+                    txtVarCount.Text = variables.Count().ToString();
+                    _variables = new double[_variablesCount][][];
+                    for (int i = 0; i < _variablesCount; i++)
                     {
-                        var variables = MatrixFileReader.ReadAsMatrix(txtVariablePath.Text);
-                        txtVarCount.Text = variables.Count().ToString();
-                        _variables = new double[_variablesCount][][];
-                        for (int i = 0; i < _variablesCount; i++)
-                        {
-                            _variables[i] = variables.Skip(_variablesDimension.Take(i).Sum()).Take(_variablesDimension[i]).ToArray();// new double[_variablesDimension[i]][];
-                        }
+                        _variables[i] = variables.Skip(_variablesDimension.Take(i).Sum()).Take(_variablesDimension[i]).ToArray();// new double[_variablesDimension[i]][];
                     }
+
+                    _normalizedVariables = DataNormalizer.Normalize(_variables);
                 }
                 catch (IOException exc)
                 {
@@ -132,8 +141,6 @@ namespace UI
 
             try
             {
-                _normalizedFunctions =DataNormalizer.Normalize(_functions);
-                _normalizedVariables = DataNormalizer.Normalize(_variables);
                 var tables = new InputDataInTables(_normalizedVariables, _normalizedFunctions[0], _normalizedFunctions[1], _normalizedFunctions[2]);
                 tables.ShowDialog();
             }
@@ -155,10 +162,9 @@ namespace UI
                 var path = textBox.Text;
                 try
                 {
-                    using (var sr = new StreamReader(path))
-                    {
-                        _functions = MatrixFileReader.ReadAsMatrix(txtVariablePath.Text);
-                    }
+                    _functions = MatrixFileReader.ReadAsMatrix(path);
+
+                    _normalizedFunctions = DataNormalizer.Normalize(_functions);
                 }
                 catch (IOException exc)
                 {
