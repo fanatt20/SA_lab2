@@ -137,6 +137,7 @@ namespace UI
 
         private void chart1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            
             new OutputChart().ShowDialog();
         }
     }
