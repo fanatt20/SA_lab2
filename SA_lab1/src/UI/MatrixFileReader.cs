@@ -14,12 +14,13 @@ namespace UI
             {
                 var resultInLst = new List<List<double>>();
                 var bufferStr = sReader.ReadLine();
-                var collection = bufferStr.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
-                                            .Split('\t')
-                                            .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
+
                 if (bufferStr != null)
                 {
-                    foreach (var num in bufferStr)
+                    var collection = bufferStr.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
+                            .Split('\t')
+                            .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
+                    foreach (var num in collection)
                     {
                         resultInLst.Add(new List<double> { num });
                     }
