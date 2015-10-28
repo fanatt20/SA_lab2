@@ -7,28 +7,29 @@ using System.Threading.Tasks;
 namespace Algorithms
 {
     //Solving Systems of Linear Algebric Equations (SLAE) AX=B, using method of best probe.
-    class SlaeSolver
+    public class SlaeSolver
     {
+        private const int MAX_ITERS = 100000;
         //optional parameter
-        private const double STEP_REDUCE_PARAMETER = 0.99;
+        private static double STEP_REDUCE_PARAMETER = 0.5;
         //size of step in random seeking 
-        private const double STEP = 0.0000001;
+        private static double STEP = 100;
         //amount of random vectors
-        private const int M = 500;
+        private const int M = 50;
         //accuracy of calculations for finding solution
-        private const double ACCURACY = 0.0000000001;
+        private const double ACCURACY = 0.00000001;
         //input parameters holder
         private static ParameterHolder Params;
         private static Random randomValues;
 
-        public static double[] Solve(double[][] a, double[] b)
+        public static double[] Solve(double[,] a, double[] b)
         {
             if (a == null || a.Length == 0 || b == null || b.Length == 0)
                 return null;
             Params = new ParameterHolder(a, b);
-            var x = GetX0(a.Length / a.Length);
+            var x = GetX0(Params.A.GetLength(1));
             Params.Value = F(x);
-            while (Params.Value > ACCURACY)
+            while (Params.Value > ACCURACY && Params.Iteration++ < MAX_ITERS)
             {
                 x = GetBestValue(x);
             }
@@ -55,14 +56,15 @@ namespace Algorithms
         private static LinkedList<double[]> GetRandomVectors(double[] x)
         {
             LinkedList<double[]> result = new LinkedList<double[]>();
+            double step = GetStep();
             for (int i = 0; i < M; i++)
             {
                 var vector = new double[x.Length];
                 for (int j = 0; j < x.Length; j++)
                     vector[j] = GetPseudoRandomValue();
                 var norma = GetVectorNorma(vector);
-                for (int j = 0; j < x.Length; j++)
-                    vector[j] = x[j] + vector[j]*GetStep()/norma;
+                for (int k = 0; k < x.Length; k++)
+                    vector[k] = x[k] + vector[k]*step/norma;
                 result.AddLast(vector);
             }
             return result;
@@ -78,7 +80,8 @@ namespace Algorithms
 
         private static double GetStep()
         {
-            return STEP * Math.Pow(STEP_REDUCE_PARAMETER, Params.Iteration);
+            var multiplier = Math.Pow(STEP_REDUCE_PARAMETER, Params.Iteration);
+            return STEP * multiplier;
         }
 
         private static double GetVectorNorma(double[] vector)
@@ -105,21 +108,22 @@ namespace Algorithms
                 double temp = -Params.B[i];
                 for (int j = 0; j < x.Length; j++)
                 {
-                    temp += Params.A[i][j] * x[j];
+                    temp += Params.A[i,j] * x[j];
                 }
                 result += temp*temp;
             }
+            double[] inputParam = x;//todo delete
             return result;
         }
 
         private class ParameterHolder
         {
-            public double[][] A;
+            public double[,] A;
             public double[] B;
             public int Iteration = 0;
             public double Value = 0;
 
-            public ParameterHolder(double[][] a, double[] b)
+            public ParameterHolder(double[,] a, double[] b)
             {
                 A = a;
                 B = b;
