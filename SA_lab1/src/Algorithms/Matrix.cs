@@ -43,11 +43,11 @@ namespace Algorithms
             for (int i = 0; i < A.Length; i++)
             {
                 for (int j = 0; j < X1[0].Length; j++)
-                    for (int k = 0; k < rang_1 + 1; k++) A[i][j * (rang_1 + 1) + k] = new Polynom().Polynom(X1[i][j], k, p_type);
+                    for (int k = 0; k < rang_1 + 1; k++) A[i][j * (rang_1 + 1) + k] = new Polynom().Calculate(X1[i][j], k, p_type);
                 for (int j = 0; j < X2[0].Length; j++)
-                    for (int k = 0; k < rang_2 + 1; k++) A[i][(rang_1 + 1) * (X1[0].Length) + j * (rang_2 + 1) + k] = new Polynom().Polynom(X2[i][j], k, p_type);
+                    for (int k = 0; k < rang_2 + 1; k++) A[i][(rang_1 + 1) * (X1[0].Length) + j * (rang_2 + 1) + k] = new Polynom().Calculate(X2[i][j], k, p_type);
                 for (int j = 0; j < X3[0].Length; j++)
-                    for (int k = 0; k < rang_3 + 1; k++) A[i][(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + j * (rang_3 + 1) + k] = new Polynom().Polynom(X3[i][j], k, p_type);
+                    for (int k = 0; k < rang_3 + 1; k++) A[i][(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + j * (rang_3 + 1) + k] = new Polynom().Calculate(X3[i][j], k, p_type);
             }
             return A;
         }

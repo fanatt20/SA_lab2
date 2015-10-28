@@ -16,13 +16,15 @@ namespace SA_lab1
         [STAThread]
         static void Main() { 
         
-            if ( RunTest()) {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-            } else
-            {
+            if ( !RunTest()) {
                 Console.WriteLine("Tests did not pass, unable to run App.");
+                return;
+            }
+            else
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
             }
 
         }
