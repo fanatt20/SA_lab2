@@ -266,7 +266,7 @@ namespace UI
                 MessageBox.Show("Выберите файл для сохранения");
                 return;
             }
-            using (var sw = new StreamWriter(txtSaveResult.Text))
+            using (var sw = new StreamWriter(txtSaveResult.Text,true))
             {
                 sw.Write(txtLog.Text);
             }
