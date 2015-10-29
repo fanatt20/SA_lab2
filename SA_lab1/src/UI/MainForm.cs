@@ -1,51 +1,41 @@
-﻿using Algorithms;
-using Algorithms.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using Algorithms;
+using Algorithms.Extensions;
 using UI.Properties;
 
 namespace UI
 {
+
     public partial class MainForm : Form
     {
+
         private readonly OpenFileDialog _openFile;
         private readonly SaveFileDialog _saveFile;
 
-        private double[][][] _variables;
-        private double[][][] _normalizedVariables;
-        private double[][] _functions;
-        private double[][] _normalizedFunctions;
+        private int _maxMeterageCount;
+        private int _meterageCount;
 
-        private int _variablesCount = 3;
-        private readonly List<int> _variablesDimension = new List<int> { 2, 1, 2 };
-        private int _meterageCount = 36;
-        private int _maxMeterageCount = 36;
-
-        public double[][] X1 { get { return _variables[0]; } }
-        public double[][] X2 { get { return _variables[1]; } }
-        public double[][] X3 { get { return _variables[2]; } }
-        public double[][] Y { get { return _functions; } }
-
-        public double[][] X1Normalized { get { return _normalizedVariables[0]; } }
-        public double[][] X2Normalized { get { return _normalizedVariables[1]; } }
-        public double[][] X3Normalized { get { return _normalizedVariables[2]; } }
-        public double[][] YNormalized { get { return _normalizedFunctions; } }
+        private DataHolder _data = new DataHolder();
 
         public MainForm()
         {
             InitializeComponent();
-            _openFile = new OpenFileDialog { Multiselect = false, Filter = "Text File|*.txt" };
-            _saveFile = new SaveFileDialog { Filter = "Text File|*.txt" };
-            txtVar1Dim.Text = _variablesDimension[0].ToString();
-            txtVar2Dim.Text = _variablesDimension[1].ToString();
-            txtVar3Dim.Text = _variablesDimension[2].ToString();
-            numMeterageCount.Value = _meterageCount;
+
+            _openFile = new OpenFileDialog { Multiselect = false, Filter = Resources.File_Fileter_Txt };
+            _saveFile = new SaveFileDialog { Filter = Resources.File_Fileter_Txt };
 
         }
+
+
+        private readonly List<int> _variablesDimension = new List<int> { 0, 0, 0 };
+
+
+
 
         private void TextBoxOpenFileAction(object sender, MouseEventArgs e)
         {
@@ -53,7 +43,7 @@ namespace UI
             if (txtBox == null)
                 throw new ArgumentException("Sender must be textbox");
 
-            _openFile.FileName = txtBox.Text ?? "";
+            _openFile.FileName = txtBox.Text ?? string.Empty;
             _openFile.ShowDialog();
             if (_openFile.FileName != null)
             {
@@ -66,7 +56,7 @@ namespace UI
             var txtBox = sender as TextBox;
             if (txtBox == null)
                 throw new ArgumentException("Sender must be textbox");
-            _saveFile.FileName = txtBox.Text ?? "";
+            _saveFile.FileName = txtBox.Text ?? string.Empty;
             _openFile.ShowDialog();
             if (_openFile.FileName != null)
             {
@@ -74,104 +64,181 @@ namespace UI
             }
         }
 
-        private void SaveFile_Click(object sender, EventArgs e)
-        {
-        }
-
         private void OpenInputInTableForm(object sender, EventArgs e)
         {
-            try
-            {
-                var tables = new InputDataInTables(_variables, _functions[0], _functions[1], _functions[2]);
-                tables.ShowDialog();
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Невозможно открыть файл\n" + exc.Message, "Ошибка", MessageBoxButtons.OK,
+            if (_data.AllVariables == null)
+
+                MessageBox.Show(Resources.InputFileWithVariables, Resources.Error, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-            }
+            else if (_data.Y == null)
+                MessageBox.Show(Resources.InputFileWithFunctions, Resources.Error, MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            else
+                try
+                {
+                    var tables = new InputDataInTables(_data);
+                    tables.ShowDialog();
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(Resources.UnnableToOpenFile + exc.Message, Resources.Error, MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
         }
 
         private void VariableDataSourceChanged(object sender, EventArgs e)
         {
             var textBox = (sender as TextBox);
-            if (textBox != null)
+            if (textBox == null) return;
+            var path = textBox.Text;
+            try
             {
-                var path = textBox.Text;
-                try
-                {
+                _data.SetVariables(MatrixFileReader.ReadAsMatrix(path), _variablesDimension.ToArray());
+                numMeterageCount.Value = _maxMeterageCount = _meterageCount = _data.AllVariables[0].Length;
+                txtVarCount.Text = _data.AllVariables.Count().ToString();
 
-                    var variables = MatrixFileReader.ReadAsMatrix(path);
-                    txtVarCount.Text = variables.Count().ToString();
-                    _variables = new double[_variablesCount][][];
-                    for (int i = 0; i < _variablesCount; i++)
-                    {
-                        _variables[i] = variables.Skip(_variablesDimension.Take(i).Sum()).Take(_variablesDimension[i]).ToArray();// new double[_variablesDimension[i]][];
-                    }
 
-                    _normalizedVariables = DataNormalizer.Normalize(_variables);
-                }
-                catch (IOException exc)
-                {
-                    MessageBox.Show("Попробуйте другой файл\n" + exc.Message, "Ошибка при чтении", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
+            catch (IOException exc)
+            {
+                MessageBox.Show(Resources.TryAnotherFile + exc.Message, Resources.ReadingError,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            catch (ArgumentOutOfRangeException exc)
+            {
+                MessageBox.Show(Resources.TryAnotherFile + exc.Message, Resources.ReadingError,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
 
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
+            }
         }
 
         private void numMeterageCount_ValueChanged(object sender, EventArgs e)
         {
             var num = (NumericUpDown)sender;
             if (num.Value < 0 || num.Value > _maxMeterageCount)
-                if (num.Value < 0)
-                    num.Value = 0;
-                else
-                    num.Value = _maxMeterageCount;
+                num.Value = num.Value < 0 ? 0 : _maxMeterageCount;
             else
-                _meterageCount = (int)num.Value;
+                _data.MeterageCount = (int)num.Value;
         }
 
-        private void btnShowNormalizeInputInTables_Click(object sender, EventArgs e)
+        private void OpenNormalizeInputInTableForm(object sender, EventArgs e)
         {
+            if (_data.AllVariables == null)
 
-            try
-            {
-                var tables = new InputDataInTables(_normalizedVariables, _normalizedFunctions[0], _normalizedFunctions[1], _normalizedFunctions[2]);
-                tables.ShowDialog();
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("Невозможно открыть файл\n" + exc.Message, "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show(Resources.InputFileWithVariables, Resources.Error, MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-            }
-
-
-
-        }
-
-        private void txtFunction1Path_TextChanged(object sender, EventArgs e)
-        {
-            var textBox = (sender as TextBox);
-            if (textBox != null)
-            {
-                var path = textBox.Text;
+            else if (_data.Y == null)
+                MessageBox.Show(Resources.InputFileWithFunctions, Resources.Error, MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            else
                 try
                 {
-                    _functions = MatrixFileReader.ReadAsMatrix(path);
-
-                    _normalizedFunctions = DataNormalizer.Normalize(_functions);
+                    var tables = new InputDataInTables(_data.Normalized);
+                    tables.ShowDialog();
                 }
-                catch (IOException exc)
+                catch (Exception exc)
                 {
-                    MessageBox.Show("Попробуйте другой файл\n" + exc.Message, "Ошибка при чтении", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Resources.UnnableToOpenFile + exc.Message, Resources.Error, MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
+        }
+
+        private void FunctionDataSourceChanged(object sender, EventArgs e)
+        {
+            var textBox = (sender as TextBox);
+            if (textBox == null) return;
+            var path = textBox.Text;
+            try
+            {
+                var func = MatrixFileReader.ReadAsMatrix(path);
+                _data.SetFunctions(func);
+            }
+            catch (IOException exc)
+            {
+                MessageBox.Show(Resources.TryAnotherFile + exc.Message, Resources.ReadingError,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            catch (ArgumentOutOfRangeException exc)
+            {
+                MessageBox.Show(Resources.TryAnotherFile + exc.Message, Resources.ReadingError,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void VariableDimensionChanged(object sender, EventArgs e)
+        {
+
+            var currentVariableDimensionUpDown = (NumericUpDown)sender;
+
+            var variableNumber = int.Parse(new string(currentVariableDimensionUpDown.Name.Where(ch => char.IsDigit(ch)).ToArray())) - 1;
+
+            if (!DimensionsIsCorrect() || _data.AllVariables == null)
+
+                currentVariableDimensionUpDown.Value = _variablesDimension[variableNumber];
+            else
+            {
+                _variablesDimension[variableNumber] = (int)currentVariableDimensionUpDown.Value;
+
+                _data.ChangeDimensions(_variablesDimension.ToArray());
             }
 
+
+        }
+
+        private bool DimensionsIsCorrect()
+        {
+            decimal sumOfDimensions = numVar1Dim.Value + numVar2Dim.Value + numVar3Dim.Value;
+            return sumOfDimensions <= int.Parse(txtVarCount.Text);
+        }
+
+        private void btnCalculate_Click(object sender, EventArgs e)
+        {
+            if (_data.AllVariables == null||_data.Y==null)
+                return;
+
+            var strBuilder = new StringBuilder();
+            var x1AsString = _data.X1.Aggregate(strBuilder, (builder, array) =>
+                             builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
+                             .Append('\n')
+                             .Append('-', 7)
+                             .Append('\n')).ToString();
+            var x2AsString = _data.X2.Aggregate(strBuilder, (builder, array) =>
+                             builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
+                             .Append('\n')
+                             .Append('-', 7)
+                             .Append('\n')).ToString();
+            var x3AsString = _data.X3.Aggregate(strBuilder, (builder, array) =>
+                              builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
+                             .Append('\n')
+                             .Append('-', 7)
+                             .Append('\n')).ToString();
+            var yAsString = _data.Y.Aggregate(strBuilder, (builder, array) =>
+                              builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
+                             .Append('\n')
+                             .Append('-', 7)
+                             .Append('\n')).ToString();
+            txtLog.Text =   "\nX1:\n" + x1AsString+
+                            "\nX2:\n" + x2AsString+
+                            "\nX3:\n" + x3AsString+
+                            "\nY:\n" + yAsString;
+        }
+
+        private void btnSaveResult_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSaveResult.Text))
+            {
+                MessageBox.Show("Выберите файл для сохранения");
+                return;
+            }
+            using (var sw = new StreamWriter(txtSaveResult.Text))
+            {
+                sw.Write(txtLog.Text);
+            }
         }
     }
 }

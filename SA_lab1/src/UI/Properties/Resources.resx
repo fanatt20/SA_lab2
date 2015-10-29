@@ -124,4 +124,27 @@
   <data name="Variables" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Variables.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
+  <data name="UnnableToOpenFile" xml:space="preserve">
+    <value>Невозможно открыть файл
+</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="ReadingError" xml:space="preserve">
+    <value>Ошибка при чтении</value>
+  </data>
+  <data name="TryAnotherFile" xml:space="preserve">
+    <value>Попробуйте другой файл
+</value>
+  </data>
+  <data name="File_Fileter_Txt" xml:space="preserve">
+    <value>Text File|*.txt</value>
+  </data>
+  <data name="InputFileWithVariables" xml:space="preserve">
+    <value>Введите файл с переменными</value>
+  </data>
+  <data name="InputFileWithFunctions" xml:space="preserve">
+    <value>Введите файл с функциями</value>
+  </data>
 </root>
