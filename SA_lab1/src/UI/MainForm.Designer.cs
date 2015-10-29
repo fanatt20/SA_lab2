@@ -258,6 +258,11 @@
             this.numVar3Dim.Name = "numVar3Dim";
             this.numVar3Dim.Size = new System.Drawing.Size(52, 20);
             this.numVar3Dim.TabIndex = 9;
+            this.numVar3Dim.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.numVar3Dim.ValueChanged += new System.EventHandler(this.VariableDimensionChanged);
             // 
             // numVar2Dim
@@ -267,6 +272,11 @@
             this.numVar2Dim.Name = "numVar2Dim";
             this.numVar2Dim.Size = new System.Drawing.Size(52, 20);
             this.numVar2Dim.TabIndex = 8;
+            this.numVar2Dim.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numVar2Dim.ValueChanged += new System.EventHandler(this.VariableDimensionChanged);
             // 
             // numVar1Dim
@@ -276,6 +286,11 @@
             this.numVar1Dim.Name = "numVar1Dim";
             this.numVar1Dim.Size = new System.Drawing.Size(52, 20);
             this.numVar1Dim.TabIndex = 7;
+            this.numVar1Dim.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.numVar1Dim.ValueChanged += new System.EventHandler(this.VariableDimensionChanged);
             // 
             // label4
