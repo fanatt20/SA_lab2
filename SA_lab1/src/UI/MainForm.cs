@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Algorithms;
+using Algorithms.Extensions;
 using UI.Properties;
+using Matrix = Algorithms.Matrix;
 
 namespace UI
 {
@@ -14,6 +18,8 @@ namespace UI
 
         private readonly OpenFileDialog _openFile;
         private readonly SaveFileDialog _saveFile;
+        private readonly Dictionary<PolinomType,RadioButton> _polinomRadioButtons=new Dictionary<PolinomType, RadioButton>();
+        private readonly Dictionary<Matrix.BType,RadioButton> _matrixBRadioButtons = new Dictionary<Matrix.BType, RadioButton>();
 
         private int _maxMeterageCount;
 
@@ -25,6 +31,16 @@ namespace UI
 
             _openFile = new OpenFileDialog { Multiselect = false, Filter = Resources.File_Fileter_Txt };
             _saveFile = new SaveFileDialog { Filter = Resources.File_Fileter_Txt };
+
+            _polinomRadioButtons.Add(PolinomType.Chebyshev, radioPolinomChebyshev);
+            _polinomRadioButtons.Add(PolinomType.Hermit, radioPolinomHermit);
+            _polinomRadioButtons.Add(PolinomType.Lagger, radioPolinomLagger);
+            _polinomRadioButtons.Add(PolinomType.Lejandr, radioPolinomLejandr);
+
+            _matrixBRadioButtons.Add(Matrix.BType.Type1, radioBType1);
+            _matrixBRadioButtons.Add(Matrix.BType.Type2,radioBType2);
+            _matrixBRadioButtons.Add(Matrix.BType.Type3, radioBType3);
+
 
         }
 
@@ -114,8 +130,8 @@ namespace UI
         private void numMeterageCount_ValueChanged(object sender, EventArgs e)
         {
             var num = (NumericUpDown)sender;
-            if (num.Value < 0 || num.Value > _maxMeterageCount)
-                num.Value = num.Value < 0 ? 0 : _maxMeterageCount;
+            if (num.Value > _maxMeterageCount)
+                num.Value = _maxMeterageCount;
             else
                 _data.MeterageCount = (int)num.Value;
         }
@@ -195,9 +211,23 @@ namespace UI
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
-            if (_data.AllVariables == null||_data.Y==null)
+            if (_data.AllVariables == null || _data.Y == null)
                 return;
+            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Y);
+            
+            txtLog.Text ="Матрица Б:\n"+ bMatrix.AsString();
 
+            var aMatrix = Matrix.A_Create((int) numPolinomPowerX1.Value, (int) numPolinomPowerX2.Value,
+                (int) numPolinomPowerX3.Value,
+                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.X1, _data.X2, _data.X3, _data.Y);
+
+            txtLog.Text = "Матрица A:\n" + aMatrix.AsString();
+
+
+        }
+
+        private void GetX1X2X3YAsString()
+        {
             var strBuilder = new StringBuilder();
             var x1AsString = _data.X1.Aggregate(strBuilder, (builder, array) =>
                              builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
@@ -219,10 +249,14 @@ namespace UI
                              .Append('\n')
                              .Append('-', 7)
                              .Append('\n')).ToString();
-            txtLog.Text =   "\nX1:\n" + x1AsString+
-                            "\nX2:\n" + x2AsString+
-                            "\nX3:\n" + x3AsString+
+            var result = "\nX1:\n" + x1AsString +
+                            "\nX2:\n" + x2AsString +
+                            "\nX3:\n" + x3AsString +
                             "\nY:\n" + yAsString;
+        }
+        private int BoolToInt(bool value)
+        {
+            return value ? 1 : 0;
         }
 
         private void btnSaveResult_Click(object sender, EventArgs e)

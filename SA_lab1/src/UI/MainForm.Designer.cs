@@ -56,6 +56,24 @@
             this.btnOpenChart = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.numPolinomPowerX3 = new System.Windows.Forms.NumericUpDown();
+            this.numPolinomPowerX2 = new System.Windows.Forms.NumericUpDown();
+            this.numPolinomPowerX1 = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.radioPolinomChebyshev = new System.Windows.Forms.RadioButton();
+            this.radioPolinomLejandr = new System.Windows.Forms.RadioButton();
+            this.radioPolinomLagger = new System.Windows.Forms.RadioButton();
+            this.radioPolinomHermit = new System.Windows.Forms.RadioButton();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.radioBType3 = new System.Windows.Forms.RadioButton();
+            this.radioBType2 = new System.Windows.Forms.RadioButton();
+            this.radioBType1 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -69,6 +87,14 @@
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPolinomPowerX3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPolinomPowerX2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPolinomPowerX1)).BeginInit();
+            this.groupBox13.SuspendLayout();
+            this.groupBox14.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtVariablePath
@@ -124,6 +150,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.groupBox13);
+            this.groupBox3.Controls.Add(this.groupBox10);
             this.groupBox3.Controls.Add(this.btnCalculate);
             this.groupBox3.Controls.Add(this.btnShowNormalizeInputInTables);
             this.groupBox3.Controls.Add(this.groupBox6);
@@ -150,10 +178,10 @@
             // 
             // btnShowNormalizeInputInTables
             // 
-            this.btnShowNormalizeInputInTables.Location = new System.Drawing.Point(8, 168);
+            this.btnShowNormalizeInputInTables.Location = new System.Drawing.Point(6, 168);
             this.btnShowNormalizeInputInTables.Margin = new System.Windows.Forms.Padding(2);
             this.btnShowNormalizeInputInTables.Name = "btnShowNormalizeInputInTables";
-            this.btnShowNormalizeInputInTables.Size = new System.Drawing.Size(224, 36);
+            this.btnShowNormalizeInputInTables.Size = new System.Drawing.Size(225, 36);
             this.btnShowNormalizeInputInTables.TabIndex = 8;
             this.btnShowNormalizeInputInTables.Text = "Показать в нормированом виде";
             this.btnShowNormalizeInputInTables.UseVisualStyleBackColor = true;
@@ -302,7 +330,7 @@
             // 
             // btnShowInputInTables
             // 
-            this.btnShowInputInTables.Location = new System.Drawing.Point(8, 127);
+            this.btnShowInputInTables.Location = new System.Drawing.Point(6, 128);
             this.btnShowInputInTables.Name = "btnShowInputInTables";
             this.btnShowInputInTables.Size = new System.Drawing.Size(225, 36);
             this.btnShowInputInTables.TabIndex = 6;
@@ -371,6 +399,195 @@
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
             // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.groupBox12);
+            this.groupBox10.Controls.Add(this.groupBox11);
+            this.groupBox10.Location = new System.Drawing.Point(12, 209);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(322, 139);
+            this.groupBox10.TabIndex = 9;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Полиномы";
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.radioPolinomHermit);
+            this.groupBox11.Controls.Add(this.radioPolinomLagger);
+            this.groupBox11.Controls.Add(this.radioPolinomLejandr);
+            this.groupBox11.Controls.Add(this.radioPolinomChebyshev);
+            this.groupBox11.Location = new System.Drawing.Point(176, 19);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(125, 114);
+            this.groupBox11.TabIndex = 0;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Вид полинома";
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.numPolinomPowerX3);
+            this.groupBox12.Controls.Add(this.numPolinomPowerX2);
+            this.groupBox12.Controls.Add(this.numPolinomPowerX1);
+            this.groupBox12.Controls.Add(this.label6);
+            this.groupBox12.Controls.Add(this.label7);
+            this.groupBox12.Controls.Add(this.label8);
+            this.groupBox12.Location = new System.Drawing.Point(6, 19);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(164, 114);
+            this.groupBox12.TabIndex = 1;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Степень полинома";
+            // 
+            // numPolinomPowerX3
+            // 
+            this.numPolinomPowerX3.Location = new System.Drawing.Point(38, 86);
+            this.numPolinomPowerX3.Margin = new System.Windows.Forms.Padding(2);
+            this.numPolinomPowerX3.Name = "numPolinomPowerX3";
+            this.numPolinomPowerX3.Size = new System.Drawing.Size(52, 20);
+            this.numPolinomPowerX3.TabIndex = 15;
+            // 
+            // numPolinomPowerX2
+            // 
+            this.numPolinomPowerX2.Location = new System.Drawing.Point(38, 51);
+            this.numPolinomPowerX2.Margin = new System.Windows.Forms.Padding(2);
+            this.numPolinomPowerX2.Name = "numPolinomPowerX2";
+            this.numPolinomPowerX2.Size = new System.Drawing.Size(52, 20);
+            this.numPolinomPowerX2.TabIndex = 14;
+            // 
+            // numPolinomPowerX1
+            // 
+            this.numPolinomPowerX1.Location = new System.Drawing.Point(38, 16);
+            this.numPolinomPowerX1.Margin = new System.Windows.Forms.Padding(2);
+            this.numPolinomPowerX1.Name = "numPolinomPowerX1";
+            this.numPolinomPowerX1.Size = new System.Drawing.Size(52, 20);
+            this.numPolinomPowerX1.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(5, 88);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(29, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Х3 - ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 53);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(29, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Х2 - ";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 16);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Х1 - ";
+            // 
+            // radioPolinomChebyshev
+            // 
+            this.radioPolinomChebyshev.AutoSize = true;
+            this.radioPolinomChebyshev.Checked = true;
+            this.radioPolinomChebyshev.Location = new System.Drawing.Point(8, 16);
+            this.radioPolinomChebyshev.Name = "radioPolinomChebyshev";
+            this.radioPolinomChebyshev.Size = new System.Drawing.Size(79, 17);
+            this.radioPolinomChebyshev.TabIndex = 0;
+            this.radioPolinomChebyshev.TabStop = true;
+            this.radioPolinomChebyshev.Text = "Чебышева";
+            this.radioPolinomChebyshev.UseVisualStyleBackColor = true;
+            // 
+            // radioPolinomLejandr
+            // 
+            this.radioPolinomLejandr.AutoSize = true;
+            this.radioPolinomLejandr.Location = new System.Drawing.Point(8, 39);
+            this.radioPolinomLejandr.Name = "radioPolinomLejandr";
+            this.radioPolinomLejandr.Size = new System.Drawing.Size(77, 17);
+            this.radioPolinomLejandr.TabIndex = 1;
+            this.radioPolinomLejandr.Text = "Лежандра";
+            this.radioPolinomLejandr.UseVisualStyleBackColor = true;
+            // 
+            // radioPolinomLagger
+            // 
+            this.radioPolinomLagger.AutoSize = true;
+            this.radioPolinomLagger.Location = new System.Drawing.Point(8, 62);
+            this.radioPolinomLagger.Name = "radioPolinomLagger";
+            this.radioPolinomLagger.Size = new System.Drawing.Size(67, 17);
+            this.radioPolinomLagger.TabIndex = 2;
+            this.radioPolinomLagger.Text = "Лаггера";
+            this.radioPolinomLagger.UseVisualStyleBackColor = true;
+            // 
+            // radioPolinomHermit
+            // 
+            this.radioPolinomHermit.AutoSize = true;
+            this.radioPolinomHermit.Location = new System.Drawing.Point(8, 84);
+            this.radioPolinomHermit.Name = "radioPolinomHermit";
+            this.radioPolinomHermit.Size = new System.Drawing.Size(63, 17);
+            this.radioPolinomHermit.TabIndex = 3;
+            this.radioPolinomHermit.Text = "Эрмита";
+            this.radioPolinomHermit.UseVisualStyleBackColor = true;
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.groupBox14);
+            this.groupBox13.Location = new System.Drawing.Point(340, 209);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(215, 139);
+            this.groupBox13.TabIndex = 10;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Формируем матрицу Б";
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.radioBType3);
+            this.groupBox14.Controls.Add(this.radioBType2);
+            this.groupBox14.Controls.Add(this.radioBType1);
+            this.groupBox14.Location = new System.Drawing.Point(6, 19);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(203, 114);
+            this.groupBox14.TabIndex = 0;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "По";
+            // 
+            // radioBType3
+            // 
+            this.radioBType3.AutoSize = true;
+            this.radioBType3.Location = new System.Drawing.Point(6, 65);
+            this.radioBType3.Name = "radioBType3";
+            this.radioBType3.Size = new System.Drawing.Size(103, 17);
+            this.radioBType3.TabIndex = 5;
+            this.radioBType3.Text = "Нормированию";
+            this.radioBType3.UseVisualStyleBackColor = true;
+            // 
+            // radioBType2
+            // 
+            this.radioBType2.AutoSize = true;
+            this.radioBType2.Location = new System.Drawing.Point(6, 42);
+            this.radioBType2.Name = "radioBType2";
+            this.radioBType2.Size = new System.Drawing.Size(171, 17);
+            this.radioBType2.TabIndex = 4;
+            this.radioBType2.Text = "Среднему арифметическому";
+            this.radioBType2.UseVisualStyleBackColor = true;
+            // 
+            // radioBType1
+            // 
+            this.radioBType1.AutoSize = true;
+            this.radioBType1.Checked = true;
+            this.radioBType1.Location = new System.Drawing.Point(6, 19);
+            this.radioBType1.Name = "radioBType1";
+            this.radioBType1.Size = new System.Drawing.Size(83, 17);
+            this.radioBType1.TabIndex = 3;
+            this.radioBType1.TabStop = true;
+            this.radioBType1.Text = "(max+min)/2";
+            this.radioBType1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -399,6 +616,17 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPolinomPowerX3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPolinomPowerX2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPolinomPowerX1)).EndInit();
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -433,6 +661,24 @@
         private System.Windows.Forms.NumericUpDown numVar3Dim;
         private System.Windows.Forms.NumericUpDown numVar2Dim;
         private System.Windows.Forms.NumericUpDown numVar1Dim;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.NumericUpDown numPolinomPowerX3;
+        private System.Windows.Forms.NumericUpDown numPolinomPowerX2;
+        private System.Windows.Forms.NumericUpDown numPolinomPowerX1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.RadioButton radioPolinomHermit;
+        private System.Windows.Forms.RadioButton radioPolinomLagger;
+        private System.Windows.Forms.RadioButton radioPolinomLejandr;
+        private System.Windows.Forms.RadioButton radioPolinomChebyshev;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.RadioButton radioBType3;
+        private System.Windows.Forms.RadioButton radioBType2;
+        private System.Windows.Forms.RadioButton radioBType1;
     }
 }
 

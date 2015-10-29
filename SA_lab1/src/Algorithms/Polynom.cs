@@ -1,5 +1,15 @@
-﻿namespace Algorithms
+﻿using System;
+
+namespace Algorithms
 {
+    public enum PolinomType
+    {
+        Chebyshev = 1,
+        Lejandr,
+        Lagger,
+        Hermit
+    }
+
     internal class Polynom
     {
         public double Chebyshev(double x, int rang)
@@ -40,20 +50,20 @@
             return 2*x*Hermit(x, rang - 1) - 2*(rang - 1)*Hermit(x, rang - 2);
         }
 
-        public double Calculate(double x, int rang, int type)
+        public double Calculate(double x, int rang, PolinomType type)
         {
             switch (type)
             {
-                case 1:
+                case PolinomType.Chebyshev:
                     return Chebyshev(x, rang);
-                case 2:
+                case PolinomType.Lejandr:
                     return Lejandr(x, rang);
-                case 3:
+                case PolinomType.Lagger:
                     return Lagger(x, rang);
-                case 4:
+                case PolinomType.Hermit:
                     return Hermit(x, rang);
                 default:
-                    return 0;
+                    throw new NotSupportedException();
             }
         }
     }
