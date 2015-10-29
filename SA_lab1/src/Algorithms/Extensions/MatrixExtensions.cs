@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Algorithms.Extensions
 {
@@ -14,12 +12,13 @@ namespace Algorithms.Extensions
         {
             var result = new double[1 + array.Length][];
             result[0] = data;
-            for (int i = 0; i < array.Length; i++)
+            for (var i = 0; i < array.Length; i++)
             {
                 result[i + 1] = array[i];
             }
             return result;
         }
+
         public static double[][] ToArrayOfArray(this double[][][] data)
         {
             var lst = new List<double[]>();
@@ -29,14 +28,15 @@ namespace Algorithms.Extensions
             }
             return lst.ToArray();
         }
+
         public static double[,] ToMatrix(this double[][] data)
         {
-            int n = data.Count();
-            int m = data.First().Count();
+            var n = data.Count();
+            var m = data.First().Count();
             var result = new double[n, m];
 
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < m; j++)
+            for (var i = 0; i < n; i++)
+                for (var j = 0; j < m; j++)
                     result[i, j] = data[i][j];
             return result;
         }
@@ -71,14 +71,15 @@ namespace Algorithms.Extensions
         {
             return data.Select(c => c.Take(count).ToArray()).ToArray();
         }
+
         public static double[][][] SpliceAccordingDims(this double[][] data, int[] dimensions)
         {
             if (dimensions.Sum() > data.Length)
                 throw new ArgumentOutOfRangeException();
-            double[][][] result = new double[dimensions.Length][][];
-            for (int i = 0; i < dimensions.Length; i++)
+            var result = new double[dimensions.Length][][];
+            for (var i = 0; i < dimensions.Length; i++)
             {
-                result[i] = (double[][])data.Skip(dimensions.Take(i).Sum()).Take(dimensions[i]).ToArray().Clone();
+                result[i] = (double[][]) data.Skip(dimensions.Take(i).Sum()).Take(dimensions[i]).ToArray().Clone();
             }
             return result;
         }
@@ -86,10 +87,10 @@ namespace Algorithms.Extensions
         public static double[][] DeepCopy(this double[][] data)
         {
             var result = new double[data.Length][];
-            for (int i = 0; i < data.Length; i++)
+            for (var i = 0; i < data.Length; i++)
             {
                 result[i] = new double[data[i].Length];
-                for (int j = 0; j < data[i].Length; j++)
+                for (var j = 0; j < data[i].Length; j++)
                 {
                     result[i][j] = data[i][j];
                 }
@@ -109,8 +110,6 @@ namespace Algorithms.Extensions
                 builder.AppendLine();
             }
             return builder.ToString();
-
-
         }
     }
 }

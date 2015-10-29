@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Algorithms
 {
@@ -10,14 +7,14 @@ namespace Algorithms
     public class SlaeSolver
     {
         private const int MAX_ITERS = 100000;
-        //optional parameter
-        private static double STEP_REDUCE_PARAMETER = 0.5;
-        //size of step in random seeking 
-        private static double STEP = 100;
         //amount of random vectors
         private const int M = 50;
         //accuracy of calculations for finding solution
         private const double ACCURACY = 0.00000001;
+        //optional parameter
+        private static readonly double STEP_REDUCE_PARAMETER = 0.5;
+        //size of step in random seeking 
+        private static readonly double STEP = 100;
         //input parameters holder
         private static ParameterHolder Params;
         private static Random randomValues;
@@ -41,10 +38,11 @@ namespace Algorithms
             var values = GetRandomVectors(x);
             var bestValue = F(x);
             var result = x;
-            foreach (double[] tempX in values) {
+            foreach (var tempX in values)
+            {
                 var value = F(tempX);
                 if (bestValue > value)
-                    {
+                {
                     bestValue = value;
                     result = tempX;
                 }
@@ -55,15 +53,15 @@ namespace Algorithms
 
         private static LinkedList<double[]> GetRandomVectors(double[] x)
         {
-            LinkedList<double[]> result = new LinkedList<double[]>();
-            double step = GetStep();
-            for (int i = 0; i < M; i++)
+            var result = new LinkedList<double[]>();
+            var step = GetStep();
+            for (var i = 0; i < M; i++)
             {
                 var vector = new double[x.Length];
-                for (int j = 0; j < x.Length; j++)
+                for (var j = 0; j < x.Length; j++)
                     vector[j] = GetPseudoRandomValue();
                 var norma = GetVectorNorma(vector);
-                for (int k = 0; k < x.Length; k++)
+                for (var k = 0; k < x.Length; k++)
                     vector[k] = x[k] + vector[k]*step/norma;
                 result.AddLast(vector);
             }
@@ -81,21 +79,21 @@ namespace Algorithms
         private static double GetStep()
         {
             var multiplier = Math.Pow(STEP_REDUCE_PARAMETER, Params.Iteration);
-            return STEP * multiplier;
+            return STEP*multiplier;
         }
 
         private static double GetVectorNorma(double[] vector)
         {
             var result = 0.0;
-            for (int i = 0; i < vector.Length; i++)
-                result += vector[i] * vector[i];
+            for (var i = 0; i < vector.Length; i++)
+                result += vector[i]*vector[i];
             return Math.Sqrt(result);
         }
 
         private static double[] GetX0(int size)
         {
             var result = new double[size];
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
                 result[i] = 0;
             return result;
         }
@@ -103,25 +101,25 @@ namespace Algorithms
         private static double F(double[] x)
         {
             var result = 0.0;
-            for (int i = 0; i < Params.B.Length; i++)
+            for (var i = 0; i < Params.B.Length; i++)
             {
-                double temp = -Params.B[i];
-                for (int j = 0; j < x.Length; j++)
+                var temp = -Params.B[i];
+                for (var j = 0; j < x.Length; j++)
                 {
-                    temp += Params.A[i,j] * x[j];
+                    temp += Params.A[i, j]*x[j];
                 }
                 result += temp*temp;
             }
-            double[] inputParam = x;//todo delete
+            var inputParam = x; //todo delete
             return result;
         }
 
         private class ParameterHolder
         {
-            public double[,] A;
-            public double[] B;
-            public int Iteration = 0;
-            public double Value = 0;
+            public readonly double[,] A;
+            public readonly double[] B;
+            public int Iteration;
+            public double Value;
 
             public ParameterHolder(double[,] a, double[] b)
             {

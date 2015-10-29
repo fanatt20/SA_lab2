@@ -5,12 +5,11 @@ namespace UI
 {
     public partial class InputDataInTables : Form
     {
-        
         public InputDataInTables(IDataHolder dataHolder)
         {
             InitializeComponent();
             gridViewVariables.DataSource = dataHolder.AllVariables.GetDataTableFromMatrix(new[]
-                    {"Переменная 1", "Переменная 2", "Переменная 3", "Переменная 4", "Переменная 5"});
+            {"Переменная 1", "Переменная 2", "Переменная 3", "Переменная 4", "Переменная 5"});
             gridViewFunctions.DataSource =
                 dataHolder.Y.GetDataTableFromMatrix(new[] {"Функция 1", "Функция 2", "Функция 3"});
         }
@@ -20,10 +19,10 @@ namespace UI
             InitializeComponent();
 
             gridViewVariables.DataSource = variables
-                    .GetDataTableFromMatrix(new[]
-                    {"Переменная 1", "Переменная 2", "Переменная 3", "Переменная 4", "Переменная 5"});
+                .GetDataTableFromMatrix(new[]
+                {"Переменная 1", "Переменная 2", "Переменная 3", "Переменная 4", "Переменная 5"});
             gridViewFunctions.DataSource =
-                functions.GetDataTableFromMatrix(new[] { "Функция 1", "Функция 2", "Функция 3" });
+                functions.GetDataTableFromMatrix(new[] {"Функция 1", "Функция 2", "Функция 3"});
         }
     }
 }

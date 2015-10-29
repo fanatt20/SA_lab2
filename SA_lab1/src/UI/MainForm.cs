@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Algorithms;
-using Algorithms.Extensions;
 using UI.Properties;
 
 namespace UI
@@ -18,7 +16,6 @@ namespace UI
         private readonly SaveFileDialog _saveFile;
 
         private int _maxMeterageCount;
-        private int _meterageCount;
 
         private DataHolder _data = new DataHolder();
 
@@ -94,7 +91,7 @@ namespace UI
             try
             {
                 _data.SetVariables(MatrixFileReader.ReadAsMatrix(path), _variablesDimension.ToArray());
-                numMeterageCount.Value = _maxMeterageCount = _meterageCount = _data.AllVariables[0].Length;
+                numMeterageCount.Value = _maxMeterageCount = _data.AllVariables[0].Length;
                 txtVarCount.Text = _data.AllVariables.Count().ToString();
 
 
