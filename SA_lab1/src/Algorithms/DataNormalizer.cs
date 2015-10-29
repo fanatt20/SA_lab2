@@ -9,22 +9,12 @@ namespace Algorithms
 
         public static double[][] Normalize(double[][] matrix)
         {
-            var result = new List<double[]>();
-            foreach (var array in matrix)
-            {
-                result.Add(Normalize(array));
-            }
-            return result.ToArray();
+            return matrix.Select(Normalize).ToArray();
         }
 
         public static double[][][] Normalize(double[][][] setOfMatrix)
         {
-            var result = new List<double[][]>();
-            foreach (var matrix in setOfMatrix)
-            {
-                result.Add(Normalize(matrix));
-            }
-            return result.ToArray();
+            return setOfMatrix.Select(Normalize).ToArray();
         }
 
         public static double[] Normalize(double[] array)
