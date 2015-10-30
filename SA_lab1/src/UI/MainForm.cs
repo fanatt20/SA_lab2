@@ -9,6 +9,7 @@ using Algorithms;
 using Algorithms.Extensions;
 using UI.Properties;
 using Matrix = Algorithms.Matrix;
+using UI.DataHolder;
 
 namespace UI
 {
@@ -23,7 +24,7 @@ namespace UI
 
         private int _maxMeterageCount;
 
-        private DataHolder _data = new DataHolder();
+        private DataHolder.DataHolder _data = new DataHolder.DataHolder();
 
         public MainForm()
         {

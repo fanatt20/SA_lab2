@@ -63,7 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataHolder.cs" />
+    <Compile Include="DataHolder\DataHolder.cs" />
+    <Compile Include="DataHolder\IDataHolder.cs" />
+    <Compile Include="DataHolder\NormalizedDataHolder.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,9 +139,7 @@
     <Content Include="Resources\Func2.txt" />
     <Content Include="Resources\Func3.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataHolder\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
