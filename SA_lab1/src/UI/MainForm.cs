@@ -217,16 +217,17 @@ namespace UI
         {
             if (_data.AllVariables == null || _data.Y == null)
                 return;
-            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y);
+            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone()).Transpone();
             
             txtLog.Text ="Матрица Б:\n"+ bMatrix.AsString();
 
             var aMatrix = Matrix.A_Create((int) numPolinomPowerX1.Value, (int) numPolinomPowerX2.Value,
                 (int) numPolinomPowerX3.Value,
-                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1, _data.Normalized.X2, _data.Normalized.X3, _data.Normalized.Y);
+                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone()).Transpone();
 
-            txtLog.Text = "Матрица A:\n" + aMatrix.AsString();
+            txtLog.Text += "Матрица A:\n" + aMatrix.AsString();
 
+            new InputDataInTables(aMatrix,null, bMatrix,null).ShowDialog();
 
         }
 
@@ -266,10 +267,13 @@ namespace UI
                 MessageBox.Show("Выберите файл для сохранения");
                 return;
             }
-            using (var sw = new StreamWriter(txtSaveResult.Text,true))
-            {
-                sw.Write(txtLog.Text);
-            }
+            txtLog.Text.SaveToFile(txtSaveResult.Text);
+            MessageBox.Show("Успешно сохранено");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

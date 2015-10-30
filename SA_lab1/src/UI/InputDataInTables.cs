@@ -14,15 +14,14 @@ namespace UI
                 dataHolder.Y.GetDataTableFromMatrix(new[] {"Функция 1", "Функция 2", "Функция 3"});
         }
 
-        public InputDataInTables(double[][] variables, double[][] functions)
+        public InputDataInTables(double[][] MatrixA,string[] nameForVariableOfMatrix1, double[][] matrixB, string[] nameForVariableOfMatrix2)
         {
             InitializeComponent();
 
-            gridViewVariables.DataSource = variables
-                .GetDataTableFromMatrix(new[]
-                {"Переменная 1", "Переменная 2", "Переменная 3", "Переменная 4", "Переменная 5"});
+            gridViewVariables.DataSource = MatrixA
+                .GetDataTableFromMatrix(nameForVariableOfMatrix1);
             gridViewFunctions.DataSource =
-                functions.GetDataTableFromMatrix(new[] {"Функция 1", "Функция 2", "Функция 3"});
+                matrixB.GetDataTableFromMatrix(nameForVariableOfMatrix2);
         }
     }
 }

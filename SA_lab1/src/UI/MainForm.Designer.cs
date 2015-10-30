@@ -121,7 +121,7 @@
             // 
             this.groupBox2.Controls.Add(this.btnSaveResult);
             this.groupBox2.Controls.Add(this.txtSaveResult);
-            this.groupBox2.Location = new System.Drawing.Point(6, 404);
+            this.groupBox2.Location = new System.Drawing.Point(6, 311);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(369, 87);
             this.groupBox2.TabIndex = 5;
@@ -160,7 +160,7 @@
             this.groupBox3.Controls.Add(this.groupBox1);
             this.groupBox3.Location = new System.Drawing.Point(10, 11);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(568, 497);
+            this.groupBox3.Size = new System.Drawing.Size(568, 407);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Входные данные";
@@ -371,7 +371,7 @@
             // 
             // btnCalculate
             // 
-            this.btnCalculate.Location = new System.Drawing.Point(5, 457);
+            this.btnCalculate.Location = new System.Drawing.Point(5, 357);
             this.btnCalculate.Margin = new System.Windows.Forms.Padding(2);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(558, 41);
@@ -580,18 +580,17 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.btnOpenChart);
-            this.groupBox5.Controls.Add(this.groupBox8);
             this.groupBox5.Controls.Add(this.groupBox2);
-            this.groupBox5.Location = new System.Drawing.Point(584, 11);
+            this.groupBox5.Location = new System.Drawing.Point(584, 12);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(381, 497);
+            this.groupBox5.Size = new System.Drawing.Size(381, 406);
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Результат";
             // 
             // btnOpenChart
             // 
-            this.btnOpenChart.Location = new System.Drawing.Point(6, 357);
+            this.btnOpenChart.Location = new System.Drawing.Point(6, 270);
             this.btnOpenChart.Name = "btnOpenChart";
             this.btnOpenChart.Size = new System.Drawing.Size(369, 41);
             this.btnOpenChart.TabIndex = 7;
@@ -601,9 +600,9 @@
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.txtLog);
-            this.groupBox8.Location = new System.Drawing.Point(6, 19);
+            this.groupBox8.Location = new System.Drawing.Point(10, 424);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(369, 332);
+            this.groupBox8.Size = new System.Drawing.Size(955, 161);
             this.groupBox8.TabIndex = 6;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Лог";
@@ -614,7 +613,7 @@
             this.txtLog.Location = new System.Drawing.Point(3, 16);
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
-            this.txtLog.Size = new System.Drawing.Size(363, 313);
+            this.txtLog.Size = new System.Drawing.Size(949, 142);
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
             // 
@@ -622,8 +621,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(977, 520);
+            this.ClientSize = new System.Drawing.Size(977, 597);
             this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox3);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";

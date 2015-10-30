@@ -105,11 +105,30 @@ namespace Algorithms.Extensions
             {
                 foreach (var element in array)
                 {
-                    builder.Append(element).Append('\t');
+                    builder.Append(element.ToString("####.######")).Append('\t');
                 }
                 builder.AppendLine();
             }
             return builder.ToString();
+        }
+
+        public static double[][] Transpone(this double[][] data)
+        {
+            var dimension = data[0].Length;
+            if(data.Any(arr=>arr.Length!=dimension))
+                throw new ArgumentException();
+            double[][] result=new double[dimension][];
+            List<List<double>> resultAsList=new List<List<double>>();
+            for (int i = 0; i < dimension; i++)
+            {
+                resultAsList.Add(new List<double>());
+                for (int j = 0; j < data.Length; j++)
+                {
+                    resultAsList[i].Add(data[j][i]);
+                }
+            }
+
+            return resultAsList.Select(ar => ar.ToArray()).ToArray();
         }
     }
 }
