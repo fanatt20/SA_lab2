@@ -41,6 +41,10 @@ namespace UI
             _matrixBRadioButtons.Add(Matrix.BType.Type2,radioBType2);
             _matrixBRadioButtons.Add(Matrix.BType.Type3, radioBType3);
 
+            _variablesDimension[0] =(int) numVar1Dim.Value;
+            _variablesDimension[1] = (int)numVar2Dim.Value;
+            _variablesDimension[2] = (int)numVar3Dim.Value;
+
 
         }
 
@@ -213,13 +217,13 @@ namespace UI
         {
             if (_data.AllVariables == null || _data.Y == null)
                 return;
-            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Y);
+            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y);
             
             txtLog.Text ="Матрица Б:\n"+ bMatrix.AsString();
 
             var aMatrix = Matrix.A_Create((int) numPolinomPowerX1.Value, (int) numPolinomPowerX2.Value,
                 (int) numPolinomPowerX3.Value,
-                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.X1, _data.X2, _data.X3, _data.Y);
+                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1, _data.Normalized.X2, _data.Normalized.X3, _data.Normalized.Y);
 
             txtLog.Text = "Матрица A:\n" + aMatrix.AsString();
 
@@ -253,10 +257,6 @@ namespace UI
                             "\nX2:\n" + x2AsString +
                             "\nX3:\n" + x3AsString +
                             "\nY:\n" + yAsString;
-        }
-        private int BoolToInt(bool value)
-        {
-            return value ? 1 : 0;
         }
 
         private void btnSaveResult_Click(object sender, EventArgs e)
