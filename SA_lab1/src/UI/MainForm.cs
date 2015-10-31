@@ -10,6 +10,7 @@ using Algorithms.Extensions;
 using UI.Properties;
 using Matrix = Algorithms.Matrix;
 using UI.DataHolder;
+using UI;
 
 namespace UI
 {
@@ -42,11 +43,12 @@ namespace UI
             _matrixBRadioButtons.Add(Matrix.BType.Type2,radioBType2);
             _matrixBRadioButtons.Add(Matrix.BType.Type3, radioBType3);
 
-            _variablesDimension[0] =(int) numVar1Dim.Value;
+            _variablesDimension[0] =(int)numVar1Dim.Value;
             _variablesDimension[1] = (int)numVar2Dim.Value;
             _variablesDimension[2] = (int)numVar3Dim.Value;
 
-
+            txtLog.Text = "";
+            Log.Target = txtLog;
         }
 
 
@@ -220,14 +222,13 @@ namespace UI
                 return;
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone()).Transpone();
             
-            txtLog.Text ="Матрица Б:\n"+ bMatrix.AsString();
+            Log.Write("Матрица Б:\n"+ bMatrix.AsString());
             var numPolinomPowerVals = new int[3];
             numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
             numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
             numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
             var aMatrix = Matrix.A_Create(numPolinomPowerVals, _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone()).Transpone();
-
-            txtLog.Text += "Матрица A:\n" + aMatrix.AsString();
+            Log.Write("Матрица A:\n" + aMatrix.AsString());
 
             new InputDataInTables(aMatrix,null, bMatrix,null).ShowDialog();
             
