@@ -50,6 +50,25 @@ namespace Algorithms
                 }
             return result;
         }
+        public static double[] Denormalize(double[] array, double min, double max)
+        {
+            if (array == null || array.Length == 0)
+                return array;
+            double[] result = (double[])array.Clone();
+            int i = 0;
+            double d = (max - min);
+            if (IsDoubleValueZero(d))
+                foreach (double value in array)
+                {
+                    result[i++] = value;
+                }
+            else
+                foreach (double value in array)
+                {
+                    result[i++] = value * d + min;
+                }
+            return result;
+        }
         private static bool IsDoubleValueZero(double value)
         {
             return (-DELTA < value) && (value < DELTA);
