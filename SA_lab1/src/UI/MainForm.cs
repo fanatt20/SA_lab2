@@ -221,15 +221,45 @@ namespace UI
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone()).Transpone();
             
             txtLog.Text ="Матрица Б:\n"+ bMatrix.AsString();
-
-            var aMatrix = Matrix.A_Create((int) numPolinomPowerX1.Value, (int) numPolinomPowerX2.Value,
-                (int) numPolinomPowerX3.Value,
-                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone()).Transpone();
+            var numPolinomPowerVals = new int[3];
+            numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
+            numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
+            numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
+            var aMatrix = Matrix.A_Create(numPolinomPowerVals, _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone()).Transpone();
 
             txtLog.Text += "Матрица A:\n" + aMatrix.AsString();
 
             new InputDataInTables(aMatrix,null, bMatrix,null).ShowDialog();
-
+            
+            double[][] lambda = new double[bMatrix.Length][];
+            for (int i = 0; i < bMatrix.Length; i++)
+            {
+                lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix[i]);
+            }
+            //TODO log values and show result on UI
+            int type = 0;
+            //TODO get type of selected polynomial
+            var Xi = new double[][][] { _data.X1, _data.X2, _data.X3 };
+            Polinom[][][] psi = PolinomCalculus.CalculatePsi(
+                lambda,
+                type, 
+                numPolinomPowerVals,
+                new int[3] { _data.X1.Length, _data.X2.Length, _data.X3.Length });
+            //TODO log calculations and show result
+            var Yt = Matrix.Transponation(_data.Y);//fixme
+            double[][][] aRes = Matrix.A_Get(
+                Xi,
+                _data.Y,
+                Yt,
+                psi);
+            //TODO log calculations and show result
+            double[][][] F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
+            //TODO log calculations and show result
+            double[][] c = Matrix.C_Get(Yt, F);
+            //TODO log calculations and show result
+            var Yo = Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length);
+            //TODO log calculations and show result
+            //TODO denormalize data
         }
 
         private void GetX1X2X3YAsString()

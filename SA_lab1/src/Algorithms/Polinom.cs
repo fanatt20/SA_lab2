@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Algorithms
 {
-    class Polinom : List<double>
+    public class Polinom : List<double>
     {
 
         /*

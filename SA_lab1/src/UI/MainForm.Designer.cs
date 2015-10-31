@@ -609,6 +609,7 @@
             // 
             // txtLog
             // 
+            this.txtLog.BackColor = System.Drawing.SystemColors.ControlLight;
             this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLog.Location = new System.Drawing.Point(3, 16);
             this.txtLog.Name = "txtLog";

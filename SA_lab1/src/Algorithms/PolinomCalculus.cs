@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Algorithms
 {
-    class PolinomCalculus
+    public class PolinomCalculus
     {
         /*
         selectedType = type_combo.SelectedIndex + 1

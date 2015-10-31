@@ -21,7 +21,7 @@ namespace Algorithms
                     for (var i = 0; i < Y.Length; i++)
                         B[i] = new double[1];
                     for (var i = 0; i < Y.Length; i++)
-                        B[i][0] = (Y[i].Max() + Y[i].Min())/2;
+                        B[i][0] = (Y[i].Max() + Y[i].Min()) / 2;
                     break;
                 case BType.Type2:
                     for (var i = 0; i < Y.Length; i++)
@@ -42,28 +42,131 @@ namespace Algorithms
             return B;
         }
 
-        public static double[][] A_Create(int rang_1, int rang_2, int rang_3, PolinomType p_type, double[][] X1, double[][] X2,
+        public static double[][] A_Create(int[] rang, PolinomType p_type, double[][] X1, double[][] X2,
             double[][] X3, double[][] Y)
         {
+            var rang_1 = rang[0];
+            var rang_2 = rang[1];
+            var rang_3 = rang[2];
             var A = new double[Y.Length][];
             for (var i = 0; i < A.Length; i++)
                 A[i] =
-                    new double[(rang_1 + 1)*(X1[0].Length) + (rang_2 + 1)*(X2[0].Length) + (rang_3 + 1)*(X3[0].Length)];
+                    new double[(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + (rang_3 + 1) * (X3[0].Length)];
             for (var i = 0; i < A.Length; i++)
             {
                 for (var j = 0; j < X1[0].Length; j++)
                     for (var k = 0; k < rang_1 + 1; k++)
-                        A[i][j*(rang_1 + 1) + k] = new Polynom().Calculate(X1[i][j], k, p_type);
+                        A[i][j * (rang_1 + 1) + k] = new Polynom().Calculate(X1[i][j], k, p_type);
                 for (var j = 0; j < X2[0].Length; j++)
                     for (var k = 0; k < rang_2 + 1; k++)
-                        A[i][(rang_1 + 1)*(X1[0].Length) + j*(rang_2 + 1) + k] = new Polynom().Calculate(X2[i][j], k,
+                        A[i][(rang_1 + 1) * (X1[0].Length) + j * (rang_2 + 1) + k] = new Polynom().Calculate(X2[i][j], k,
                             p_type);
                 for (var j = 0; j < X3[0].Length; j++)
                     for (var k = 0; k < rang_3 + 1; k++)
-                        A[i][(rang_1 + 1)*(X1[0].Length) + (rang_2 + 1)*(X2[0].Length) + j*(rang_3 + 1) + k] =
+                        A[i][(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + j * (rang_3 + 1) + k] =
                             new Polynom().Calculate(X3[i][j], k, p_type);
             }
             return A;
+        }
+        /*
+        Xt = Data.Xt {t : 1,2,3}
+            */
+        static double[][] W(Polinom[][] poli, double[][] Xt, int t)
+        {
+            double[][] w;
+            w = new double[Xt.Length][];
+            for (int i = 0; i < w.Length; i++)
+            {
+                w[i] = new double[poli[t - 1].Length];
+                for (int j = 0; j < w[i].Length; j++)
+                    w[i][j] = poli[t - 1][j].zn(Xt[i][j + 1]);
+            }
+            return w;
+        }
+
+        public static double[][][] A_Get(double[][][]x, double[][] y, double[][] yt, Polinom[][][] psi)
+        {
+            double[][][] a = new double[y.Length][][];
+            for (int i = 0; i < a.Length; i++)
+            {
+                a[i] = new double[3][];
+                for (int j = 0; j < 3; j++)
+                {
+                    double[][] w = W(psi[i], x[j], j + 1);
+                    a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                }
+            }
+            return a;
+        }
+
+        public static double[][][] F_Get(double [][][]x, double[][] y, double[][] yt, double[][][] a, Polinom[][][] psi)
+        {
+            double[][][] tF = new double[yt.Length][][];
+            for (int i = 0; i < tF.Length; i++)
+            {
+                tF[i] = new double[y.Length][];
+                for (int j = 0; j < tF[i].Length; j++)
+                {
+                    tF[i][j] = new double[3];
+                    for (int k = 0; k < 3; k++)
+                    {
+                        tF[i][j][k] = F(psi, x[k], a, k, i, j);
+                    }
+                }
+            }
+            return tF;
+        }
+
+        private static double F(Polinom[][][] p, double[][] Xi, double[][][] a, int x, int y, int q)
+        {
+            double rez = 0;
+            for (int i = 0; i < p[y][x].Length; i++)
+                rez += (a[y][x][i] * p[y][x][i]).zn(Xi[q][i + 1]);
+            return rez;
+        }
+
+        public static double[][] C_Get(double[][] yt, double[][][] f)
+        {
+            double[][] c = new double[yt.Length][];
+            for (int i = 0; i < c.Length; i++)
+            {
+                c[i] = SlaeSolver.Solve(f[i], yt[i]);
+            }
+            return c;
+        }
+
+        public static object Yo_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length)
+        {
+            var Yo = new double[length][];
+            for (int i = 0; i < Yo.Length; i++)
+            {
+                Yo[i] = new double[length];
+                for (int j = 0; j < Yo[i].Length; j++)
+                {
+                    Yo[i][j] = f(psi, x, a, c, i, j);
+                }
+            }
+            return Yo;
+        }
+        private static double f(Polinom[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q)
+        {
+            double rez = 0;
+            for (int i = 0; i < c[y].Length; i++)
+                rez += c[y][i] * F(psi, x[i], a, i, y, q);
+            return rez;
+
+        }
+
+        public static double[][] Transponation(double[][] Y)
+        {
+            var Yt = new double[Y[0].Length - 1][];
+            for (int i = 0; i < Yt.Length; i++)
+            {
+                Yt[i] = new double[Y.Length];
+                for (int j = 0; j < Yt[i].Length; j++)
+                    Yt[i][j] = Y[j][i + 1];
+            }
+            return Yt;
         }
     }
 }

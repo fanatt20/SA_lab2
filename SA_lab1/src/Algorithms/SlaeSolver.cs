@@ -33,6 +33,25 @@ namespace Algorithms
             return x;
         }
 
+        public static double[] Solve(double[][] a, double[] b)
+        {
+            if (a == null || a.Length == 0 || b == null || b.Length == 0)
+                return null;
+            double[,] aFormatted = new double [a.GetLength(0), a.GetLength(1)];
+            int i = 0;
+            foreach (double[] arr in a)
+            {
+                int j = 0;
+                foreach (double val in arr)
+                {
+                    aFormatted[i, j] = a[i][j];
+                    j++;
+                }
+                i++;
+            }
+            return Solve(aFormatted, b);
+        }
+
         private static double[] GetBestValue(double[] x)
         {
             var values = GetRandomVectors(x);
