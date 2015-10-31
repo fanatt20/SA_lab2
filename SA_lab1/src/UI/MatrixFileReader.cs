@@ -17,19 +17,18 @@ namespace UI
 
                 if (bufferStr != null)
                 {
-                    var collection = bufferStr.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
-                            .Split('\t')
-                            .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
-                    foreach (var num in collection)
-                    {
-                        resultInLst.Add(new List<double> { num });
-                    }
+                    var collection = bufferStr.Replace(".",
+                        CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
+                        .Split('\t')
+                        .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
+                    resultInLst.AddRange(collection.Select(num => new List<double> {num}));
                     var index = 0;
                     while ((bufferStr = sReader.ReadLine()) != null)
                     {
-                        collection = bufferStr.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
-                                                .Split('\t')
-                                                .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
+                        collection = bufferStr.Replace(".",
+                            CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)
+                            .Split('\t')
+                            .Select(s => double.Parse(s, CultureInfo.InvariantCulture));
                         foreach (var item in collection)
                             resultInLst[index++].Add(item);
                         index = 0;
@@ -55,7 +54,10 @@ namespace UI
                 var firstIndex = 0;
                 while ((buffer = sReader.ReadLine()) != null)
                 {
-                    result[firstIndex++] = double.Parse(buffer.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
+                    result[firstIndex++] =
+                        double.Parse(
+                            buffer.Replace(".", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator),
+                            CultureInfo.InvariantCulture);
                 }
             }
 

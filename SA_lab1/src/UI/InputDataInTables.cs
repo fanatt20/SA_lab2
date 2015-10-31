@@ -1,46 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Algorithms.Extensions;
+using UI.DataHolder;
 
 namespace UI
 {
     public partial class InputDataInTables : Form
     {
-        public InputDataInTables(double[][][] variables, double[] function1, double[] function2, double[] function3)
+        public InputDataInTables(IDataHolder dataHolder)
+        {
+            InitializeComponent();
+            gridViewVariables.DataSource = dataHolder.AllVariables.GetDataTableFromMatrix(new[]
+            {"Переменная 1", "Переменная 2", "Переменная 3", "Переменная 4", "Переменная 5"});
+            gridViewFunctions.DataSource =
+                dataHolder.Y.GetDataTableFromMatrix(new[] {"Функция 1", "Функция 2", "Функция 3"});
+        }
+
+        public InputDataInTables(double[][] MatrixA,string[] nameForVariableOfMatrix1, double[][] matrixB, string[] nameForVariableOfMatrix2)
         {
             InitializeComponent();
 
-            dataGridView1.DataSource = GetDataTableFromMatrix(variables.AsMatrix(), new string[] { "Переменная 1", "Переменная 2", "Переменная 3", "Переменная 4", "Переменная 5" });
-            var functions = function1.CreateMatrix(function2, function3);
-            dataGridView3.DataSource = GetDataTableFromMatrix(functions, new string[] { "Функция 1", "Функция 2", "Функция 3" });
-        }
-
-        private DataTable GetDataTableFromMatrix(double[][] matrix, string[] columnsName = null)
-        {
-            var result = new DataTable();
-            if (columnsName != null)
-            {
-                for (var i = 0; i < matrix.Length; i++)
-                {
-                    result.Columns.Add(columnsName[i]);
-                }
-            }
-            else
-                for (var i = 0; i < matrix.Length; i++)
-                {
-                    result.Columns.Add();
-                }
-            var row = new List<string>();
-            for (var i = 0; i < matrix[0].Length; i++)
-            {
-                row.AddRange(matrix.Select(sub => sub[i].ToString()));
-                result.Rows.Add(row.ToArray());
-                row.Clear();
-            }
-            return result;
+            gridViewVariables.DataSource = MatrixA
+                .GetDataTableFromMatrix(nameForVariableOfMatrix1);
+            gridViewFunctions.DataSource =
+                matrixB.GetDataTableFromMatrix(nameForVariableOfMatrix2);
         }
     }
 }
