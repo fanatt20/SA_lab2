@@ -84,9 +84,15 @@ namespace Algorithms
             return w;
         }
 
+<<<<<<< .merge_file_a23332
         public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi)
         {
             double[][][] a = new double[yt.Length][][];
+=======
+        public static double[][][] A_Get(double[][][]x, double[][] y, double[][] yt, Polinom[][][] psi)
+        {
+            double[][][] a = new double[y.Length][][];
+>>>>>>> .merge_file_a37348
             for (int i = 0; i < a.Length; i++)
             {
                 a[i] = new double[3][];
