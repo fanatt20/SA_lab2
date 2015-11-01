@@ -84,9 +84,9 @@ namespace Algorithms
             return w;
         }
 
-        public static double[][][] A_Get(double[][][]x, double[][] y, double[][] yt, Polinom[][][] psi)
+        public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi)
         {
-            double[][][] a = new double[y.Length][][];
+            double[][][] a = new double[yt.Length][][];
             for (int i = 0; i < a.Length; i++)
             {
                 a[i] = new double[3][];

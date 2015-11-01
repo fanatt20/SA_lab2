@@ -46,9 +46,10 @@ namespace UI
             _variablesDimension[0] =(int)numVar1Dim.Value;
             _variablesDimension[1] = (int)numVar2Dim.Value;
             _variablesDimension[2] = (int)numVar3Dim.Value;
-
-            txtLog.Text = "";
+            
             Log.Target = txtLog;
+            Log.WriteLine(new DateTime());
+            Log.WriteLine();
         }
 
 
@@ -241,18 +242,14 @@ namespace UI
             int type = 0;
             //TODO get type of selected polynomial
             var Xi = new double[][][] { _data.X1, _data.X2, _data.X3 };
-            Polinom[][][] psi = PolinomCalculus.CalculatePsi(
+            Polinom[][][] psi = PolynomialCalculus.CalculatePsi(
                 lambda,
                 type, 
                 numPolinomPowerVals,
                 new int[3] { _data.X1.Length, _data.X2.Length, _data.X3.Length });
             //TODO log calculations and show result
             var Yt = Matrix.Transponation(_data.Y);//fixme
-            double[][][] aRes = Matrix.A_Get(
-                Xi,
-                _data.Y,
-                Yt,
-                psi);
+            double[][][] aRes = Matrix.A_Get(Xi, Yt, psi);
             //TODO log calculations and show result
             double[][][] F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
             //TODO log calculations and show result
