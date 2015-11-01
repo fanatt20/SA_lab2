@@ -221,17 +221,17 @@ namespace UI
         {
             if (_data.AllVariables == null || _data.Y == null)
                 return;
-            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone()).Transpone();
+            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone());
             
-            Log.Write("Матрица B:\n"+ bMatrix.AsString());
+            Log.Write("Матрица B:\n"+ bMatrix.Transpone().AsString());
             var numPolinomPowerVals = new int[3];
             numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
             numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
             numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
-            var aMatrix = Matrix.A_Create(numPolinomPowerVals, _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone()).Transpone();
-            Log.Write("Матрица A:\n" + aMatrix.AsString());
+            var aMatrix = Matrix.A_Create(numPolinomPowerVals, _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            Log.Write("Матрица A:\n" + aMatrix.Transpone().AsString());
 
-            new InputDataInTables(aMatrix,null, bMatrix,null).ShowDialog();
+            new InputDataInTables(aMatrix.Transpone(),null, bMatrix.Transpone(),null).ShowDialog();
             
             double[][] lambda = new double[bMatrix.Length][];
             for (int i = 0; i < bMatrix.Length; i++)
