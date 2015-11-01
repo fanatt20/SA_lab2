@@ -100,7 +100,7 @@ namespace Algorithms.Extensions
 
         public static string AsString(this double[][] data)
         {
-            var builder = new StringBuilder().Append('\t');
+            var builder = new StringBuilder().Append(' ');
             foreach (var array in data)
             {
                 foreach (var element in array)

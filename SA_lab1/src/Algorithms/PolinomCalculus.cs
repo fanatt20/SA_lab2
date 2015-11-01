@@ -13,22 +13,22 @@ namespace Algorithms
         por = ? (original content)
         x[i-1] = Data.Xi[0]
         */
-        public static Polinom[][][] CalculatePsi(double[][] lambda, int selectedType, int[] por, int[] x)
+        public static Polinom[][][] CalculatePsi(double[][] lambda, PolinomType p_type, int[] por, int[] x)
         {
             Polinom[][][] result = new Polinom[lambda.Length][][];
             for (int i = 0; i < result.Length; i++)
             {
                 result[i] = new Polinom[3][];
                 for (int l = 0; l < 3; l++) {
-                    result[i][l] = new Polinom[x[0]];
-                    for (int j = 0; j < result[i][0].Length; j++)
+                    result[i][l] = new Polinom[x[l]];
+                    for (int j = 0; j < result[i][l].Length; j++)
                     {
-                        for (int k = 0; k <= por[0]; k++)
+                        for (int k = 0; k <= por[l]; k++)
                         {
                             int index = j * (por[l] + 1) + k;
                             for (int m = 0; m < l; m++)
                                 index += (x[l]) * (por[l] + 1);
-                            result[i][l][j] += lambda[i][index] * new Polinom(selectedType, k, false);
+                            result[i][l][j] += lambda[i][index] * new Polinom(p_type, k);
                         }
                     }
                 }      

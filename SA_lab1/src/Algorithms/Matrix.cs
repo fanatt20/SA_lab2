@@ -19,15 +19,17 @@ namespace Algorithms
             {
                 case BType.Type1:
                     for (var i = 0; i < Y.Length; i++)
-                        B[i] = new double[1];
-                    for (var i = 0; i < Y.Length; i++)
-                        B[i][0] = (Y[i].Max() + Y[i].Min()) / 2;
+                        B[i] = new double[Y[i].Length];
+                    for (var i = 0; i < B.Length; i++)
+                        for (var j = 0; j < B[i].Length; j++)
+                            B[i][j] = (Y[i].Max() + Y[i].Min()) / 2;
                     break;
                 case BType.Type2:
                     for (var i = 0; i < Y.Length; i++)
-                        B[i] = new double[1];
-                    for (var i = 0; i < Y.Length; i++)
-                        B[i][0] = Y[i].Average();
+                        B[i] = new double[Y[i].Length];
+                    for (var i = 0; i < B.Length; i++)
+                        for (var j = 0; j < B[i].Length; j++)
+                            B[i][j] = Y[i].Average();
                     break;
                 case BType.Type3:
                     for (var i = 0; i < Y.Length; i++)
@@ -69,13 +71,13 @@ namespace Algorithms
             return A;
         }
 
-        public static double[][] Al(int matrix_number, int rang, PolinomType p_type, double[][] X1, double[][] X2,
+        public static double[][] Al_Create(int matrix_number, int rang, PolinomType p_type, double[][] X1, double[][] X2,
             double[][] X3, double[][] Y)
         {
             var A = new double[Y.Length][];
             switch (matrix_number)
             {
-                case 0:
+                case 1:
                     for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X1[0].Length)];
                     for (int i = 0; i < A.Length; i++)
                     {
@@ -85,7 +87,7 @@ namespace Algorithms
                         }
                     }
                     break;
-                case 1:
+                case 2:
                     for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X2[0].Length)];
                     for (int i = 0; i < A.Length; i++)
                     {
@@ -96,7 +98,7 @@ namespace Algorithms
                         }
                     }
                     break;
-                default:
+                case 3:
                     for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X3[0].Length)];
                     for (int i = 0; i < A.Length; i++)
                     {
@@ -198,18 +200,6 @@ namespace Algorithms
                 A += c[y][i] * F(psi, x[i], a, i, y, q);
             return A;
 
-        }
-
-        public static double[][] Transponation(double[][] Y)
-        {
-            var Yt = new double[Y[0].Length - 1][];
-            for (int i = 0; i < Yt.Length; i++)
-            {
-                Yt[i] = new double[Y.Length];
-                for (int j = 0; j < Yt[i].Length; j++)
-                    Yt[i][j] = Y[j][i + 1];
-            }
-            return Yt;
         }
     }
 }
