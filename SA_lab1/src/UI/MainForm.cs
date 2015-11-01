@@ -238,9 +238,8 @@ namespace UI
             double[][] lambda = new double[3][];
             if (!checkBox1.Checked)
             {
-                lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                for(int i=0; i<3; i++)
+                    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
                 //for (int i = 0; i < bMatrix.Length; i++)
                 //{
                 //    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix[i]);
