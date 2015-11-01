@@ -51,7 +51,7 @@ namespace Algorithms
             var A = new double[Y.Length][];
             for (var i = 0; i < A.Length; i++)
                 A[i] =
-                    new double[(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + (rang_3 + 1) * (X3[0].Length)];
+                    new double[(rang_1 + 1)*(X1[0].Length) + (rang_2 + 1)*(X2[0].Length) + (rang_3 + 1)*(X3[0].Length)];
             for (var i = 0; i < A.Length; i++)
             {
                 for (var j = 0; j < X1[0].Length; j++)
@@ -68,6 +68,48 @@ namespace Algorithms
             }
             return A;
         }
+
+        public static double[][] Al(int matrix_number, int rang, PolinomType p_type, double[][] X1, double[][] X2,
+            double[][] X3, double[][] Y)
+        {
+            var A = new double[Y.Length][];
+            switch (matrix_number)
+            {
+                case 0:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X1[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X1[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = new Polynom().Calculate(X1[i][j], k, p_type);
+                        }
+                    }
+                    break;
+                case 1:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X2[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X2[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = new Polynom().Calculate(X2[i][j], k,
+                            p_type);
+                        }
+                    }
+                    break;
+                default:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X3[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X3[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = new Polynom().Calculate(X3[i][j], k, p_type);
+                        }
+                    }
+                    break;
+            }
+            return A;
+        }
+
         /*
         Xt = Data.Xt {t : 1,2,3}
             */
@@ -84,15 +126,10 @@ namespace Algorithms
             return w;
         }
 
-<<<<<<< .merge_file_a23332
         public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi)
         {
-            double[][][] a = new double[yt.Length][][];
-=======
-        public static double[][][] A_Get(double[][][]x, double[][] y, double[][] yt, Polinom[][][] psi)
-        {
-            double[][][] a = new double[y.Length][][];
->>>>>>> .merge_file_a37348
+            double[][][] a = new double[yt[0].Length][][];
+
             for (int i = 0; i < a.Length; i++)
             {
                 a[i] = new double[3][];
@@ -125,10 +162,10 @@ namespace Algorithms
 
         private static double F(Polinom[][][] p, double[][] Xi, double[][][] a, int x, int y, int q)
         {
-            double rez = 0;
+            double A = 0;
             for (int i = 0; i < p[y][x].Length; i++)
-                rez += (a[y][x][i] * p[y][x][i]).zn(Xi[q][i + 1]);
-            return rez;
+                A += (a[y][x][i] * p[y][x][i]).zn(Xi[q][i + 1]);
+            return A;
         }
 
         public static double[][] C_Get(double[][] yt, double[][][] f)
@@ -156,10 +193,10 @@ namespace Algorithms
         }
         private static double f(Polinom[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q)
         {
-            double rez = 0;
+            double A = 0;
             for (int i = 0; i < c[y].Length; i++)
-                rez += c[y][i] * F(psi, x[i], a, i, y, q);
-            return rez;
+                A += c[y][i] * F(psi, x[i], a, i, y, q);
+            return A;
 
         }
 

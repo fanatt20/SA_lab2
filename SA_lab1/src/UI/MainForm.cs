@@ -223,7 +223,7 @@ namespace UI
                 return;
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone()).Transpone();
             
-            Log.Write("Матрица Б:\n"+ bMatrix.AsString());
+            Log.Write("Матрица B:\n"+ bMatrix.AsString());
             var numPolinomPowerVals = new int[3];
             numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
             numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;

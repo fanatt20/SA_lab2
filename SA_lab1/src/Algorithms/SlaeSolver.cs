@@ -37,7 +37,7 @@ namespace Algorithms
         {
             if (a == null || a.Length == 0 || b == null || b.Length == 0)
                 return null;
-            double[,] aFormatted = new double [a.GetLength(0), a.GetLength(1)];
+            double[,] aFormatted = new double [a.Length, a[0].Length];
             int i = 0;
             foreach (double[] arr in a)
             {
