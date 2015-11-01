@@ -20,7 +20,7 @@ namespace UI.DataHolder
         }
 
 
-        public IDataHolder Normalized { get; }
+        public IDataHolder Normalized { get; private set; }
 
         public int MeterageCount
         {

@@ -47,8 +47,7 @@ namespace Algorithms
         {
             var A = new double[Y.Length][];
             for (var i = 0; i < A.Length; i++)
-                A[i] =
-                    new double[(rang_1 + 1)*(X1[0].Length) + (rang_2 + 1)*(X2[0].Length) + (rang_3 + 1)*(X3[0].Length)];
+                A[i] = new double[(rang_1 + 1)*(X1[0].Length) + (rang_2 + 1)*(X2[0].Length) + (rang_3 + 1)*(X3[0].Length)];
             for (var i = 0; i < A.Length; i++)
             {
                 for (var j = 0; j < X1[0].Length; j++)
