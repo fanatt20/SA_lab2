@@ -14,7 +14,7 @@ namespace Algorithms
         //optional parameter
         private static readonly double STEP_REDUCE_PARAMETER = 0.5;
         //size of step in random seeking 
-        private static double STEP = 100;
+        private readonly static double STEP = 100000;
         //input parameters holder
         private static ParameterHolder Params;
         private static Random randomValues;
@@ -37,7 +37,6 @@ namespace Algorithms
         {
             if (a == null || a.Length == 0 || b == null || b.Length == 0)
                 return null;
-            STEP = CalculateStep(a, b);
             double[,] aFormatted = new double [a.Length, a[0].Length];
             int i = 0;
             foreach (double[] arr in a)
@@ -51,25 +50,6 @@ namespace Algorithms
                 i++;
             }
             return Solve(aFormatted, b);
-        }
-
-        private static double CalculateStep(double[][] a, double[] b)
-        {
-            double maxVal = double.MinValue;
-            foreach (double[] arr in a)
-                foreach (double val in arr)
-                {
-                    var tempVal = val < 0 ? -val : val;
-                    if (tempVal > maxVal)
-                        maxVal = tempVal;
-                }
-            foreach (double val in b)
-            {
-                var tempVal = val < 0 ? -val : val;
-                if (tempVal > maxVal)
-                    maxVal = tempVal;
-            }
-            return maxVal;
         }
 
         private static double[] GetBestValue(double[] x)
@@ -94,7 +74,7 @@ namespace Algorithms
         {
             var result = new LinkedList<double[]>();
             var step = GetStep();
-            for (var i = 0; i < M; i++)
+            for (var i = 0; i < (Params.Iteration < 2 ? M * 20 : M); i++)
             {
                 var vector = new double[x.Length];
                 for (var j = 0; j < x.Length; j++)
@@ -117,7 +97,7 @@ namespace Algorithms
 
         private static double GetStep()
         {
-            var multiplier = Params.Iteration == 0 ? 0.7 : Math.Pow(STEP_REDUCE_PARAMETER, Params.Iteration);
+            var multiplier = Params.Iteration < 2 ? 0.1 : Math.Pow(STEP_REDUCE_PARAMETER, Params.Iteration);
             return STEP*multiplier;
         }
 
