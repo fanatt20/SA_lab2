@@ -166,7 +166,7 @@ namespace Algorithms
         {
             double A = 0;
             for (int i = 0; i < p[y][x].Length; i++)
-                A += (a[y][x][i] * p[y][x][i]).zn(Xi[q][i + 1]);
+                A += (a[y][x][i] * p[y][x][i]).zn(Xi[q][i]);
             return A;
         }
 
@@ -180,12 +180,12 @@ namespace Algorithms
             return c;
         }
 
-        public static object Yo_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length)
+        public static object Yo_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length, int length2)
         {
             var Yo = new double[length][];
             for (int i = 0; i < Yo.Length; i++)
             {
-                Yo[i] = new double[length];
+                Yo[i] = new double[length2];
                 for (int j = 0; j < Yo[i].Length; j++)
                 {
                     Yo[i][j] = f(psi, x, a, c, i, j);

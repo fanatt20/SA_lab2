@@ -264,11 +264,11 @@ namespace UI
             var Yt = _data.Normalized.Y;
             double[][][] aRes = Matrix.A_Get(Xi, Yt, psi);
             //TODO log calculations and show result
-            double[][][] F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
+            double[][][] F = Matrix.F_Get(Xi, _data.Normalized.Y.Transpone(), Yt, aRes, psi);
             //TODO log calculations and show result
             double[][] c = Matrix.C_Get(Yt, F);
             //TODO log calculations and show result
-            var Yo = Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length);
+            var Yo = Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length, _data.Normalized.Y.Transpone().Length);
             //TODO log calculations and show result
             //TODO denormalize data
         }
