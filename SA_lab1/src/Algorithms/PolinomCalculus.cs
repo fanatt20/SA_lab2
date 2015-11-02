@@ -23,7 +23,7 @@ namespace Algorithms
                     for (int j = 0; j < result[i][l].Length; j++)
                     {
                         result[i][l][j] = lambda[i][j * (rang[l] + 1)] * (new Polinom(p_type, 0));
-                        for (int k = 0; k <= rang[l]; k++)
+                        for (int k = 1; k <= rang[l]; k++)
                         {
                             //int index = j * (rang[l] + 1) + k;
                             //for (int m = 0; m < l; m++)
