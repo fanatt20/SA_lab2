@@ -8,7 +8,7 @@ namespace Algorithms
     {
         private const int MAX_ITERS = 100000;
         //amount of random vectors
-        private const int M = 50;
+        private const int M = 500;
         //accuracy of calculations for finding solution
         private const double ACCURACY = 0.00000001;
         //optional parameter
@@ -74,7 +74,7 @@ namespace Algorithms
         {
             var result = new LinkedList<double[]>();
             var step = GetStep();
-            for (var i = 0; i < (Params.Iteration < 2 ? M * 20 : M); i++)
+            for (var i = 0; i < M; i++)
             {
                 var vector = new double[x.Length];
                 for (var j = 0; j < x.Length; j++)
