@@ -14,7 +14,7 @@ namespace Algorithms
         //optional parameter
         private static readonly double STEP_REDUCE_PARAMETER = 0.5;
         //size of step in random seeking 
-        private readonly static double STEP = 1000;
+        private readonly static double STEP = 100;
         //input parameters holder
         private static ParameterHolder Params;
         private static Random randomValues;
@@ -98,7 +98,7 @@ namespace Algorithms
         private static double GetStep()
         {
             var multiplier = Math.Pow(STEP_REDUCE_PARAMETER, Params.Iteration);
-            return Params.Iteration < 1 ? 1000000 : STEP *multiplier;
+            return Params.Iteration < 1 ? Double.MaxValue : STEP *multiplier;
         }
 
         private static double GetVectorNorma(double[] vector)
