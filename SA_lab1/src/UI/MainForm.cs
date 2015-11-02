@@ -256,10 +256,10 @@ namespace UI
             Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
             var Xi = new double[][][] { _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone() };
             Polinom[][][] psi = PolynomialCalculus.CalculatePsi(
-                lambda_rez,
+                lambda,
                 _polinomRadioButtons.First(pair => pair.Value.Checked).Key, 
                 numPolinomPowerVals,
-                new int[3] { _data.Normalized.X1.Transpone().Length, _data.Normalized.X2.Transpone().Length, _data.Normalized.X2.Transpone().Length });
+                new int[3] { _data.Normalized.X1.Length, _data.Normalized.X2.Length, _data.Normalized.X3.Length });
             //TODO log calculations and show result
             var Yt = _data.Normalized.Y;
             double[][][] aRes = Matrix.A_Get(Xi, Yt, psi);
