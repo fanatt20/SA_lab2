@@ -123,14 +123,14 @@ namespace Algorithms
             {
                 w[i] = new double[poli[t - 1].Length];
                 for (int j = 0; j < w[i].Length; j++)
-                    w[i][j] = poli[t - 1][j].zn(Xt[i][j + 1]);
+                    w[i][j] = poli[t - 1][j].zn(Xt[i][j]);
             }
             return w;
         }
 
         public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi)
         {
-            double[][][] a = new double[yt[0].Length][][];
+            double[][][] a = new double[yt.Length][][];
 
             for (int i = 0; i < a.Length; i++)
             {
