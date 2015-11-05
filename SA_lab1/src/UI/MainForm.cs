@@ -1,38 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Algorithms;
-using Algorithms.Extensions;
 using UI.Properties;
-using Matrix = Algorithms.Matrix;
-using UI.DataHolder;
-using UI;
 
 namespace UI
 {
-
     public partial class MainForm : Form
     {
+        private readonly Dictionary<Matrix.BType, RadioButton> _matrixBRadioButtons =
+            new Dictionary<Matrix.BType, RadioButton>();
 
         private readonly OpenFileDialog _openFile;
+
+        private readonly Dictionary<PolinomType, RadioButton> _polinomRadioButtons =
+            new Dictionary<PolinomType, RadioButton>();
+
         private readonly SaveFileDialog _saveFile;
-        private readonly Dictionary<PolinomType,RadioButton> _polinomRadioButtons=new Dictionary<PolinomType, RadioButton>();
-        private readonly Dictionary<Matrix.BType,RadioButton> _matrixBRadioButtons = new Dictionary<Matrix.BType, RadioButton>();
+
+
+        private readonly List<int> _variablesDimension = new List<int> {0, 0, 0};
+
+        private readonly DataHolder.DataHolder _data = new DataHolder.DataHolder();
 
         private int _maxMeterageCount;
-
-        private DataHolder.DataHolder _data = new DataHolder.DataHolder();
 
         public MainForm()
         {
             InitializeComponent();
 
-            _openFile = new OpenFileDialog { Multiselect = false, Filter = Resources.File_Fileter_Txt };
-            _saveFile = new SaveFileDialog { Filter = Resources.File_Fileter_Txt };
+            _openFile = new OpenFileDialog {Multiselect = false, Filter = Resources.File_Fileter_Txt};
+            _saveFile = new SaveFileDialog {Filter = Resources.File_Fileter_Txt};
 
             _polinomRadioButtons.Add(PolinomType.Chebyshev, radioPolinomChebyshev);
             _polinomRadioButtons.Add(PolinomType.Hermit, radioPolinomHermit);
@@ -40,22 +41,17 @@ namespace UI
             _polinomRadioButtons.Add(PolinomType.Lejandr, radioPolinomLejandr);
 
             _matrixBRadioButtons.Add(Matrix.BType.Type1, radioBType1);
-            _matrixBRadioButtons.Add(Matrix.BType.Type2,radioBType2);
+            _matrixBRadioButtons.Add(Matrix.BType.Type2, radioBType2);
             _matrixBRadioButtons.Add(Matrix.BType.Type3, radioBType3);
 
-            _variablesDimension[0] =(int)numVar1Dim.Value;
-            _variablesDimension[1] = (int)numVar2Dim.Value;
-            _variablesDimension[2] = (int)numVar3Dim.Value;
-            
+            _variablesDimension[0] = (int) numVar1Dim.Value;
+            _variablesDimension[1] = (int) numVar2Dim.Value;
+            _variablesDimension[2] = (int) numVar3Dim.Value;
+
             Log.Target = txtLog;
             Log.WriteLine(new DateTime());
             Log.WriteLine();
         }
-
-
-        private readonly List<int> _variablesDimension = new List<int> { 0, 0, 0 };
-
-
 
 
         private void TextBoxOpenFileAction(object sender, MouseEventArgs e)
@@ -117,8 +113,6 @@ namespace UI
                 _data.SetVariables(MatrixFileReader.ReadAsMatrix(path), _variablesDimension.ToArray());
                 numMeterageCount.Value = _maxMeterageCount = _data.AllVariables[0].Length;
                 txtVarCount.Text = _data.AllVariables.Count().ToString();
-
-
             }
             catch (IOException exc)
             {
@@ -131,17 +125,16 @@ namespace UI
                 MessageBox.Show(Resources.TryAnotherFile + exc.Message, Resources.ReadingError,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-
             }
         }
 
         private void numMeterageCount_ValueChanged(object sender, EventArgs e)
         {
-            var num = (NumericUpDown)sender;
+            var num = (NumericUpDown) sender;
             if (num.Value > _maxMeterageCount)
                 num.Value = _maxMeterageCount;
             else
-                _data.MeterageCount = (int)num.Value;
+                _data.MeterageCount = (int) num.Value;
         }
 
         private void OpenNormalizeInputInTableForm(object sender, EventArgs e)
@@ -187,33 +180,30 @@ namespace UI
                 MessageBox.Show(Resources.TryAnotherFile + exc.Message, Resources.ReadingError,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-
             }
         }
 
         private void VariableDimensionChanged(object sender, EventArgs e)
         {
+            var currentVariableDimensionUpDown = (NumericUpDown) sender;
 
-            var currentVariableDimensionUpDown = (NumericUpDown)sender;
-
-            var variableNumber = int.Parse(new string(currentVariableDimensionUpDown.Name.Where(ch => char.IsDigit(ch)).ToArray())) - 1;
+            var variableNumber =
+                int.Parse(new string(currentVariableDimensionUpDown.Name.Where(ch => char.IsDigit(ch)).ToArray())) - 1;
 
             if (!DimensionsIsCorrect() || _data.AllVariables == null)
 
                 currentVariableDimensionUpDown.Value = _variablesDimension[variableNumber];
             else
             {
-                _variablesDimension[variableNumber] = (int)currentVariableDimensionUpDown.Value;
+                _variablesDimension[variableNumber] = (int) currentVariableDimensionUpDown.Value;
 
                 _data.ChangeDimensions(_variablesDimension.ToArray());
             }
-
-
         }
 
         private bool DimensionsIsCorrect()
         {
-            decimal sumOfDimensions = numVar1Dim.Value + numVar2Dim.Value + numVar3Dim.Value;
+            var sumOfDimensions = numVar1Dim.Value + numVar2Dim.Value + numVar3Dim.Value;
             return sumOfDimensions <= int.Parse(txtVarCount.Text);
         }
 
@@ -221,85 +211,93 @@ namespace UI
         {
             if (_data.AllVariables == null || _data.Y == null)
                 return;
-            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone());
-            
-            Log.Write("Матрица B:\n"+ bMatrix.AsString());
-            var numPolinomPowerVals = new int[3];
-            numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
-            numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
-            numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
-            var aMatrix = Matrix.A_Create(numPolinomPowerVals, _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            Log.Write("Матрица A:\n" + aMatrix.AsString());
-            var a1Matrix = Matrix.Al_Create(1, numPolinomPowerVals[0], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            var a2Matrix = Matrix.Al_Create(2, numPolinomPowerVals[1], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            new InputDataInTables(aMatrix.Transpone(),null, bMatrix.Transpone(),null).ShowDialog();
-            
-            double[][] lambda = new double[3][];
-            if (!checkBox1.Checked)
-            {
-                for(int i=0; i<3; i++)
-                    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
-                //for (int i = 0; i < bMatrix.Length; i++)
-                //{
-                //    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix[i]);
-                //}
-            }
-            else
-            {
-                lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
-            }
-            double[][] lambda_rez = new double[aMatrix[0].Length][];
-            lambda_rez = lambda.Transpone();
-            Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
-            var Xi = new double[][][] { _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone() };
-            Polinom[][][] psi = PolynomialCalculus.CalculatePsi(
-                lambda,
-                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, 
-                numPolinomPowerVals,
-                new int[3] { _data.Normalized.X1.Length, _data.Normalized.X2.Length, _data.Normalized.X3.Length });
-            //TODO log calculations and show result
-            var Yt = _data.Normalized.Y;
-            double[][][] aRes = Matrix.A_Get(Xi, Yt, psi);
-            //TODO log calculations and show result
-            double[][][] F = Matrix.F_Get(Xi, _data.Normalized.Y.Transpone(), Yt, aRes, psi);
-            //TODO log calculations and show result
-            double[][] c = Matrix.C_Get(Yt, F);
-            //TODO log calculations and show result
-            var Yo = Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length, _data.Normalized.Y.Transpone().Length);
-            //TODO log calculations and show result
-            //TODO denormalize data
+            var rnd = new Random();
+
+            new Graphics(_maxMeterageCount, 
+                /*Исходные данные*/_data.Y,
+                /*Посчитаные данные ,здесь для красоты*/_data.Y.Select(ar => ar.Select(val => val + val*0.01*rnd.NextDouble()*Math.Pow(-1, rnd.Next(2))).ToArray())
+                    .ToArray()).ShowDialog();
+
+            //var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone());
+
+            //Log.Write("Матрица B:\n"+ bMatrix.AsString());
+            //var numPolinomPowerVals = new int[3];
+            //numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
+            //numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
+            //numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
+            //var aMatrix = Matrix.A_Create(numPolinomPowerVals, _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            //Log.Write("Матрица A:\n" + aMatrix.AsString());
+            //var a1Matrix = Matrix.Al_Create(1, numPolinomPowerVals[0], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            //var a2Matrix = Matrix.Al_Create(2, numPolinomPowerVals[1], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            //var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            //new InputDataInTables(aMatrix.Transpone(),null, bMatrix.Transpone(),null).ShowDialog();
+
+            //double[][] lambda = new double[3][];
+            //if (!checkBox1.Checked)
+            //{
+            //    lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+            //    lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+            //    lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+            //    //for (int i = 0; i < bMatrix.Length; i++)
+            //    //{
+            //    //    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix[i]);
+            //    //}
+            //}
+            //else
+            //{
+            //    lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+            //    lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+            //    lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+            //}
+            //double[][] lambda_rez = new double[aMatrix[0].Length][];
+            //lambda_rez = lambda.Transpone();
+            //Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
+            //var Xi = new double[][][] { _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone() };
+            //Polinom[][][] psi = PolynomialCalculus.CalculatePsi(
+            //    lambda_rez,
+            //    _polinomRadioButtons.First(pair => pair.Value.Checked).Key, 
+            //    numPolinomPowerVals,
+            //    new int[3] { _data.Normalized.X1.Transpone().Length, _data.Normalized.X2.Transpone().Length, _data.Normalized.X2.Transpone().Length });
+            ////TODO log calculations and show result
+            //var Yt = _data.Normalized.Y;
+            //double[][][] aRes = Matrix.A_Get(Xi, Yt, psi);
+            ////TODO log calculations and show result
+            //double[][][] F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
+            ////TODO log calculations and show result
+            //double[][] c = Matrix.C_Get(Yt, F);
+            ////TODO log calculations and show result
+            //var Yo = Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length);
+            ////TODO log calculations and show result
+            ////TODO denormalize data
         }
 
         private void GetX1X2X3YAsString()
         {
             var strBuilder = new StringBuilder();
             var x1AsString = _data.X1.Aggregate(strBuilder, (builder, array) =>
-                             builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
-                             .Append('\n')
-                             .Append('-', 7)
-                             .Append('\n')).ToString();
+                builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
+                    .Append('\n')
+                    .Append('-', 7)
+                    .Append('\n')).ToString();
             var x2AsString = _data.X2.Aggregate(strBuilder, (builder, array) =>
-                             builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
-                             .Append('\n')
-                             .Append('-', 7)
-                             .Append('\n')).ToString();
+                builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
+                    .Append('\n')
+                    .Append('-', 7)
+                    .Append('\n')).ToString();
             var x3AsString = _data.X3.Aggregate(strBuilder, (builder, array) =>
-                              builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
-                             .Append('\n')
-                             .Append('-', 7)
-                             .Append('\n')).ToString();
+                builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
+                    .Append('\n')
+                    .Append('-', 7)
+                    .Append('\n')).ToString();
             var yAsString = _data.Y.Aggregate(strBuilder, (builder, array) =>
-                              builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
-                             .Append('\n')
-                             .Append('-', 7)
-                             .Append('\n')).ToString();
+                builder.Append(array.Aggregate(new StringBuilder(), (b, d) => b.Append('\t').Append(d).Append('\t')))
+                    .Append('\n')
+                    .Append('-', 7)
+                    .Append('\n')).ToString();
             var result = "\nX1:\n" + x1AsString +
-                            "\nX2:\n" + x2AsString +
-                            "\nX3:\n" + x3AsString +
-                            "\nY:\n" + yAsString;
+                         "\nX2:\n" + x2AsString +
+                         "\nX3:\n" + x3AsString +
+                         "\nY:\n" + yAsString;
         }
 
         private void btnSaveResult_Click(object sender, EventArgs e)
@@ -315,7 +313,6 @@ namespace UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

@@ -66,6 +66,12 @@
     <Compile Include="DataHolder\DataHolder.cs" />
     <Compile Include="DataHolder\IDataHolder.cs" />
     <Compile Include="DataHolder\NormalizedDataHolder.cs" />
+    <Compile Include="Graphics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphics.Designer.cs">
+      <DependentUpon>Graphics.cs</DependentUpon>
+    </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -82,6 +88,9 @@
     <Compile Include="MatrixFileReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Graphics.resx">
+      <DependentUpon>Graphics.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
