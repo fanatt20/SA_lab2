@@ -180,7 +180,7 @@ namespace Algorithms
             return c;
         }
 
-        public static object Yo_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length, int length2)
+        public static double[][] Yo_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length, int length2)
         {
             var Yo = new double[length][];
             for (int i = 0; i < Yo.Length; i++)
