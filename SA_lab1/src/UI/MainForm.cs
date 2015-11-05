@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Algorithms;
+using Algorithms.Extensions;
 using UI.Properties;
 
 namespace UI
@@ -215,60 +216,60 @@ namespace UI
 
             new Graphics(_maxMeterageCount, 
                 /*Исходные данные*/_data.Y,
-                /*Посчитаные данные ,здесь для красоты*/_data.Y.Select(ar => ar.Select(val => val + val*0.01*rnd.NextDouble()*Math.Pow(-1, rnd.Next(2))).ToArray())
+                /*Посчитаные данные ,здесь ,для красоты, левые данные*/_data.Y.Select(ar => ar.Select(val => val + val*0.01*rnd.NextDouble()*Math.Pow(-1, rnd.Next(2))).ToArray())
                     .ToArray()).ShowDialog();
 
-            //var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone());
+            var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First((pair => pair.Value.Checked)).Key, _data.Normalized.Y.Transpone());
 
-            //Log.Write("Матрица B:\n"+ bMatrix.AsString());
-            //var numPolinomPowerVals = new int[3];
-            //numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
-            //numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
-            //numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
-            //var aMatrix = Matrix.A_Create(numPolinomPowerVals, _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            //Log.Write("Матрица A:\n" + aMatrix.AsString());
-            //var a1Matrix = Matrix.Al_Create(1, numPolinomPowerVals[0], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            //var a2Matrix = Matrix.Al_Create(2, numPolinomPowerVals[1], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            //var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            //new InputDataInTables(aMatrix.Transpone(),null, bMatrix.Transpone(),null).ShowDialog();
+            Log.Write("Матрица B:\n" + bMatrix.AsString());
+            var numPolinomPowerVals = new int[3];
+            numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
+            numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
+            numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
+            var aMatrix = Matrix.A_Create(numPolinomPowerVals, _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            Log.Write("Матрица A:\n" + aMatrix.AsString());
+            var a1Matrix = Matrix.Al_Create(1, numPolinomPowerVals[0], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            var a2Matrix = Matrix.Al_Create(2, numPolinomPowerVals[1], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            new InputDataInTables(aMatrix.Transpone(), null, bMatrix.Transpone(), null).ShowDialog();
 
-            //double[][] lambda = new double[3][];
-            //if (!checkBox1.Checked)
-            //{
-            //    lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-            //    lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-            //    lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
-            //    //for (int i = 0; i < bMatrix.Length; i++)
-            //    //{
-            //    //    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix[i]);
-            //    //}
-            //}
-            //else
-            //{
-            //    lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-            //    lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-            //    lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
-            //}
-            //double[][] lambda_rez = new double[aMatrix[0].Length][];
-            //lambda_rez = lambda.Transpone();
-            //Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
-            //var Xi = new double[][][] { _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone() };
-            //Polinom[][][] psi = PolynomialCalculus.CalculatePsi(
-            //    lambda_rez,
-            //    _polinomRadioButtons.First(pair => pair.Value.Checked).Key, 
-            //    numPolinomPowerVals,
-            //    new int[3] { _data.Normalized.X1.Transpone().Length, _data.Normalized.X2.Transpone().Length, _data.Normalized.X2.Transpone().Length });
-            ////TODO log calculations and show result
-            //var Yt = _data.Normalized.Y;
-            //double[][][] aRes = Matrix.A_Get(Xi, Yt, psi);
-            ////TODO log calculations and show result
-            //double[][][] F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
-            ////TODO log calculations and show result
-            //double[][] c = Matrix.C_Get(Yt, F);
-            ////TODO log calculations and show result
-            //var Yo = Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length);
-            ////TODO log calculations and show result
-            ////TODO denormalize data
+            double[][] lambda = new double[3][];
+            if (!checkBox1.Checked)
+            {
+                lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                //for (int i = 0; i < bMatrix.Length; i++)
+                //{
+                //    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix[i]);
+                //}
+            }
+            else
+            {
+                lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+            }
+            double[][] lambda_rez = new double[aMatrix[0].Length][];
+            lambda_rez = lambda.Transpone();
+            Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
+            var Xi = new double[][][] { _data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone() };
+            Polinom[][][] psi = PolynomialCalculus.CalculatePsi(
+                lambda_rez,
+                _polinomRadioButtons.First(pair => pair.Value.Checked).Key,
+                numPolinomPowerVals,
+                new int[3] { _data.Normalized.X1.Transpone().Length, _data.Normalized.X2.Transpone().Length, _data.Normalized.X2.Transpone().Length });
+            //TODO log calculations and show result
+            var Yt = _data.Normalized.Y;
+            double[][][] aRes = Matrix.A_Get(Xi, Yt, psi);
+            //TODO log calculations and show result
+            double[][][] F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
+            //TODO log calculations and show result
+            double[][] c = Matrix.C_Get(Yt, F);
+            //TODO log calculations and show result
+            var Yo = Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length);
+            //TODO log calculations and show result
+            //TODO denormalize data
         }
 
         private void GetX1X2X3YAsString()
