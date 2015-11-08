@@ -139,6 +139,7 @@ namespace Algorithms
                 {
                     double[][] w = W(psi[i], x[j], j + 1);
                     a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                    //a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
                 }
             }
             return a;
@@ -176,6 +177,7 @@ namespace Algorithms
             for (int i = 0; i < c.Length; i++)
             {
                 c[i] = SlaeSolver.Solve(f[i], yt[i]);
+                //c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
             }
             return c;
         }
