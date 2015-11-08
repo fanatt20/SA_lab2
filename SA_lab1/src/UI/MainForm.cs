@@ -241,47 +241,15 @@ namespace UI
             var lambda = new double[3][];
             if (!checkBox1.Checked)
             {
-                ThreadPool.QueueUserWorkItem(s =>
-                {
-                    lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                    if (Interlocked.Decrement(ref lambdaCount) == 0)
-                        resetEvent.Set();
-                });
-                ThreadPool.QueueUserWorkItem(s =>
-                {
-                    lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                    if (Interlocked.Decrement(ref lambdaCount) == 0)
-                        resetEvent.Set();
-                });
-                ThreadPool.QueueUserWorkItem(s =>
-                {
-                    lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
-                    if (Interlocked.Decrement(ref lambdaCount) == 0)
-                        resetEvent.Set();
-                });
+                for(int i=0; i<lambdaCount; i++)
+                    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
             }
             else
             {
-                ThreadPool.QueueUserWorkItem(s =>
-                {
-                    lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                    if (Interlocked.Decrement(ref lambdaCount) == 0)
-                        resetEvent.Set();
-                });
-                ThreadPool.QueueUserWorkItem(s =>
-                {
-                    lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                    if (Interlocked.Decrement(ref lambdaCount) == 0)
-                        resetEvent.Set();
-                });
-                ThreadPool.QueueUserWorkItem(s =>
-                {
-                    lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
-                    if (Interlocked.Decrement(ref lambdaCount) == 0)
-                        resetEvent.Set();
-                });
+                lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
             }
-            resetEvent.WaitOne();
 
             var lambda_rez = lambda.Transpone();
             Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
