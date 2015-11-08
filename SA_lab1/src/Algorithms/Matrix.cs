@@ -115,15 +115,15 @@ namespace Algorithms
         /*
         Xt = Data.Xt {t : 1,2,3}
             */
-        static double[][] W(Polinom[][] poli, double[][] Xt, int t)
+        static double[][] W(Polinom[][] p, double[][] X, int t)
         {
             double[][] w;
-            w = new double[Xt.Length][];
+            w = new double[X.Length][];
             for (int i = 0; i < w.Length; i++)
             {
-                w[i] = new double[poli[t - 1].Length];
+                w[i] = new double[p[t - 1].Length];
                 for (int j = 0; j < w[i].Length; j++)
-                    w[i][j] = poli[t - 1][j].zn(Xt[i][j]);
+                    w[i][j] = p[t - 1][j].zn(X[i][j]);
             }
             return w;
         }
@@ -163,11 +163,11 @@ namespace Algorithms
             return tF;
         }
 
-        private static double F(Polinom[][][] p, double[][] Xi, double[][][] a, int x, int y, int q)
+        private static double F(Polinom[][][] p, double[][] X, double[][][] a, int x, int y, int q)
         {
             double A = 0;
             for (int i = 0; i < p[y][x].Length; i++)
-                A += (a[y][x][i] * p[y][x][i]).zn(Xi[q][i]);
+                A += (a[y][x][i] * p[y][x][i]).zn(X[q][i]);
             return A;
         }
 

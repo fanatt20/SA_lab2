@@ -258,7 +258,7 @@ namespace UI
 
             var lambda_rez = lambda.Transpone();
             Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
-            var Xi = new[]
+            var X = new[]
             {_data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone()};
             var psi = PolynomialCalculus.CalculatePsi(
                 lambda,
@@ -271,19 +271,19 @@ namespace UI
                     _data.Normalized.X3.Length
                 });
             //TODO log calculations and show result
-            var Yt = _data.Normalized.Y;
-            var aRes = Matrix.A_Get(Xi, Yt, psi);
+            var aRes = Matrix.A_Get(X, _data.Normalized.Y, psi);
             //TODO log calculations and show result
-            var F = Matrix.F_Get(Xi, _data.Normalized.Y.Transpone(), Yt, aRes, psi);
+            var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
             //TODO log calculations and show result
-            var c = Matrix.C_Get(Yt, F);
+            var c = Matrix.C_Get(_data.Normalized.Y, F);
             //TODO log calculations and show result
-            var Yo =  Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length, _data.Normalized.Y.Transpone().Length);
+            var Y_eval_norm = Matrix.Yo_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
+            Log.Write("Approximated normalized Y:\n" + Y_eval_norm.Transpone().AsString());
             //TODO log calculations and show result
             //TODO denormalize data
 
 
-            new Graphics(_maxMeterageCount, _data.Normalized.Y, Yo).ShowDialog();
+            new Graphics(_maxMeterageCount, _data.Normalized.Y, Y_eval_norm).ShowDialog();
         }
 
 
