@@ -259,11 +259,6 @@ namespace UI
                     if (Interlocked.Decrement(ref lambdaCount) == 0)
                         resetEvent.Set();
                 });
-
-                //for (int i = 0; i < bMatrix.Length; i++)
-                //{
-                //    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix[i]);
-                //}
             }
             else
             {
@@ -293,20 +288,20 @@ namespace UI
             var Xi = new[]
             {_data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone()};
             var psi = PolynomialCalculus.CalculatePsi(
-                lambda_rez,
+                lambda,
                 polinomType,
                 numPolinomPowerVals,
                 new[]
                 {
-                    _data.Normalized.X1.Transpone().Length,
-                    _data.Normalized.X2.Transpone().Length,
-                    _data.Normalized.X2.Transpone().Length
+                    _data.Normalized.X1.Length,
+                    _data.Normalized.X2.Length,
+                    _data.Normalized.X3.Length
                 });
             //TODO log calculations and show result
             var Yt = _data.Normalized.Y;
             var aRes = Matrix.A_Get(Xi, Yt, psi);
             //TODO log calculations and show result
-            var F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
+            var F = Matrix.F_Get(Xi, _data.Normalized.Y.Transpone(), Yt, aRes, psi);
             //TODO log calculations and show result
             var c = Matrix.C_Get(Yt, F);
             //TODO log calculations and show result
