@@ -138,8 +138,8 @@ namespace Algorithms
                 for (int j = 0; j < 3; j++)
                 {
                     double[][] w = W(psi[i], x[j], j + 1);
-                    a[i][j] = SlaeSolver.Solve(w, yt[i]);
-                    //a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
+                    //a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                    a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
                 }
             }
             return a;
@@ -176,13 +176,13 @@ namespace Algorithms
             double[][] c = new double[yt.Length][];
             for (int i = 0; i < c.Length; i++)
             {
-                c[i] = SlaeSolver.Solve(f[i], yt[i]);
-                //c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
+                //c[i] = SlaeSolver.Solve(f[i], yt[i]);
+                c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
             }
             return c;
         }
 
-        public static double[][] Yo_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length, int length2)
+        public static double[][] Y_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length, int length2)
         {
             var Yo = new double[length][];
             for (int i = 0; i < Yo.Length; i++)
@@ -202,6 +202,13 @@ namespace Algorithms
                 A += c[y][i] * F(psi, x[i], a, i, y, q);
             return A;
 
+        }
+        public static double sq_err(double[] y1, double[] y2)
+        {
+            double err = 0;
+            for (int i = 0; i < y1.Length; i++)
+                err += (y1[i] - y2[i]) * (y1[i] - y2[i]);
+            return err;
         }
     }
 }

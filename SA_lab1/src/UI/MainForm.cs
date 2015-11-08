@@ -236,24 +236,23 @@ namespace UI
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
             var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], polinomType, _data.Normalized.X1.Transpone(),
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            var resetEvent = new AutoResetEvent(false);
             var lambdaCount = 3;
             double ep = 0.00001;
             var lambda = new double[lambdaCount][];
             if (!checkBox1.Checked)
             {
                 for (int i = 0; i < lambdaCount; i++)
-                    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
-                    //lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
+                    //lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
+                    lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
             }
             else
             {
-                lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
-                //lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
-                //lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
-                //lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
+                //lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                //lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                //lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
+                lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
+                lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
             }
 
             var lambda_rez = lambda.Transpone();
@@ -277,13 +276,32 @@ namespace UI
             //TODO log calculations and show result
             var c = Matrix.C_Get(_data.Normalized.Y, F);
             //TODO log calculations and show result
-            var Y_eval_norm = Matrix.Yo_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
+            var Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
             Log.Write("Approximated normalized Y:\n" + Y_eval_norm.Transpone().AsString());
+            Log.WriteLine("Squared error:");
+            double[] err = new double[_data.Normalized.Y.Length];
+            for(int i=0; i< err.Length; i++)
+            {
+                err[i] = Matrix.sq_err(_data.Normalized.Y[i], Y_eval_norm[i]);
+                Log.WriteLine("For Y" + (i+1).ToString() + " sq_err = " + err[i].ToString());
+            }
+            double[][] Y_eval = new double[_data.Normalized.Y.Length][];
+            for (int i = 0; i < Y_eval.Length; i++)
+            {
+                Y_eval[i] = new double[_data.Normalized.Y[i].Length];
+                Y_eval[i] = DataNormalizer.Denormalize(Y_eval_norm[i], _data.Y[i].Min(), _data.Y[i].Max());
+            }
+            Log.Write("Approximated Y:\n" + Y_eval.Transpone().AsString());
+            Log.WriteLine("Squared error:");
+            double[] err2 = new double[_data.Y.Length];
+            for (int i = 0; i < err.Length; i++)
+            {
+                err2[i] = Matrix.sq_err(_data.Y[i], Y_eval[i]);
+                Log.WriteLine("For Y" + (i + 1).ToString() + " sq_err = " + err2[i].ToString());
+            }
             //TODO log calculations and show result
-            //TODO denormalize data
-
-
-            new Graphics(_maxMeterageCount, _data.Normalized.Y, Y_eval_norm).ShowDialog();
+            //new Graphics(_maxMeterageCount, _data.Normalized.Y, Y_eval_norm).ShowDialog();
+            new Graphics(_maxMeterageCount, _data.Y, Y_eval).ShowDialog();
         }
 
 
