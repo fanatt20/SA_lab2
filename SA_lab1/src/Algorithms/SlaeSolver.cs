@@ -99,7 +99,7 @@ namespace Algorithms
         private static double GetStep()
         {
             var multiplier = Math.Pow(STEP_REDUCE_PARAMETER, Params.Iteration);
-            return Params.Iteration < 1 ? Double.MaxValue : STEP *multiplier;
+            return Params.Iteration < 1 ? 10000 : STEP *multiplier;
         }
 
         private static double GetVectorNorma(double[] vector)

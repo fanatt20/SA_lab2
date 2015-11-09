@@ -50,7 +50,7 @@ namespace UI
             _variablesDimension[2] = (int) numVar3Dim.Value;
 
             Log.Target = txtLog;
-            Log.WriteLine(new DateTime());
+            Log.WriteLine(DateTime.Now);
             Log.WriteLine();
         }
 
@@ -259,11 +259,6 @@ namespace UI
                     if (Interlocked.Decrement(ref lambdaCount) == 0)
                         resetEvent.Set();
                 });
-
-                //for (int i = 0; i < bMatrix.Length; i++)
-                //{
-                //    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix[i]);
-                //}
             }
             else
             {
@@ -289,6 +284,8 @@ namespace UI
             resetEvent.WaitOne();
 
             var lambda_rez = lambda.Transpone();
+            Log.WriteLine("Матрицы коэффициентов");
+            Log.WriteLine();
             Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
             var Xi = new[]
             {_data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone()};
@@ -305,10 +302,14 @@ namespace UI
             //TODO log calculations and show result
             var Yt = _data.Normalized.Y;
             var aRes = Matrix.A_Get(Xi, Yt, psi);
+            Log.WriteLine("Матрица a:\n" + aRes.AsString());
             //TODO log calculations and show result
             var F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
             //TODO log calculations and show result
             var c = Matrix.C_Get(Yt, F);
+            Log.WriteLine("Матрица c:\n" + c.AsString());
+            Log.WriteLine();
+            Log.WriteLine("Матрица Фи:\n" + F.AsString());
             //TODO log calculations and show result
             var Yo =  Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length, _data.Normalized.Y.Transpone().Length);
             //TODO log calculations and show result
