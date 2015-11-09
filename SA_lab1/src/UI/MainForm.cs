@@ -242,17 +242,13 @@ namespace UI
             if (!checkBox1.Checked)
             {
                 for (int i = 0; i < lambdaCount; i++)
-                    //lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
-                    lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
+                    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
             }
             else
             {
-                //lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                //lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                //lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
-                lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
-                lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
-                lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
+                lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
             }
 
             var lambda_rez = lambda.Transpone();

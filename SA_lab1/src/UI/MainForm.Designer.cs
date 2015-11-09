@@ -686,7 +686,7 @@
             this.groupBox8.Size = new System.Drawing.Size(1273, 198);
             this.groupBox8.TabIndex = 6;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Лог";
+            this.groupBox8.Text = "Промежуточные результаты";
             // 
             // txtLog
             // 
