@@ -57,6 +57,9 @@
             this.btnShowNormalizeInputInTables = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.numMeterageCount = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -75,9 +78,6 @@
             this.btnOpenChart = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.txtLog = new System.Windows.Forms.RichTextBox();
-            this.groupBox15 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -91,6 +91,7 @@
             this.groupBox11.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMeterageCount)).BeginInit();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numVar3Dim)).BeginInit();
@@ -99,7 +100,6 @@
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            this.groupBox15.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtVariablePath
@@ -476,6 +476,39 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Переменные";
             // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.radioButton2);
+            this.groupBox15.Controls.Add(this.radioButton1);
+            this.groupBox15.Location = new System.Drawing.Point(214, 85);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(206, 100);
+            this.groupBox15.TabIndex = 7;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Метод решения СНЛАУ";
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(7, 68);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(162, 21);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "Градиентный метод";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(7, 30);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(200, 21);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Метод случайного поиска";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
             // numMeterageCount
             // 
             this.numMeterageCount.Location = new System.Drawing.Point(345, 49);
@@ -680,6 +713,7 @@
             this.btnOpenChart.TabIndex = 7;
             this.btnOpenChart.Text = "Открыть графики";
             this.btnOpenChart.UseVisualStyleBackColor = true;
+            this.btnOpenChart.Click += new System.EventHandler(this.btnOpenChart_Click);
             // 
             // groupBox8
             // 
@@ -704,39 +738,6 @@
             this.txtLog.Size = new System.Drawing.Size(1265, 175);
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
-            // 
-            // groupBox15
-            // 
-            this.groupBox15.Controls.Add(this.radioButton2);
-            this.groupBox15.Controls.Add(this.radioButton1);
-            this.groupBox15.Location = new System.Drawing.Point(214, 85);
-            this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(206, 100);
-            this.groupBox15.TabIndex = 7;
-            this.groupBox15.TabStop = false;
-            this.groupBox15.Text = "Метод решения СНЛАУ";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(7, 30);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(200, 21);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Метод случайного поиска";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(7, 68);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(162, 21);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "Градиентный метод";
-            this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -771,6 +772,8 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox15.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numMeterageCount)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
@@ -781,8 +784,6 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
-            this.groupBox15.ResumeLayout(false);
-            this.groupBox15.PerformLayout();
             this.ResumeLayout(false);
 
         }
