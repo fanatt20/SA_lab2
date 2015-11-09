@@ -19,22 +19,22 @@ namespace Algorithms
                     switch (rang)
                     {
                         case 0:
-                            this.Add(1);
+                            this.Add(0.5);
                             break;
                         case 1:
-                            this.Add(-2);
-                            this.Add(4);
+                            this.Add(-1);
+                            this.Add(2);
                             break;
                         case 2:
-                            this.Add(3);
-                            this.Add(-16);
-                            this.Add(16);
+                            this.Add(1);
+                            this.Add(-8);
+                            this.Add(8);
                             break;
                         case 3:
-                            this.Add(-4);
-                            this.Add(40);
-                            this.Add(-96);
-                            this.Add(64);
+                            this.Add(-1);
+                            this.Add(18);
+                            this.Add(-48);
+                            this.Add(32);
                             break;
                         default:
                             Polinom p = new Polinom();
@@ -45,7 +45,7 @@ namespace Algorithms
                                 this.Add(pp[i]);
                             break;
                     }
-                    break;                
+                    break;  
                 case PolinomType.Lejandr:
                     switch (rang)
                     {

@@ -13,6 +13,8 @@ namespace UI.DataHolder
         private double[][] _x2;
         private double[][] _x3;
         private double[][] _y;
+        public double[][] Y_eval_norm;
+        public double[][] Y_eval;
 
         public DataHolder()
         {

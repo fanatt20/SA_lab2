@@ -302,7 +302,7 @@ namespace UI
             //TODO log calculations and show result
             var Yt = _data.Normalized.Y;
             var aRes = Matrix.A_Get(Xi, Yt, psi);
-            Log.WriteLine("Матрица a:\n" + aRes.AsString());
+            Log.WriteLine("Матрица a:\n" + aRes.AsString());    
             //TODO log calculations and show result
             var F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
             //TODO log calculations and show result

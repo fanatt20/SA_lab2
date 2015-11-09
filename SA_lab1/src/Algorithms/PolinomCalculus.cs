@@ -22,14 +22,17 @@ namespace Algorithms
                     result[i][l] = new Polinom[x[l]];
                     for (int j = 0; j < result[i][l].Length; j++)
                     {
-                        result[i][l][j] = lambda[i][j * (rang[l] + 1)] * (new Polinom(p_type, 0));
+                        int index = j * (rang[l] + 1);
+                        for (int m = 0; m < l; m++)
+                            index += (x[m]) * (rang[m] + 1);
+                        result[i][l][j] = lambda[i][index] * (new Polinom(p_type, 0));
                         for (int k = 1; k <= rang[l]; k++)
                         {
-                            //int index = j * (rang[l] + 1) + k;
-                            //for (int m = 0; m < l; m++)
-                            //    index += (x[l]) * (rang[l] + 1);
-                            //result[i][l][j] += lambda[i][index] * new Polinom(p_type, k);
-                            result[i][l][j] += lambda[i][j * (rang[l] + 1) + k] * (new Polinom(p_type, k));
+                            index = j * (rang[l] + 1) + k;
+                            for (int m = 0; m < l; m++)
+                                index += (x[m]) * (rang[m] + 1);
+                            result[i][l][j] += lambda[i][index] * new Polinom(p_type, k);
+                            //result[i][l][j] += lambda[i][j * (rang[l] + 1) + k] * (new Polinom(p_type, k));
                         }
                     }
                 }      

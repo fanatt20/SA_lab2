@@ -115,20 +115,20 @@ namespace Algorithms
         /*
         Xt = Data.Xt {t : 1,2,3}
             */
-        static double[][] W(Polinom[][] poli, double[][] Xt, int t)
+        static double[][] W(Polinom[][] p, double[][] X, int t)
         {
             double[][] w;
-            w = new double[Xt.Length][];
+            w = new double[X.Length][];
             for (int i = 0; i < w.Length; i++)
             {
-                w[i] = new double[poli[t - 1].Length];
+                w[i] = new double[p[t - 1].Length];
                 for (int j = 0; j < w[i].Length; j++)
-                    w[i][j] = poli[t - 1][j].zn(Xt[i][j]);
+                    w[i][j] = p[t - 1][j].zn(X[i][j]);
             }
             return w;
         }
 
-        public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi)
+        public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi, int method)
         {
             double[][][] a = new double[yt.Length][][];
 
@@ -138,7 +138,15 @@ namespace Algorithms
                 for (int j = 0; j < 3; j++)
                 {
                     double[][] w = W(psi[i], x[j], j + 1);
-                    a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                    switch (method)
+                    {
+                        case 0:
+                            a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                            break;
+                        case 1:
+                            a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
+                            break;
+                    }            
                 }
             }
             return a;
@@ -162,25 +170,33 @@ namespace Algorithms
             return tF;
         }
 
-        private static double F(Polinom[][][] p, double[][] Xi, double[][][] a, int x, int y, int q)
+        private static double F(Polinom[][][] p, double[][] X, double[][][] a, int x, int y, int q)
         {
             double A = 0;
             for (int i = 0; i < p[y][x].Length; i++)
-                A += (a[y][x][i] * p[y][x][i]).zn(Xi[q][i]);
+                A += (a[y][x][i] * p[y][x][i]).zn(X[q][i]);
             return A;
         }
 
-        public static double[][] C_Get(double[][] yt, double[][][] f)
+        public static double[][] C_Get(double[][] yt, double[][][] f, int method)
         {
             double[][] c = new double[yt.Length][];
             for (int i = 0; i < c.Length; i++)
             {
-                c[i] = SlaeSolver.Solve(f[i], yt[i]);
+                switch (method)
+                {
+                    case 0:
+                        c[i] = SlaeSolver.Solve(f[i], yt[i]);
+                        break;
+                    case 1:
+                        c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
+                        break;
+                }         
             }
             return c;
         }
 
-        public static double[][] Yo_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length, int length2)
+        public static double[][] Y_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length, int length2)
         {
             var Yo = new double[length][];
             for (int i = 0; i < Yo.Length; i++)
@@ -200,6 +216,20 @@ namespace Algorithms
                 A += c[y][i] * F(psi, x[i], a, i, y, q);
             return A;
 
+        }
+        public static double sq_err(double[] y1, double[] y2)
+        {
+            double err = 0;
+            for (int i = 0; i < y1.Length; i++)
+                err += (y1[i] - y2[i]) * (y1[i] - y2[i]);
+            return err;
+        }
+        public static double max_err(double[] y1, double[] y2)
+        {
+            double[] err = new double[y1.Length];
+            for(int i=0; i< err.Length; i++)
+                err[i] = Math.Abs(y1[i] - y2[i]);
+            return err.Max();
         }
     }
 }
