@@ -301,20 +301,34 @@ namespace UI
                 });
             //TODO log calculations and show result
             var Yt = _data.Normalized.Y;
-            var aRes = Matrix.A_Get(Xi, Yt, psi);
-            Log.WriteLine("Матрица a:\n" + aRes.AsString());    
+            var aRes = Matrix.A_Get(Xi, Yt, psi, polinomType);
+            Log.WriteLine("Матрица a:\n");
+            for (int j = 0; j < 3; j++)
+            {
+                Log.WriteLine("Для Y" + (j+1) + ":" + aRes[j].ToString());
+            }
             //TODO log calculations and show result
             var F = Matrix.F_Get(Xi, _data.Y, Yt, aRes, psi);
+            Log.WriteLine("Матрицы Ф:");
+            int i = 0;
+            foreach (var fi in F)
+                Log.WriteLine("Ф" + (++i) + ":\n" + fi.ToString());
             //TODO log calculations and show result
-            var c = Matrix.C_Get(Yt, F);
+            var c = Matrix.C_Get(Yt, F, polinomType);
             Log.WriteLine("Матрица c:\n" + c.AsString());
-            Log.WriteLine();
-            Log.WriteLine("Матрица Фи:\n" + F.AsString());
             //TODO log calculations and show result
-            var Yo =  Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length, _data.Normalized.Y.Transpone().Length);
-            //TODO log calculations and show result
-            //TODO denormalize data
-
+            var Yo =  Matrix.Yo_Get(aRes, Xi, c, psi, Yt.Length, _data.Normalized.Y.Transpone().Length, polinomType);
+            Log.WriteLine("Оцененые Y:");
+            i = 0;
+            foreach (var yi in Yo)
+                Log.WriteLine("Y" + (++i) + ":\n" + yi.ToString());
+            Log.WriteLine("Ошибки:");
+            //FIXME where are error vectors? print here
+            Log.WriteLine("Оцененые денормализованые Y:");
+            i = 0;
+            double[][] Ydenormalized = null;//FIXME get normalized vector
+            foreach (var yi in Ydenormalized)
+                Log.WriteLine("Y" + (++i) + ":\n" + yi.ToString());
 
             new Graphics(_maxMeterageCount, _data.Normalized.Y, Yo).ShowDialog();
         }
