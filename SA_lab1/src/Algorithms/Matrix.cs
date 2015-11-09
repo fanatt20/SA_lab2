@@ -128,7 +128,7 @@ namespace Algorithms
             return w;
         }
 
-        public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi)
+        public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi, int method)
         {
             double[][][] a = new double[yt.Length][][];
 
@@ -138,7 +138,15 @@ namespace Algorithms
                 for (int j = 0; j < 3; j++)
                 {
                     double[][] w = W(psi[i], x[j], j + 1);
-                    a[i][j] = SlaeSolver.Solve(w, yt[i]);                    
+                    switch (method)
+                    {
+                        case 0:
+                            a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                            break;
+                        case 1:
+                            a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
+                            break;
+                    }            
                 }
             }
             return a;
@@ -170,12 +178,20 @@ namespace Algorithms
             return A;
         }
 
-        public static double[][] C_Get(double[][] yt, double[][][] f)
+        public static double[][] C_Get(double[][] yt, double[][][] f, int method)
         {
             double[][] c = new double[yt.Length][];
             for (int i = 0; i < c.Length; i++)
             {
-                c[i] = SlaeSolver.Solve(f[i], yt[i]);                
+                switch (method)
+                {
+                    case 0:
+                        c[i] = SlaeSolver.Solve(f[i], yt[i]);
+                        break;
+                    case 1:
+                        c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
+                        break;
+                }         
             }
             return c;
         }

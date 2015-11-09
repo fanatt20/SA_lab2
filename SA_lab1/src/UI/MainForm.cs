@@ -216,6 +216,9 @@ namespace UI
         {
             if (_data.AllVariables == null || _data.Y == null)
                 return;
+            int method = 0;
+            if (radioButton1.Checked) method = 0;
+            if (radioButton2.Checked) method = 1;
             var rnd = new Random();
             var polinomType = _polinomType;
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First(btn => btn.Value.Checked).Key,
@@ -242,13 +245,34 @@ namespace UI
             if (!checkBox1.Checked)
             {
                 for (int i = 0; i < lambdaCount; i++)
-                    lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
+                {
+                    switch (method)
+                    {
+                        case 0: 
+                            lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
+                            break;
+                        case 1:
+                            lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], 0.00001);
+                            break;
+                    }                    
+                }
+                   
             }
             else
             {
-                lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                switch (method)
+                {
+                    case 1:
+                        lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], 0.00001);
+                        lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], 0.00001);
+                        lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], 0.00001);
+                        break;
+                    case 0:
+                        lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                        lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                        lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                        break;
+                }
             }
 
             var lambda_rez = lambda.Transpone();
@@ -266,11 +290,11 @@ namespace UI
                     _data.Normalized.X3.Length
                 });
             //TODO log calculations and show result
-            var aRes = Matrix.A_Get(X, _data.Normalized.Y, psi);
+            var aRes = Matrix.A_Get(X, _data.Normalized.Y, psi, method);
             //TODO log calculations and show result
             var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
             //TODO log calculations and show result
-            var c = Matrix.C_Get(_data.Normalized.Y, F);
+            var c = Matrix.C_Get(_data.Normalized.Y, F, method);
             //TODO log calculations and show result
             var Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
             Log.Write("Approximated normalized Y:\n" + Y_eval_norm.Transpone().AsString());

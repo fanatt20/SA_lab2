@@ -75,6 +75,9 @@
             this.btnOpenChart = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -96,6 +99,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox15.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtVariablePath
@@ -457,6 +461,7 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.groupBox15);
             this.groupBox7.Controls.Add(this.numMeterageCount);
             this.groupBox7.Controls.Add(this.label5);
             this.groupBox7.Controls.Add(this.groupBox9);
@@ -473,7 +478,7 @@
             // 
             // numMeterageCount
             // 
-            this.numMeterageCount.Location = new System.Drawing.Point(351, 111);
+            this.numMeterageCount.Location = new System.Drawing.Point(345, 49);
             this.numMeterageCount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numMeterageCount.Minimum = new decimal(new int[] {
             1,
@@ -493,7 +498,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(213, 113);
+            this.label5.Location = new System.Drawing.Point(214, 49);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(125, 17);
             this.label5.TabIndex = 4;
@@ -700,6 +705,39 @@
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
             // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.radioButton2);
+            this.groupBox15.Controls.Add(this.radioButton1);
+            this.groupBox15.Location = new System.Drawing.Point(214, 85);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(206, 100);
+            this.groupBox15.TabIndex = 7;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Метод решения СНЛАУ";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(7, 30);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(200, 21);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Метод случайного поиска";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(7, 68);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(162, 21);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.Text = "Градиентный метод";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -743,6 +781,8 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox15.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -796,6 +836,9 @@
         private System.Windows.Forms.RadioButton radioBType2;
         private System.Windows.Forms.RadioButton radioBType1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }
 
