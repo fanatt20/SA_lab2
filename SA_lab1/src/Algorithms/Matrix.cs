@@ -224,5 +224,12 @@ namespace Algorithms
                 err += (y1[i] - y2[i]) * (y1[i] - y2[i]);
             return err;
         }
+        public static double max_err(double[] y1, double[] y2)
+        {
+            double[] err = new double[y1.Length];
+            for(int i=0; i< err.Length; i++)
+                err[i] = Math.Abs(y1[i] - y2[i]);
+            return err.Max();
+        }
     }
 }

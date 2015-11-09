@@ -305,6 +305,13 @@ namespace UI
                 err[i] = Matrix.sq_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
                 Log.WriteLine("For Y" + (i+1).ToString() + " sq_err = " + err[i].ToString());
             }
+            Log.WriteLine("Max abs error:");
+            double[] errr = new double[_data.Normalized.Y.Length];
+            for (int i = 0; i < errr.Length; i++)
+            {
+                errr[i] = Matrix.max_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
+                Log.WriteLine("For Y" + (i + 1).ToString() + " max_err = " + errr[i].ToString());
+            }
             _data.Y_eval = new double[_data.Normalized.Y.Length][];
             for (int i = 0; i < _data.Y_eval.Length; i++)
             {
@@ -312,12 +319,12 @@ namespace UI
                 _data.Y_eval[i] = DataNormalizer.Denormalize(_data.Y_eval_norm[i], _data.Y[i].Min(), _data.Y[i].Max());
             }
             Log.Write("Approximated Y:\n" + _data.Y_eval.Transpone().AsString());
-            Log.WriteLine("Squared error:");
+            Log.WriteLine("Max abs error:");
             double[] err2 = new double[_data.Y.Length];
             for (int i = 0; i < err.Length; i++)
             {
-                err2[i] = Matrix.sq_err(_data.Y[i], _data.Y_eval[i]);
-                Log.WriteLine("For Y" + (i + 1).ToString() + " sq_err = " + err2[i].ToString());
+                err2[i] = Matrix.max_err(_data.Y[i], _data.Y_eval[i]);
+                Log.WriteLine("For Y" + (i + 1).ToString() + " max_err = " + err2[i].ToString());
             }
             //TODO log calculations and show result
             //new Graphics(_maxMeterageCount, _data.Normalized.Y, Y_eval_norm).ShowDialog();
