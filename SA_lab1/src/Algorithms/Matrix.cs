@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Algorithms
 {
@@ -53,7 +54,7 @@ namespace Algorithms
             var A = new double[Y.Length][];
             for (var i = 0; i < A.Length; i++)
                 A[i] =
-                    new double[(rang_1 + 1)*(X1[0].Length) + (rang_2 + 1)*(X2[0].Length) + (rang_3 + 1)*(X3[0].Length)];
+                    new double[(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + (rang_3 + 1) * (X3[0].Length)];
             for (var i = 0; i < A.Length; i++)
             {
                 for (var j = 0; j < X1[0].Length; j++)
@@ -93,8 +94,9 @@ namespace Algorithms
                     {
                         for (int j = 0; j < X2[0].Length; j++)
                         {
-                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = new Polynom().Calculate(X2[i][j], k,
-                            p_type);
+                            for (int k = 0; k < rang + 1; k++)
+                                A[i][j * (rang + 1) + k] = new Polynom().Calculate(X2[i][j], k,
+p_type);
                         }
                     }
                     break;
@@ -128,31 +130,46 @@ namespace Algorithms
             return w;
         }
 
-        public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi, int method)
+        public static double[][][] A_Get(double[][][] x, double[][] yt, Polinom[][][] psi, int method)
         {
             double[][][] a = new double[yt.Length][][];
 
+            Task<double[]>[,] tasks = new Task<double[]>[a.Length,3];
             for (int i = 0; i < a.Length; i++)
             {
+                int bufi = i;
                 a[i] = new double[3][];
                 for (int j = 0; j < 3; j++)
                 {
+                    int bufj = j;
                     double[][] w = W(psi[i], x[j], j + 1);
                     switch (method)
                     {
                         case 0:
-                            a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                            tasks[i, j] = new Task<double[]>(() => SlaeSolver.Solve(w, yt[bufi]));
                             break;
                         case 1:
-                            a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
+                            tasks[i, j] = new Task<double[]>(() => Gradient_method.X(w, yt[bufi], 0.00001));
                             break;
-                    }            
+                    }
+                    tasks[i, j].Start();
+                }
+            }
+            foreach (var task in tasks)
+            {
+                task.Wait();
+                }
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < a.Length; j++)
+                {
+                    a[i][j] = tasks[i, j].Result;
                 }
             }
             return a;
         }
 
-        public static double[][][] F_Get(double [][][]x, double[][] y, double[][] yt, double[][][] a, Polinom[][][] psi)
+        public static double[][][] F_Get(double[][][] x, double[][] y, double[][] yt, double[][][] a, Polinom[][][] psi)
         {
             double[][][] tF = new double[yt.Length][][];
             for (int i = 0; i < tF.Length; i++)
@@ -191,7 +208,7 @@ namespace Algorithms
                     case 1:
                         c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
                         break;
-                }         
+                }
             }
             return c;
         }
@@ -209,7 +226,7 @@ namespace Algorithms
             }
             return Yo;
         }
-        private static double f(Polinom[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q)
+        private static double f(Polinom[][][] psi, double[][][] x, double[][][] a, double[][] c, int y, int q)
         {
             double A = 0;
             for (int i = 0; i < c[y].Length; i++)
@@ -227,7 +244,7 @@ namespace Algorithms
         public static double max_err(double[] y1, double[] y2)
         {
             double[] err = new double[y1.Length];
-            for(int i=0; i< err.Length; i++)
+            for (int i = 0; i < err.Length; i++)
                 err[i] = Math.Abs(y1[i] - y2[i]);
             return err.Max();
         }
