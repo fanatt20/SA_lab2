@@ -345,8 +345,8 @@ namespace UI
 
         private void btnOpenChart_Click(object sender, EventArgs e)
         {
-            //new Graphics(_maxMeterageCount, _data.Normalized.Y, Y_eval_norm).ShowDialog();
-            new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
+            new Graphics(_maxMeterageCount, _data.Normalized.Y, _data.Y_eval_norm).ShowDialog();
+            //new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
         }
     }
 }
