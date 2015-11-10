@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Algorithms;
 using Algorithms.Extensions;
@@ -25,7 +26,7 @@ namespace UI
         private readonly SaveFileDialog _saveFile;
 
 
-        private readonly List<int> _variablesDimension = new List<int> {0, 0, 0};
+        private readonly List<int> _variablesDimension = new List<int> { 0, 0, 0 };
 
         private int _maxMeterageCount;
 
@@ -33,8 +34,8 @@ namespace UI
         {
             InitializeComponent();
 
-            _openFile = new OpenFileDialog {Multiselect = false, Filter = Resources.File_Fileter_Txt};
-            _saveFile = new SaveFileDialog {Filter = Resources.File_Fileter_Txt};
+            _openFile = new OpenFileDialog { Multiselect = false, Filter = Resources.File_Fileter_Txt };
+            _saveFile = new SaveFileDialog { Filter = Resources.File_Fileter_Txt };
 
             _polinomRadioButtons.Add(PolinomType.Chebyshev, radioPolinomChebyshev);
             _polinomRadioButtons.Add(PolinomType.Hermit, radioPolinomHermit);
@@ -45,9 +46,9 @@ namespace UI
             _matrixBRadioButtons.Add(Matrix.BType.Type2, radioBType2);
             _matrixBRadioButtons.Add(Matrix.BType.Type3, radioBType3);
 
-            _variablesDimension[0] = (int) numVar1Dim.Value;
-            _variablesDimension[1] = (int) numVar2Dim.Value;
-            _variablesDimension[2] = (int) numVar3Dim.Value;
+            _variablesDimension[0] = (int)numVar1Dim.Value;
+            _variablesDimension[1] = (int)numVar2Dim.Value;
+            _variablesDimension[2] = (int)numVar3Dim.Value;
 
             Log.Target = txtLog;
             Log.WriteLine(DateTime.Now);
@@ -135,11 +136,11 @@ namespace UI
 
         private void numMeterageCount_ValueChanged(object sender, EventArgs e)
         {
-            var num = (NumericUpDown) sender;
+            var num = (NumericUpDown)sender;
             if (num.Value > _maxMeterageCount)
                 num.Value = _maxMeterageCount;
             else
-                _data.MeterageCount = (int) num.Value;
+                _data.MeterageCount = (int)num.Value;
         }
 
         private void OpenNormalizeInputInTableForm(object sender, EventArgs e)
@@ -190,7 +191,7 @@ namespace UI
 
         private void VariableDimensionChanged(object sender, EventArgs e)
         {
-            var currentVariableDimensionUpDown = (NumericUpDown) sender;
+            var currentVariableDimensionUpDown = (NumericUpDown)sender;
 
             var variableNumber =
                 int.Parse(new string(currentVariableDimensionUpDown.Name.Where(ch => char.IsDigit(ch)).ToArray())) - 1;
@@ -200,7 +201,7 @@ namespace UI
                 currentVariableDimensionUpDown.Value = _variablesDimension[variableNumber];
             else
             {
-                _variablesDimension[variableNumber] = (int) currentVariableDimensionUpDown.Value;
+                _variablesDimension[variableNumber] = (int)currentVariableDimensionUpDown.Value;
 
                 _data.ChangeDimensions(_variablesDimension.ToArray());
             }
@@ -226,9 +227,9 @@ namespace UI
 
             Log.Write("Матрица B:\n" + bMatrix.AsString());
             var numPolinomPowerVals = new int[3];
-            numPolinomPowerVals[0] = (int) numPolinomPowerX1.Value;
-            numPolinomPowerVals[1] = (int) numPolinomPowerX2.Value;
-            numPolinomPowerVals[2] = (int) numPolinomPowerX3.Value;
+            numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
+            numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
+            numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
             var aMatrix = Matrix.A_Create(numPolinomPowerVals,
                 _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(),
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
@@ -244,37 +245,81 @@ namespace UI
             var lambda = new double[lambdaCount][];
             if (!checkBox1.Checked)
             {
-                for (int i = 0; i < lambdaCount; i++)
+                Parallel.For(0, lambdaCount, i =>
                 {
                     switch (method)
                     {
-                        case 0: 
+                        case 0:
                             lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
                             break;
                         case 1:
                             lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
                             break;
-                    }                    
-                }
-                   
+                    }
+                });
+
             }
             else
             {
+                AutoResetEvent evnt = new AutoResetEvent(false);
+                int count = 3;
                 switch (method)
                 {
                     case 0:
-                        lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                        lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                        lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                        ThreadPool.QueueUserWorkItem((obj) =>
+                        {
+                            lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                            if (Interlocked.Decrement(ref count) == 0)
+                            {
+                                evnt.Set();
+                            }
+                        });
+                        ThreadPool.QueueUserWorkItem((obj) =>
+                        {
+                            lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                            if (Interlocked.Decrement(ref count) == 0)
+                            {
+                                evnt.Set();
+                            }
+                        });
+                        ThreadPool.QueueUserWorkItem((obj) =>
+                        {
+                            lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                            if (Interlocked.Decrement(ref count) == 0)
+                            {
+                                evnt.Set();
+                            }
+                        });
                         break;
                     case 1:
-                        lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
-                        lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
-                        lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
+                        ThreadPool.QueueUserWorkItem((obj) =>
+                        {
+                            lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
+                            if (Interlocked.Decrement(ref count) == 0)
+                            {
+                                evnt.Set();
+                            }
+                        });
+                        ThreadPool.QueueUserWorkItem((obj) =>
+                        {
+                            lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
+                            if (Interlocked.Decrement(ref count) == 0)
+                            {
+                                evnt.Set();
+                            }
+                        });
+                        ThreadPool.QueueUserWorkItem((obj) =>
+                        {
+                            lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
+                            if (Interlocked.Decrement(ref count) == 0)
+                            {
+                                evnt.Set();
+                            }
+                        });
                         break;
                 }
+                evnt.WaitOne();
             }
-
             var lambda_rez = lambda.Transpone();
             Log.WriteLine("Матрицы коэффициентов");
             Log.WriteLine();
@@ -296,7 +341,7 @@ namespace UI
             Log.WriteLine("Матрица a:\n");
             for (int j = 0; j < 3; j++)
             {
-                Log.WriteLine("Для Y" + (j+1) + ":" + aRes[j].ToString());
+                Log.WriteLine("Для Y" + (j + 1) + ":" + aRes[j].ToString());
             }
             var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
             Log.WriteLine("Матрицы Ф:");
@@ -309,10 +354,10 @@ namespace UI
             Log.Write("Approximated normalized Y:\n" + _data.Y_eval_norm.Transpone().AsString());
             Log.WriteLine("Squared error:");
             double[] err = new double[_data.Normalized.Y.Length];
-            for(int i=0; i< err.Length; i++)
+            for (int i = 0; i < err.Length; i++)
             {
                 err[i] = Matrix.sq_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
-                Log.WriteLine("For Y" + (i+1).ToString() + " sq_err = " + err[i].ToString());
+                Log.WriteLine("For Y" + (i + 1).ToString() + " sq_err = " + err[i].ToString());
             }
             Log.WriteLine("Max abs error:");
             double[] errr = new double[_data.Normalized.Y.Length];
@@ -338,7 +383,6 @@ namespace UI
             //new Graphics(_maxMeterageCount, _data.Normalized.Y, Y_eval_norm).ShowDialog();
             new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
         }
-
 
         private void btnSaveResult_Click(object sender, EventArgs e)
         {
