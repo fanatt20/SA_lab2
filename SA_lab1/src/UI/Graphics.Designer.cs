@@ -82,6 +82,7 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(155, 459);
             this.listBox1.TabIndex = 4;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // Graphics
             // 
