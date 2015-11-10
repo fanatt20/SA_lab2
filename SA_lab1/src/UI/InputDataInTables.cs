@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Algorithms.Extensions;
 using UI.DataHolder;
+using System.Collections.Generic;
 
 namespace UI
 {
@@ -14,8 +15,8 @@ namespace UI
             var varNamelst = new List<string>();
             for (int i = 0; i < dataHolder.AllVariables.Length; i++)
             {
-                varNamelst.Add("Переменная "+(i+1));
-            }   
+                varNamelst.Add("Переменная " + (i + 1));
+            }
             gridViewVariables.DataSource = dataHolder.AllVariables.GetDataTableFromMatrix(varNamelst.ToArray());
             var funcNamelst = new List<string>();
             for (int i = 0; i < dataHolder.Y.Length; i++)
