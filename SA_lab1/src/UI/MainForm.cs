@@ -243,51 +243,33 @@ namespace UI
             var lambdaCount = 3;
             double ep = 0.00001;
             var lambda = new double[lambdaCount][];
-            Task<double[]>[] tasks = new Task<double[]>[3];
+            var bMatrixTranspose = bMatrix.Transpone();
             if (!checkBox1.Checked)
             {
-                for (int i = 0; i < lambdaCount; i++)
+                switch (method)
                 {
-                    int buf = i;
-                    switch (method)
-                    {
-                        case 0:
-                            tasks[i] = new Task<double[]>(() => SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[buf]));
-                            break;
-                        case 1:
-                            tasks[i] = new Task<double[]>(() => Gradient_method.X(aMatrix, bMatrix.Transpone()[buf], ep));
-                            break;
-                    }
+                    case 0:
+                        Parallel.For(0, lambdaCount, i => lambda[i] = SlaeSolver.Solve(aMatrix, bMatrixTranspose[i]));
+                        break;
+                    case 1:
+                        Parallel.For(0, lambdaCount, i => lambda[i] = Gradient_method.X(aMatrix, bMatrixTranspose[i], ep));
+                        break;
                 }
 
             }
             else
             {
-                var bMatrixTranspose = bMatrix.Transpone();
+
                 switch (method)
                 {
                     case 0:
-                        tasks[0] = new Task<double[]>(() => SlaeSolver.Solve(aMatrix, bMatrixTranspose[0]));
-                        tasks[1] = new Task<double[]>(() => SlaeSolver.Solve(aMatrix, bMatrixTranspose[1]));
-                        tasks[2] = new Task<double[]>(() => SlaeSolver.Solve(aMatrix, bMatrixTranspose[2]));
+                        Parallel.For(0, lambdaCount, i => lambda[i] = SlaeSolver.Solve(aMatrix, bMatrixTranspose[i]));
                         break;
                     case 1:
-                        tasks[0] = new Task<double[]>(() => Gradient_method.X(aMatrix, bMatrixTranspose[0], ep));
-                        tasks[1] = new Task<double[]>(() => Gradient_method.X(aMatrix, bMatrixTranspose[1], ep));
-                        tasks[2] = new Task<double[]>(() => Gradient_method.X(aMatrix, bMatrixTranspose[2], ep));
+                        Parallel.For(0, lambdaCount, i => lambda[i] = Gradient_method.X(aMatrix, bMatrixTranspose[i], ep));
                         break;
                 }
             }
-            foreach (var task in tasks)
-            {
-                task.Start();
-            }
-            for (int i = 0; i < tasks.Length; i++)
-            {
-                tasks[i].Wait();
-                lambda[i] = tasks[i].Result;
-            }
-
 
             var lambda_rez = lambda.Transpone();
             Log.WriteLine("Матрицы коэффициентов");

@@ -134,36 +134,18 @@ p_type);
         {
             double[][][] a = new double[yt.Length][][];
 
-            Task<double[]>[,] tasks = new Task<double[]>[a.Length,3];
             for (int i = 0; i < a.Length; i++)
             {
                 int bufi = i;
                 a[i] = new double[3][];
-                for (int j = 0; j < 3; j++)
+                switch (method)
                 {
-                    int bufj = j;
-                    double[][] w = W(psi[i], x[j], j + 1);
-                    switch (method)
-                    {
-                        case 0:
-                            tasks[i, j] = new Task<double[]>(() => SlaeSolver.Solve(w, yt[bufi]));
-                            break;
-                        case 1:
-                            tasks[i, j] = new Task<double[]>(() => Gradient_method.X(w, yt[bufi], 0.00001));
-                            break;
-                    }
-                    tasks[i, j].Start();
-                }
-            }
-            foreach (var task in tasks)
-            {
-                task.Wait();
-                }
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < a.Length; j++)
-                {
-                    a[i][j] = tasks[i, j].Result;
+                    case 0:
+                        Parallel.For(0, 3, j => a[i][j] = SlaeSolver.Solve(W(psi[bufi], x[j], j + 1), yt[i]));
+                        break;
+                    case 1:
+                        Parallel.For(0, 3,j => a[i][j] = Gradient_method.X(W(psi[bufi], x[j], j + 1), yt[i], 0.00001));
+                        break;
                 }
             }
             return a;

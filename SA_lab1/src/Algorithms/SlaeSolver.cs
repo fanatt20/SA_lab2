@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 namespace Algorithms
 {
     //Solving Systems of Linear Algebric Equations (SLAE) AX=B, using method of best probe.
+   
     public class SlaeSolver
     {
         private const int MAX_ITERS = 100000;
@@ -17,6 +18,7 @@ namespace Algorithms
         //size of step in random seeking 
         private readonly static double STEP = 100;
         //input parameters holder
+        [ThreadStatic]
         private static ParameterHolder Params;
         private static Random randomValues;
 
