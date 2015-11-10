@@ -216,6 +216,9 @@ namespace UI
         {
             if (_data.AllVariables == null || _data.Y == null)
                 return;
+            int method = 0;
+            if (radioButton1.Checked) method = 0;
+            if (radioButton2.Checked) method = 1;
             var rnd = new Random();
             var polinomType = _polinomType;
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First(btn => btn.Value.Checked).Key,
@@ -249,7 +252,7 @@ namespace UI
                             lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
                             break;
                         case 1:
-                            lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], 0.00001);
+                            lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
                             break;
                     }                    
                 }
@@ -259,15 +262,15 @@ namespace UI
             {
                 switch (method)
                 {
-                    case 1:
-                        lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], 0.00001);
-                        lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], 0.00001);
-                        lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], 0.00001);
-                        break;
                     case 0:
                         lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
                         lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
                         lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                        break;
+                    case 1:
+                        lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
+                        lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
+                        lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
                         break;
                 }
             }
@@ -290,11 +293,18 @@ namespace UI
                 });
             //TODO log calculations and show result
             var aRes = Matrix.A_Get(X, _data.Normalized.Y, psi, method);
-            //TODO log calculations and show result
+            Log.WriteLine("Матрица a:\n");
+            for (int j = 0; j < 3; j++)
+            {
+                Log.WriteLine("Для Y" + (j+1) + ":" + aRes[j].ToString());
+            }
             var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
-            //TODO log calculations and show result
+            Log.WriteLine("Матрицы Ф:");
+            int ii = 0;
+            foreach (var fi in F)
+                Log.WriteLine("Ф" + (++ii) + ":\n" + fi.ToString());
             var c = Matrix.C_Get(_data.Normalized.Y, F, method);
-            //TODO log calculations and show result
+            Log.WriteLine("Матрица c:\n" + c.AsString());
             _data.Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
             Log.Write("Approximated normalized Y:\n" + _data.Y_eval_norm.Transpone().AsString());
             Log.WriteLine("Squared error:");
@@ -325,7 +335,6 @@ namespace UI
                 err2[i] = Matrix.max_err(_data.Y[i], _data.Y_eval[i]);
                 Log.WriteLine("For Y" + (i + 1).ToString() + " max_err = " + err2[i].ToString());
             }
-            //TODO log calculations and show result
             //new Graphics(_maxMeterageCount, _data.Normalized.Y, Y_eval_norm).ShowDialog();
             new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
         }
