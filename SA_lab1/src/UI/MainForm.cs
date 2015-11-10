@@ -239,7 +239,7 @@ namespace UI
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
             var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], polinomType, _data.Normalized.X1.Transpone(),
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            var lambdaCount = 3;
+            var lambdaCount = _data.Normalized.Y.Length;
             double ep = 0.00001;
             var lambda = new double[lambdaCount][];
             if (!checkBox1.Checked)
@@ -260,19 +260,31 @@ namespace UI
             }
             else
             {
-                switch (method)
+                for (int i = 0; i < lambdaCount; i++)
                 {
-                    case 0:
-                        lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
-                        lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
-                        lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
-                        break;
-                    case 1:
-                        lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
-                        lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
-                        lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
-                        break;
+                    switch (method)
+                    {
+                        case 0:
+                            lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
+                            break;
+                        case 1:
+                            lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
+                            break;
+                    }
                 }
+                //switch (method)
+                //{
+                //    case 0:
+                //        lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                //        lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                //        lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
+                //        break;
+                //    case 1:
+                //        lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
+                //        lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
+                //        lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
+                //        break;
+                //}
             }
 
             var lambda_rez = lambda.Transpone();
@@ -294,7 +306,7 @@ namespace UI
             //TODO log calculations and show result
             var aRes = Matrix.A_Get(X, _data.Normalized.Y, psi, method);
             Log.WriteLine("Матрица a:\n");
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < _data.Normalized.Y.Length; j++)
             {
                 Log.WriteLine("Для Y" + (j+1) + ":" + aRes[j].ToString());
             }

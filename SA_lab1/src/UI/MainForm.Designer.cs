@@ -513,6 +513,11 @@
             // 
             this.numMeterageCount.Location = new System.Drawing.Point(345, 49);
             this.numMeterageCount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.numMeterageCount.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
             this.numMeterageCount.Minimum = new decimal(new int[] {
             1,
             0,
