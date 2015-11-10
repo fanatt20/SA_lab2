@@ -50,7 +50,7 @@ namespace UI
             _variablesDimension[2] = (int) numVar3Dim.Value;
 
             Log.Target = txtLog;
-            Log.WriteLine(new DateTime());
+            Log.WriteLine(DateTime.Now);
             Log.WriteLine();
         }
 
@@ -216,9 +216,6 @@ namespace UI
         {
             if (_data.AllVariables == null || _data.Y == null)
                 return;
-            int method = 0;
-            if (radioButton1.Checked) method = 0;
-            if (radioButton2.Checked) method = 1;
             var rnd = new Random();
             var polinomType = _polinomType;
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First(btn => btn.Value.Checked).Key,
@@ -276,6 +273,8 @@ namespace UI
             }
 
             var lambda_rez = lambda.Transpone();
+            Log.WriteLine("Матрицы коэффициентов");
+            Log.WriteLine();
             Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
             var X = new[]
             {_data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone()};
