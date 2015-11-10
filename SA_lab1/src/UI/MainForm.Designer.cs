@@ -104,11 +104,10 @@
             // 
             // txtVariablePath
             // 
-            this.txtVariablePath.Location = new System.Drawing.Point(8, 23);
-            this.txtVariablePath.Margin = new System.Windows.Forms.Padding(4);
+            this.txtVariablePath.Location = new System.Drawing.Point(6, 19);
             this.txtVariablePath.Name = "txtVariablePath";
             this.txtVariablePath.ReadOnly = true;
-            this.txtVariablePath.Size = new System.Drawing.Size(283, 22);
+            this.txtVariablePath.Size = new System.Drawing.Size(213, 20);
             this.txtVariablePath.TabIndex = 0;
             this.txtVariablePath.TextChanged += new System.EventHandler(this.VariableDataSourceChanged);
             this.txtVariablePath.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
@@ -116,11 +115,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtVariablePath);
-            this.groupBox1.Location = new System.Drawing.Point(8, 23);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(6, 19);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(300, 57);
+            this.groupBox1.Size = new System.Drawing.Size(225, 46);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Входные переменные";
@@ -129,21 +126,18 @@
             // 
             this.groupBox2.Controls.Add(this.btnSaveResult);
             this.groupBox2.Controls.Add(this.txtSaveResult);
-            this.groupBox2.Location = new System.Drawing.Point(8, 383);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(6, 311);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(492, 107);
+            this.groupBox2.Size = new System.Drawing.Size(369, 87);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Сохранить в файл";
             // 
             // btnSaveResult
             // 
-            this.btnSaveResult.Location = new System.Drawing.Point(8, 53);
-            this.btnSaveResult.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSaveResult.Location = new System.Drawing.Point(6, 43);
             this.btnSaveResult.Name = "btnSaveResult";
-            this.btnSaveResult.Size = new System.Drawing.Size(476, 42);
+            this.btnSaveResult.Size = new System.Drawing.Size(357, 34);
             this.btnSaveResult.TabIndex = 1;
             this.btnSaveResult.Text = "Сохранить";
             this.btnSaveResult.UseVisualStyleBackColor = true;
@@ -151,11 +145,10 @@
             // 
             // txtSaveResult
             // 
-            this.txtSaveResult.Location = new System.Drawing.Point(8, 23);
-            this.txtSaveResult.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSaveResult.Location = new System.Drawing.Point(6, 19);
             this.txtSaveResult.Name = "txtSaveResult";
             this.txtSaveResult.ReadOnly = true;
-            this.txtSaveResult.Size = new System.Drawing.Size(475, 22);
+            this.txtSaveResult.Size = new System.Drawing.Size(357, 20);
             this.txtSaveResult.TabIndex = 0;
             this.txtSaveResult.Text = "log.txt";
             this.txtSaveResult.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxSaveFileAction);
@@ -170,11 +163,9 @@
             this.groupBox3.Controls.Add(this.btnShowInputInTables);
             this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.groupBox1);
-            this.groupBox3.Location = new System.Drawing.Point(13, 14);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox3.Location = new System.Drawing.Point(10, 11);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(757, 501);
+            this.groupBox3.Size = new System.Drawing.Size(568, 407);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Входные данные";
@@ -182,11 +173,9 @@
             // groupBox13
             // 
             this.groupBox13.Controls.Add(this.groupBox14);
-            this.groupBox13.Location = new System.Drawing.Point(453, 257);
-            this.groupBox13.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox13.Location = new System.Drawing.Point(340, 209);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox13.Size = new System.Drawing.Size(287, 171);
+            this.groupBox13.Size = new System.Drawing.Size(215, 139);
             this.groupBox13.TabIndex = 10;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Формируем матрицу B";
@@ -197,11 +186,9 @@
             this.groupBox14.Controls.Add(this.radioBType3);
             this.groupBox14.Controls.Add(this.radioBType2);
             this.groupBox14.Controls.Add(this.radioBType1);
-            this.groupBox14.Location = new System.Drawing.Point(8, 23);
-            this.groupBox14.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox14.Location = new System.Drawing.Point(6, 19);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox14.Size = new System.Drawing.Size(271, 140);
+            this.groupBox14.Size = new System.Drawing.Size(203, 114);
             this.groupBox14.TabIndex = 0;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "По";
@@ -211,9 +198,10 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(8, 103);
+            this.checkBox1.Location = new System.Drawing.Point(6, 84);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(262, 21);
+            this.checkBox1.Size = new System.Drawing.Size(205, 17);
             this.checkBox1.TabIndex = 6;
             this.checkBox1.Text = "Определять лямбда в 3-х системах";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -221,10 +209,9 @@
             // radioBType3
             // 
             this.radioBType3.AutoSize = true;
-            this.radioBType3.Location = new System.Drawing.Point(8, 80);
-            this.radioBType3.Margin = new System.Windows.Forms.Padding(4);
+            this.radioBType3.Location = new System.Drawing.Point(6, 65);
             this.radioBType3.Name = "radioBType3";
-            this.radioBType3.Size = new System.Drawing.Size(214, 21);
+            this.radioBType3.Size = new System.Drawing.Size(169, 17);
             this.radioBType3.TabIndex = 5;
             this.radioBType3.Text = "Нормированным значениям";
             this.radioBType3.UseVisualStyleBackColor = true;
@@ -232,10 +219,9 @@
             // radioBType2
             // 
             this.radioBType2.AutoSize = true;
-            this.radioBType2.Location = new System.Drawing.Point(8, 52);
-            this.radioBType2.Margin = new System.Windows.Forms.Padding(4);
+            this.radioBType2.Location = new System.Drawing.Point(6, 42);
             this.radioBType2.Name = "radioBType2";
-            this.radioBType2.Size = new System.Drawing.Size(219, 21);
+            this.radioBType2.Size = new System.Drawing.Size(171, 17);
             this.radioBType2.TabIndex = 4;
             this.radioBType2.Text = "Среднему арифметическому";
             this.radioBType2.UseVisualStyleBackColor = true;
@@ -244,10 +230,9 @@
             // 
             this.radioBType1.AutoSize = true;
             this.radioBType1.Checked = true;
-            this.radioBType1.Location = new System.Drawing.Point(8, 23);
-            this.radioBType1.Margin = new System.Windows.Forms.Padding(4);
+            this.radioBType1.Location = new System.Drawing.Point(6, 19);
             this.radioBType1.Name = "radioBType1";
-            this.radioBType1.Size = new System.Drawing.Size(106, 21);
+            this.radioBType1.Size = new System.Drawing.Size(83, 17);
             this.radioBType1.TabIndex = 3;
             this.radioBType1.TabStop = true;
             this.radioBType1.Text = "(max+min)/2";
@@ -257,11 +242,9 @@
             // 
             this.groupBox10.Controls.Add(this.groupBox12);
             this.groupBox10.Controls.Add(this.groupBox11);
-            this.groupBox10.Location = new System.Drawing.Point(16, 257);
-            this.groupBox10.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox10.Location = new System.Drawing.Point(12, 209);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox10.Size = new System.Drawing.Size(429, 171);
+            this.groupBox10.Size = new System.Drawing.Size(322, 139);
             this.groupBox10.TabIndex = 9;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Полиномы";
@@ -274,26 +257,24 @@
             this.groupBox12.Controls.Add(this.label6);
             this.groupBox12.Controls.Add(this.label7);
             this.groupBox12.Controls.Add(this.label8);
-            this.groupBox12.Location = new System.Drawing.Point(8, 23);
-            this.groupBox12.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox12.Location = new System.Drawing.Point(6, 19);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox12.Size = new System.Drawing.Size(219, 140);
+            this.groupBox12.Size = new System.Drawing.Size(164, 114);
             this.groupBox12.TabIndex = 1;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Степень полинома";
             // 
             // numPolinomPowerX3
             // 
-            this.numPolinomPowerX3.Location = new System.Drawing.Point(51, 106);
-            this.numPolinomPowerX3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.numPolinomPowerX3.Location = new System.Drawing.Point(38, 86);
+            this.numPolinomPowerX3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numPolinomPowerX3.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numPolinomPowerX3.Name = "numPolinomPowerX3";
-            this.numPolinomPowerX3.Size = new System.Drawing.Size(69, 22);
+            this.numPolinomPowerX3.Size = new System.Drawing.Size(52, 20);
             this.numPolinomPowerX3.TabIndex = 15;
             this.numPolinomPowerX3.Value = new decimal(new int[] {
             3,
@@ -303,15 +284,15 @@
             // 
             // numPolinomPowerX2
             // 
-            this.numPolinomPowerX2.Location = new System.Drawing.Point(51, 63);
-            this.numPolinomPowerX2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.numPolinomPowerX2.Location = new System.Drawing.Point(38, 51);
+            this.numPolinomPowerX2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numPolinomPowerX2.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numPolinomPowerX2.Name = "numPolinomPowerX2";
-            this.numPolinomPowerX2.Size = new System.Drawing.Size(69, 22);
+            this.numPolinomPowerX2.Size = new System.Drawing.Size(52, 20);
             this.numPolinomPowerX2.TabIndex = 14;
             this.numPolinomPowerX2.Value = new decimal(new int[] {
             3,
@@ -321,15 +302,15 @@
             // 
             // numPolinomPowerX1
             // 
-            this.numPolinomPowerX1.Location = new System.Drawing.Point(51, 20);
-            this.numPolinomPowerX1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.numPolinomPowerX1.Location = new System.Drawing.Point(38, 16);
+            this.numPolinomPowerX1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numPolinomPowerX1.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numPolinomPowerX1.Name = "numPolinomPowerX1";
-            this.numPolinomPowerX1.Size = new System.Drawing.Size(69, 22);
+            this.numPolinomPowerX1.Size = new System.Drawing.Size(52, 20);
             this.numPolinomPowerX1.TabIndex = 13;
             this.numPolinomPowerX1.Value = new decimal(new int[] {
             3,
@@ -340,27 +321,30 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 108);
+            this.label6.Location = new System.Drawing.Point(5, 88);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 17);
+            this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "Х3 - ";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 65);
+            this.label7.Location = new System.Drawing.Point(5, 53);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 17);
+            this.label7.Size = new System.Drawing.Size(29, 13);
             this.label7.TabIndex = 11;
             this.label7.Text = "Х2 - ";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 20);
+            this.label8.Location = new System.Drawing.Point(5, 16);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(38, 17);
+            this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 10;
             this.label8.Text = "Х1 - ";
             // 
@@ -370,11 +354,9 @@
             this.groupBox11.Controls.Add(this.radioPolinomLagger);
             this.groupBox11.Controls.Add(this.radioPolinomLejandr);
             this.groupBox11.Controls.Add(this.radioPolinomChebyshev);
-            this.groupBox11.Location = new System.Drawing.Point(235, 23);
-            this.groupBox11.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox11.Location = new System.Drawing.Point(176, 19);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox11.Size = new System.Drawing.Size(167, 140);
+            this.groupBox11.Size = new System.Drawing.Size(125, 114);
             this.groupBox11.TabIndex = 0;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Вид полинома";
@@ -382,10 +364,9 @@
             // radioPolinomHermit
             // 
             this.radioPolinomHermit.AutoSize = true;
-            this.radioPolinomHermit.Location = new System.Drawing.Point(11, 103);
-            this.radioPolinomHermit.Margin = new System.Windows.Forms.Padding(4);
+            this.radioPolinomHermit.Location = new System.Drawing.Point(8, 84);
             this.radioPolinomHermit.Name = "radioPolinomHermit";
-            this.radioPolinomHermit.Size = new System.Drawing.Size(78, 21);
+            this.radioPolinomHermit.Size = new System.Drawing.Size(63, 17);
             this.radioPolinomHermit.TabIndex = 3;
             this.radioPolinomHermit.Text = "Эрмита";
             this.radioPolinomHermit.UseVisualStyleBackColor = true;
@@ -393,10 +374,9 @@
             // radioPolinomLagger
             // 
             this.radioPolinomLagger.AutoSize = true;
-            this.radioPolinomLagger.Location = new System.Drawing.Point(11, 76);
-            this.radioPolinomLagger.Margin = new System.Windows.Forms.Padding(4);
+            this.radioPolinomLagger.Location = new System.Drawing.Point(8, 62);
             this.radioPolinomLagger.Name = "radioPolinomLagger";
-            this.radioPolinomLagger.Size = new System.Drawing.Size(81, 21);
+            this.radioPolinomLagger.Size = new System.Drawing.Size(67, 17);
             this.radioPolinomLagger.TabIndex = 2;
             this.radioPolinomLagger.Text = "Лаггера";
             this.radioPolinomLagger.UseVisualStyleBackColor = true;
@@ -404,10 +384,9 @@
             // radioPolinomLejandr
             // 
             this.radioPolinomLejandr.AutoSize = true;
-            this.radioPolinomLejandr.Location = new System.Drawing.Point(11, 48);
-            this.radioPolinomLejandr.Margin = new System.Windows.Forms.Padding(4);
+            this.radioPolinomLejandr.Location = new System.Drawing.Point(8, 39);
             this.radioPolinomLejandr.Name = "radioPolinomLejandr";
-            this.radioPolinomLejandr.Size = new System.Drawing.Size(96, 21);
+            this.radioPolinomLejandr.Size = new System.Drawing.Size(77, 17);
             this.radioPolinomLejandr.TabIndex = 1;
             this.radioPolinomLejandr.Text = "Лежандра";
             this.radioPolinomLejandr.UseVisualStyleBackColor = true;
@@ -416,10 +395,9 @@
             // 
             this.radioPolinomChebyshev.AutoSize = true;
             this.radioPolinomChebyshev.Checked = true;
-            this.radioPolinomChebyshev.Location = new System.Drawing.Point(11, 20);
-            this.radioPolinomChebyshev.Margin = new System.Windows.Forms.Padding(4);
+            this.radioPolinomChebyshev.Location = new System.Drawing.Point(8, 16);
             this.radioPolinomChebyshev.Name = "radioPolinomChebyshev";
-            this.radioPolinomChebyshev.Size = new System.Drawing.Size(99, 21);
+            this.radioPolinomChebyshev.Size = new System.Drawing.Size(79, 17);
             this.radioPolinomChebyshev.TabIndex = 0;
             this.radioPolinomChebyshev.TabStop = true;
             this.radioPolinomChebyshev.Text = "Чебышева";
@@ -427,10 +405,10 @@
             // 
             // btnCalculate
             // 
-            this.btnCalculate.Location = new System.Drawing.Point(7, 439);
-            this.btnCalculate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCalculate.Location = new System.Drawing.Point(5, 357);
+            this.btnCalculate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCalculate.Name = "btnCalculate";
-            this.btnCalculate.Size = new System.Drawing.Size(744, 50);
+            this.btnCalculate.Size = new System.Drawing.Size(558, 41);
             this.btnCalculate.TabIndex = 8;
             this.btnCalculate.Text = "Вычислить";
             this.btnCalculate.UseVisualStyleBackColor = true;
@@ -438,10 +416,10 @@
             // 
             // btnShowNormalizeInputInTables
             // 
-            this.btnShowNormalizeInputInTables.Location = new System.Drawing.Point(8, 207);
-            this.btnShowNormalizeInputInTables.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnShowNormalizeInputInTables.Location = new System.Drawing.Point(6, 168);
+            this.btnShowNormalizeInputInTables.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnShowNormalizeInputInTables.Name = "btnShowNormalizeInputInTables";
-            this.btnShowNormalizeInputInTables.Size = new System.Drawing.Size(300, 44);
+            this.btnShowNormalizeInputInTables.Size = new System.Drawing.Size(225, 36);
             this.btnShowNormalizeInputInTables.TabIndex = 8;
             this.btnShowNormalizeInputInTables.Text = "Показать в нормализованом виде";
             this.btnShowNormalizeInputInTables.UseVisualStyleBackColor = true;
@@ -450,11 +428,11 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.groupBox7);
-            this.groupBox6.Location = new System.Drawing.Point(315, 22);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox6.Location = new System.Drawing.Point(236, 18);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox6.Size = new System.Drawing.Size(436, 229);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox6.Size = new System.Drawing.Size(327, 186);
             this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Настройка входных данных";
@@ -467,11 +445,11 @@
             this.groupBox7.Controls.Add(this.groupBox9);
             this.groupBox7.Controls.Add(this.label1);
             this.groupBox7.Controls.Add(this.txtVarCount);
-            this.groupBox7.Location = new System.Drawing.Point(5, 21);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox7.Location = new System.Drawing.Point(4, 17);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox7.Size = new System.Drawing.Size(425, 208);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox7.Size = new System.Drawing.Size(319, 169);
             this.groupBox7.TabIndex = 2;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Переменные";
@@ -480,9 +458,11 @@
             // 
             this.groupBox15.Controls.Add(this.radioButton2);
             this.groupBox15.Controls.Add(this.radioButton1);
-            this.groupBox15.Location = new System.Drawing.Point(214, 85);
+            this.groupBox15.Location = new System.Drawing.Point(160, 69);
+            this.groupBox15.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(206, 100);
+            this.groupBox15.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox15.Size = new System.Drawing.Size(154, 81);
             this.groupBox15.TabIndex = 7;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Метод решения СНЛАУ";
@@ -490,9 +470,10 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(7, 68);
+            this.radioButton2.Location = new System.Drawing.Point(5, 55);
+            this.radioButton2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(162, 21);
+            this.radioButton2.Size = new System.Drawing.Size(126, 17);
             this.radioButton2.TabIndex = 1;
             this.radioButton2.Text = "Градиентный метод";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -501,9 +482,10 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(7, 30);
+            this.radioButton1.Location = new System.Drawing.Point(5, 24);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(200, 21);
+            this.radioButton1.Size = new System.Drawing.Size(156, 17);
             this.radioButton1.TabIndex = 0;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Метод случайного поиска";
@@ -524,21 +506,17 @@
             0,
             0});
             this.numMeterageCount.Name = "numMeterageCount";
-            this.numMeterageCount.Size = new System.Drawing.Size(69, 22);
+            this.numMeterageCount.Size = new System.Drawing.Size(52, 20);
             this.numMeterageCount.TabIndex = 6;
-            this.numMeterageCount.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.numMeterageCount.ValueChanged += new System.EventHandler(this.numMeterageCount_ValueChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(214, 49);
+            this.label5.Location = new System.Drawing.Point(160, 40);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(125, 17);
+            this.label5.Size = new System.Drawing.Size(99, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Размер выборки: ";
             // 
@@ -550,26 +528,26 @@
             this.groupBox9.Controls.Add(this.label4);
             this.groupBox9.Controls.Add(this.label3);
             this.groupBox9.Controls.Add(this.label2);
-            this.groupBox9.Location = new System.Drawing.Point(5, 49);
-            this.groupBox9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox9.Location = new System.Drawing.Point(4, 40);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox9.Size = new System.Drawing.Size(203, 151);
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox9.Size = new System.Drawing.Size(152, 123);
             this.groupBox9.TabIndex = 2;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Размерность";
             // 
             // numVar3Dim
             // 
-            this.numVar3Dim.Location = new System.Drawing.Point(51, 114);
-            this.numVar3Dim.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.numVar3Dim.Location = new System.Drawing.Point(38, 93);
+            this.numVar3Dim.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numVar3Dim.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numVar3Dim.Name = "numVar3Dim";
-            this.numVar3Dim.Size = new System.Drawing.Size(69, 22);
+            this.numVar3Dim.Size = new System.Drawing.Size(52, 20);
             this.numVar3Dim.TabIndex = 9;
             this.numVar3Dim.Value = new decimal(new int[] {
             2,
@@ -580,15 +558,15 @@
             // 
             // numVar2Dim
             // 
-            this.numVar2Dim.Location = new System.Drawing.Point(51, 65);
-            this.numVar2Dim.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.numVar2Dim.Location = new System.Drawing.Point(38, 53);
+            this.numVar2Dim.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numVar2Dim.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numVar2Dim.Name = "numVar2Dim";
-            this.numVar2Dim.Size = new System.Drawing.Size(69, 22);
+            this.numVar2Dim.Size = new System.Drawing.Size(52, 20);
             this.numVar2Dim.TabIndex = 8;
             this.numVar2Dim.Value = new decimal(new int[] {
             1,
@@ -599,15 +577,15 @@
             // 
             // numVar1Dim
             // 
-            this.numVar1Dim.Location = new System.Drawing.Point(51, 22);
-            this.numVar1Dim.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.numVar1Dim.Location = new System.Drawing.Point(38, 18);
+            this.numVar1Dim.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numVar1Dim.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numVar1Dim.Name = "numVar1Dim";
-            this.numVar1Dim.Size = new System.Drawing.Size(69, 22);
+            this.numVar1Dim.Size = new System.Drawing.Size(52, 20);
             this.numVar1Dim.TabIndex = 7;
             this.numVar1Dim.Value = new decimal(new int[] {
             2,
@@ -619,55 +597,58 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 117);
+            this.label4.Location = new System.Drawing.Point(5, 95);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 17);
+            this.label4.Size = new System.Drawing.Size(29, 13);
             this.label4.TabIndex = 5;
             this.label4.Text = "Х3 - ";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 68);
+            this.label3.Location = new System.Drawing.Point(5, 55);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 17);
+            this.label3.Size = new System.Drawing.Size(29, 13);
             this.label3.TabIndex = 3;
             this.label3.Text = "Х2 - ";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 22);
+            this.label2.Location = new System.Drawing.Point(5, 18);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 17);
+            this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Х1 - ";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 25);
+            this.label1.Location = new System.Drawing.Point(9, 20);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(223, 17);
+            this.label1.Size = new System.Drawing.Size(172, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Общее количество переменных:";
             // 
             // txtVarCount
             // 
-            this.txtVarCount.Location = new System.Drawing.Point(241, 21);
-            this.txtVarCount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtVarCount.Location = new System.Drawing.Point(181, 17);
+            this.txtVarCount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtVarCount.Name = "txtVarCount";
             this.txtVarCount.ReadOnly = true;
-            this.txtVarCount.Size = new System.Drawing.Size(177, 22);
+            this.txtVarCount.Size = new System.Drawing.Size(134, 20);
             this.txtVarCount.TabIndex = 1;
             this.txtVarCount.Text = "0";
             // 
             // btnShowInputInTables
             // 
-            this.btnShowInputInTables.Location = new System.Drawing.Point(8, 158);
-            this.btnShowInputInTables.Margin = new System.Windows.Forms.Padding(4);
+            this.btnShowInputInTables.Location = new System.Drawing.Point(6, 128);
             this.btnShowInputInTables.Name = "btnShowInputInTables";
-            this.btnShowInputInTables.Size = new System.Drawing.Size(300, 44);
+            this.btnShowInputInTables.Size = new System.Drawing.Size(225, 36);
             this.btnShowInputInTables.TabIndex = 6;
             this.btnShowInputInTables.Text = "Показать в виде таблиц";
             this.btnShowInputInTables.UseVisualStyleBackColor = true;
@@ -676,22 +657,19 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.txtFunction1Path);
-            this.groupBox4.Location = new System.Drawing.Point(8, 89);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox4.Location = new System.Drawing.Point(6, 72);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(300, 60);
+            this.groupBox4.Size = new System.Drawing.Size(225, 49);
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Значения функции";
             // 
             // txtFunction1Path
             // 
-            this.txtFunction1Path.Location = new System.Drawing.Point(8, 23);
-            this.txtFunction1Path.Margin = new System.Windows.Forms.Padding(4);
+            this.txtFunction1Path.Location = new System.Drawing.Point(6, 19);
             this.txtFunction1Path.Name = "txtFunction1Path";
             this.txtFunction1Path.ReadOnly = true;
-            this.txtFunction1Path.Size = new System.Drawing.Size(284, 22);
+            this.txtFunction1Path.Size = new System.Drawing.Size(214, 20);
             this.txtFunction1Path.TabIndex = 3;
             this.txtFunction1Path.TextChanged += new System.EventHandler(this.FunctionDataSourceChanged);
             this.txtFunction1Path.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TextBoxOpenFileAction);
@@ -700,21 +678,18 @@
             // 
             this.groupBox5.Controls.Add(this.btnOpenChart);
             this.groupBox5.Controls.Add(this.groupBox2);
-            this.groupBox5.Location = new System.Drawing.Point(779, 15);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox5.Location = new System.Drawing.Point(584, 12);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox5.Size = new System.Drawing.Size(508, 500);
+            this.groupBox5.Size = new System.Drawing.Size(381, 406);
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Результат";
             // 
             // btnOpenChart
             // 
-            this.btnOpenChart.Location = new System.Drawing.Point(8, 332);
-            this.btnOpenChart.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenChart.Location = new System.Drawing.Point(6, 270);
             this.btnOpenChart.Name = "btnOpenChart";
-            this.btnOpenChart.Size = new System.Drawing.Size(492, 50);
+            this.btnOpenChart.Size = new System.Drawing.Size(369, 41);
             this.btnOpenChart.TabIndex = 7;
             this.btnOpenChart.Text = "Открыть графики";
             this.btnOpenChart.UseVisualStyleBackColor = true;
@@ -723,11 +698,9 @@
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.txtLog);
-            this.groupBox8.Location = new System.Drawing.Point(13, 522);
-            this.groupBox8.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox8.Location = new System.Drawing.Point(10, 424);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox8.Size = new System.Drawing.Size(1273, 198);
+            this.groupBox8.Size = new System.Drawing.Size(955, 161);
             this.groupBox8.TabIndex = 6;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Промежуточные результаты";
@@ -736,24 +709,23 @@
             // 
             this.txtLog.BackColor = System.Drawing.SystemColors.ControlLight;
             this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLog.Location = new System.Drawing.Point(4, 19);
-            this.txtLog.Margin = new System.Windows.Forms.Padding(4);
+            this.txtLog.Location = new System.Drawing.Point(3, 16);
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
-            this.txtLog.Size = new System.Drawing.Size(1265, 175);
+            this.txtLog.Size = new System.Drawing.Size(949, 142);
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1303, 735);
+            this.ClientSize = new System.Drawing.Size(977, 597);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

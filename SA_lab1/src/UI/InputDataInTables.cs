@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Algorithms.Extensions;
 using UI.DataHolder;
 using System.Collections.Generic;
@@ -22,7 +24,7 @@ namespace UI
                 funcNamelst.Add("Функция " + (i + 1));
             }
             gridViewFunctions.DataSource =
-            dataHolder.Y.GetDataTableFromMatrix(funcNamelst.ToArray());
+                dataHolder.Y.GetDataTableFromMatrix(funcNamelst.ToArray());
         }
 
         public InputDataInTables(double[][] MatrixA,string[] nameForVariableOfMatrix1, double[][] matrixB, string[] nameForVariableOfMatrix2)

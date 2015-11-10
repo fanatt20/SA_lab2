@@ -8,7 +8,6 @@ namespace UI
     public partial class Graphics : Form
     {
         private readonly double[][] _firstPlot;
-        private readonly List<RadioButton> _functionSelector;
         private readonly int _meterageCount;
         private readonly double[][] _secondPlot;
 
@@ -16,30 +15,37 @@ namespace UI
         {
             _firstPlot = firstPlot.DeepCopy();
             _secondPlot = secondPlot.DeepCopy();
-            _meterageCount = meterageCount;
+           
+           _meterageCount = meterageCount;
 
             InitializeComponent();
-            _functionSelector = new List<RadioButton> {radioButton1, radioButton2, radioButton3};
-
-            DrawPlot(0);
+            for (int i = 0; i <  _secondPlot.Length; i++)
+            {
+                listBox1.Items.Add("Функция " + i);
+            }
+            if (listBox1.Items.Count > 0)
+            {
+                listBox1.SelectedIndex = 0;
+                DrawPlot(0);
+            }
         }
 
 
-        private int _selectedFunction
+        private int SelectedFunction
         {
-            get { return _functionSelector.FindIndex(button => button.Checked); }
+            get { return listBox1.SelectedIndex; }
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            DrawPlot(_selectedFunction);
+            DrawPlot(SelectedFunction);
         }
 
         private void DrawPlot(int index)
         {
             chart1.Series[0].Points.Clear();
             chart1.Series[1].Points.Clear();
-            var selectedfunc = _selectedFunction;
+            var selectedfunc = SelectedFunction;
             for (var i = 0; i < _meterageCount; i++)
             {
                 chart1.Series[0].Points.AddXY(i, _firstPlot[selectedfunc][i]);
