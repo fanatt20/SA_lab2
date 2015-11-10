@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Algorithms;
 using Algorithms.Extensions;
@@ -243,30 +242,35 @@ namespace UI
             var lambdaCount = 3;
             double ep = 0.00001;
             var lambda = new double[lambdaCount][];
-            var bMatrixTranspose = bMatrix.Transpone();
             if (!checkBox1.Checked)
             {
-                switch (method)
+                for (int i = 0; i < lambdaCount; i++)
                 {
-                    case 0:
-                        Parallel.For(0, lambdaCount, i => lambda[i] = SlaeSolver.Solve(aMatrix, bMatrixTranspose[i]));
-                        break;
-                    case 1:
-                        Parallel.For(0, lambdaCount, i => lambda[i] = Gradient_method.X(aMatrix, bMatrixTranspose[i], ep));
-                        break;
+                    switch (method)
+                    {
+                        case 0:
+                            lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
+                            break;
+                        case 1:
+                            lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
+                            break;
+                    }
                 }
 
             }
             else
             {
-
                 switch (method)
                 {
                     case 0:
-                        Parallel.For(0, lambdaCount, i => lambda[i] = SlaeSolver.Solve(aMatrix, bMatrixTranspose[i]));
+                        lambda[0] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[0]);
+                        lambda[1] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[1]);
+                        lambda[2] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[2]);
                         break;
                     case 1:
-                        Parallel.For(0, lambdaCount, i => lambda[i] = Gradient_method.X(aMatrix, bMatrixTranspose[i], ep));
+                        lambda[0] = Gradient_method.X(aMatrix, bMatrix.Transpone()[0], ep);
+                        lambda[1] = Gradient_method.X(aMatrix, bMatrix.Transpone()[1], ep);
+                        lambda[2] = Gradient_method.X(aMatrix, bMatrix.Transpone()[2], ep);
                         break;
                 }
             }
