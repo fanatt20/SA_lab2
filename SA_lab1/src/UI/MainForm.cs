@@ -79,7 +79,7 @@ namespace UI
             if (txtBox == null)
                 throw new ArgumentException("Sender must be textbox");
             _saveFile.FileName = txtBox.Text ?? string.Empty;
-            _openFile.ShowDialog();
+            _saveFile.ShowDialog();
             if (_openFile.FileName != null)
             {
                 txtBox.Text = _saveFile.FileName;
