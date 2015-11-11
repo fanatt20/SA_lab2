@@ -20,6 +20,7 @@ namespace Algorithms
         //input parameters holder
         [ThreadStatic]
         private static ParameterHolder Params;
+        [ThreadStatic]
         private static Random randomValues;
 
         public static double[] Solve(double[,] a, double[] b)

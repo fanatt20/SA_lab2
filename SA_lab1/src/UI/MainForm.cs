@@ -231,15 +231,10 @@ namespace UI
             numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
             numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
             var aMatrix = Matrix.A_Create(numPolinomPowerVals,
-                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(),
+                polinomType, _data.Normalized.X1.Transpone(),
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
             Log.Write("Матрица A:\n" + aMatrix.AsString());
-            var a1Matrix = Matrix.Al_Create(1, numPolinomPowerVals[0], polinomType, _data.Normalized.X1.Transpone(),
-                _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            var a2Matrix = Matrix.Al_Create(2, numPolinomPowerVals[1], polinomType, _data.Normalized.X1.Transpone(),
-                _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], polinomType, _data.Normalized.X1.Transpone(),
-                _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+
             var lambdaCount = 3;
             double ep = 0.00001;
             var lambda = new double[lambdaCount][];
@@ -255,11 +250,9 @@ namespace UI
                         Parallel.For(0, lambdaCount, i => lambda[i] = Gradient_method.X(aMatrix, bMatrixTranspose[i], ep));
                         break;
                 }
-
             }
             else
             {
-
                 switch (method)
                 {
                     case 0:
@@ -273,7 +266,6 @@ namespace UI
 
             var lambda_rez = lambda.Transpone();
             Log.WriteLine("Матрицы коэффициентов");
-            Log.WriteLine();
             Log.Write("Матрица лямбда:\n" + lambda_rez.AsString());
             var X = new[]
             {_data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone()};
