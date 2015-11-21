@@ -244,6 +244,7 @@ namespace UI
             var lambdaCount = _data.Normalized.Y.Length;
             double ep = 0.00001;
             var lambda = new double[lambdaCount][];
+            var temp = new double[3][];
             if (!checkBox1.Checked)
             {
                 for (int i = 0; i < lambdaCount; i++)
@@ -267,14 +268,19 @@ namespace UI
                     switch (method)
                     {
                         case 0:
-                            lambda[i] = SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]);
+                            temp[0] = SlaeSolver.Solve(a1Matrix, bMatrix.Transpone()[i]);
+                            temp[1] = SlaeSolver.Solve(a2Matrix, bMatrix.Transpone()[i]);
+                            temp[2] = SlaeSolver.Solve(a3Matrix, bMatrix.Transpone()[i]);
+                            lambda[i] = Matrix.VecConcat(temp[0], temp[1], temp[2]);
                             break;
                         case 1:
-                            lambda[i] = Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
+                            temp[0] = Gradient_method.X(a1Matrix, bMatrix.Transpone()[i], ep);
+                            temp[1] = Gradient_method.X(a2Matrix, bMatrix.Transpone()[i], ep);
+                            temp[2] = Gradient_method.X(a3Matrix, bMatrix.Transpone()[i], ep);
+                            lambda[i] = Matrix.VecConcat(temp[0], temp[1], temp[2]);
                             break;
                     }
                 }
-
             }
 
             var lambda_rez = lambda.Transpone();
@@ -357,7 +363,7 @@ namespace UI
         private void btnOpenChart_Click(object sender, EventArgs e)
         {
             if (_data.Normalized != null && _data.Y_eval_norm != null)
-                new Graphics(_maxMeterageCount, _data.Normalized.Y, _data.Y_eval_norm).ShowDialog();
+            new Graphics(_maxMeterageCount, _data.Normalized.Y, _data.Y_eval_norm).ShowDialog();
         }
     }
 }
