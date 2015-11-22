@@ -300,7 +300,7 @@ namespace UI
                 foreach (var vector in aRes[j])
                 {
                     Log.WriteLine("    For X" + (++k) + ":");
-                    Log.WriteLine(aRes[j][k]);
+                    Log.WriteLine(aRes[j][k-1]);
                 }
             }
             var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
@@ -347,9 +347,12 @@ namespace UI
             foreach (var yi in f)
             {
                 Log.WriteLine("  для Y" + (++i1) + ":");
-                for (int i2 = 0, i3 = 0; i2 < yi.GetLength(0) && i3 < yi.GetLength(2); i2++, i3++)
+                for (int i2 = 0; i2 < yi.Length; i2++)
                 {
-                    Log.WriteLine("Ф" + i2 + "" + i3 + "" + yi[i2][i3]);
+                    for (int i3 = 0; i3 < yi[0].Length; i3++)
+                    {
+                        Log.WriteLine("Ф" + i2 + "" + i3 + "" + yi[i2][i3]);
+                    }
                 }
             }
         }
