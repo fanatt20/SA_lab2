@@ -231,5 +231,42 @@ namespace Algorithms
                 err[i] = Math.Abs(y1[i] - y2[i]);
             return err.Max();
         }
+
+        public static double[] VecConcat(double[] t1, double[] t2, double[] t3)
+        {
+            int N = t1.Length + t2.Length + t3.Length;
+            double[] rez = new double[N];
+            for (int i = 0; i < N; i++)
+            {
+                if (i < t1.Length)
+                    rez[i] = t1[i];
+                else
+                    if (i < t2.Length)
+                        rez[i] = t2[i];
+                    else
+                        rez[i] = t3.Length;
+            }
+            return rez;
+        }
+
+        public static double[][] Concat(double[][] t1, double[][] t2, double[][] t3)
+        {
+            double[][] rez = new double[t1.Length][];
+            int N = t1[0].Length + t2[0].Length + t3[0].Length;
+            for (int i = 0; i < rez.Length; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    if (j < t1[0].Length)
+                        rez[i][j] = t1[i][j];
+                    else
+                        if (j < t2[0].Length)
+                            rez[i][j] = t2[i][j];
+                        else rez[i][j] = t3[i][j];
+
+                }
+            }
+            return rez;
+        }
     }
 }
