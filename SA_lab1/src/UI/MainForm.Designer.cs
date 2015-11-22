@@ -410,9 +410,9 @@
             this.radioPolinomLagger.Location = new System.Drawing.Point(11, 76);
             this.radioPolinomLagger.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioPolinomLagger.Name = "radioPolinomLagger";
-            this.radioPolinomLagger.Size = new System.Drawing.Size(81, 21);
+            this.radioPolinomLagger.Size = new System.Drawing.Size(84, 21);
             this.radioPolinomLagger.TabIndex = 2;
-            this.radioPolinomLagger.Text = "Лаггера";
+            this.radioPolinomLagger.Text = "Лагерра";
             this.radioPolinomLagger.UseVisualStyleBackColor = true;
             // 
             // radioPolinomLejandr
