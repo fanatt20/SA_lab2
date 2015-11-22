@@ -50,7 +50,7 @@ namespace UI
             _variablesDimension[2] = (int)numVar3Dim.Value;
 
             Log.Target = txtLog;
-            Log.WriteLine(DateTime.Now);
+            Log.WriteLine(DateTime.Now + "");
             Log.WriteLine();
         }
 
@@ -224,7 +224,7 @@ namespace UI
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First(btn => btn.Value.Checked).Key,
                 _data.Normalized.Y.Transpone());
 
-            Log.Write("Matrix B:\n" + bMatrix.AsString());
+            //Log.Write("Matrix B:\n" + bMatrix.AsString());
             var numPolinomPowerVals = new int[3];
             numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
             numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
@@ -232,7 +232,7 @@ namespace UI
             var aMatrix = Matrix.A_Create(numPolinomPowerVals,
                 _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(),
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            Log.Write("Matrix A:\n" + aMatrix.AsString());
+            //Log.Write("Matrix A:\n" + aMatrix.AsString());
             var a1Matrix = Matrix.Al_Create(1, numPolinomPowerVals[0], polinomType, _data.Normalized.X1.Transpone(),
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
             var a2Matrix = Matrix.Al_Create(2, numPolinomPowerVals[1], polinomType, _data.Normalized.X1.Transpone(),
@@ -250,6 +250,7 @@ namespace UI
                     lambda[i] = method== 0 ? 
                         SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]) :
                         Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
+                    Log.Write(i + " solved, ");//todo delete
                 }
 
             }
@@ -299,8 +300,8 @@ namespace UI
                 int k = 0;
                 foreach (var vector in aRes[j])
                 {
-                    Log.WriteLine("    For X" + (++k) + ":");
-                    Log.WriteLine(aRes[j][k]);
+                    Log.WriteLine("    for X" + (++k) + ":");
+                    Log.Write(aRes[j][k-1]);
                 }
             }
             var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
@@ -344,12 +345,15 @@ namespace UI
         {
             Log.WriteLine("Функции Ф1i, Ф2i, Ф3i:");
             int i1 = 0;
-            foreach (var yi in f)
+            foreach (double[][] yi in f)
             {
                 Log.WriteLine("  для Y" + (++i1) + ":");
-                for (int i2 = 0, i3 = 0; i2 < yi.GetLength(0) && i3 < yi.GetLength(2); i2++, i3++)
+                for (int i2 = 0; i2 < yi.GetLength(0); i2++)
                 {
-                    Log.WriteLine("Ф" + i2 + "" + i3 + "" + yi[i2][i3]);
+                    for (int i3 = 0; i3 < yi[i2].Length; i3++)
+                    {
+                        Log.WriteLine("Ф[" + i2 + "][" + i3 + "] = " + yi[i2][i3]);
+                    }
                 }
             }
         }

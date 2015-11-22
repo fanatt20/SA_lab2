@@ -27,7 +27,7 @@ namespace Algorithms
                         var lambdaIJ = lambda[i][index];
                         var pol = (new Polinom(p_type, 0));
                         result[i][l][j] = lambdaIJ * pol;
-                        Log.Write("w" + l + " = " + lambdaIJ + "*" + pol);
+                        Log.Write("w" + l + " = " + lambdaIJ + "*" + pol.ToString());
                         for (int k = 1; k <= rang[l]; k++)
                         {
                             index = j * (rang[l] + 1) + k;
@@ -35,10 +35,10 @@ namespace Algorithms
                                 index += (x[m]) * (rang[m] + 1);
                             var lambdaIJTemp = lambda[i][index];
                             var polTemp = new Polinom(p_type, k);
-                            Log.Write(" + " + lambdaIJTemp + "*" + polTemp);
+                            Log.Write(lambdaIJTemp>=0 ? " +" : " " + lambdaIJTemp + "*" + polTemp.ToString());
                             result[i][l][j] += lambda[i][index] * new Polinom(p_type, k);
                         }
-                        Log.WriteLine(" = " + result[i][l][j]);
+                        Log.WriteLine(" = " + result[i][l][j].ToString());
                     }
                 }      
             }
