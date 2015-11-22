@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Algorithms.Extensions;
 using UI.DataHolder;
-using System.Collections.Generic;
-
 namespace UI
 {
     public partial class InputDataInTables : Form
