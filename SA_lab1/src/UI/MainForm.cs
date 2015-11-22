@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security;
-using System.Threading;
 using System.Windows.Forms;
 using Algorithms;
 using Algorithms.Extensions;
@@ -119,7 +117,7 @@ namespace UI
                 _data.SetVariables(MatrixFileReader.ReadAsMatrix(path), _variablesDimension.ToArray());
                 numMeterageCount.Value = _maxMeterageCount = _data.AllVariables[0].Length;
                 txtVarCount.Text = _data.AllVariables.Count().ToString();
-                txtStatus.Text = _data.Y == null ? "Ожидаем ввода функций" : "Готовы к вычислениям";
+                txtStatus.Text = _data.Y == null ? "Ожидаем ввода функций" : "Готов к вычислениям";
             }
             catch (IOException exc)
             {
@@ -175,7 +173,7 @@ namespace UI
             {
                 var func = MatrixFileReader.ReadAsMatrix(path);
                 _data.SetFunctions(func);
-                txtStatus.Text = "Готовы к вычислениям";
+                txtStatus.Text = "Готов к вычислениям";
             }
             catch (IOException exc)
             {
