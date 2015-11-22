@@ -344,14 +344,14 @@ namespace UI
         {
             Log.WriteLine("Функции Ф1i, Ф2i, Ф3i:");
             int i1 = 0;
-            foreach (var yi in f)
+            foreach (double[][] yi in f)
             {
-                Log.WriteLine("  для Y" + (++i1) + ":");
-                for (int i2 = 0; i2 < yi.Length; i2++)
+                Log.WriteLine(" для Y" + (++i1) + ":");
+                for (int i2 = 0; i2 < yi.GetLength(0); i2++)
                 {
-                    for (int i3 = 0; i3 < yi[0].Length; i3++)
+                    for (int i3 = 0; i3 < yi[i2].Length; i3++)
                     {
-                        Log.WriteLine("Ф" + i2 + "" + i3 + "" + yi[i2][i3]);
+                        Log.WriteLine("Ф[" + i2 + "][" + i3 + "] = " + yi[i2][i3]);
                     }
                 }
             }
