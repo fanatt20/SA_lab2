@@ -378,7 +378,13 @@ namespace UI
         private void btnOpenChart_Click(object sender, EventArgs e)
         {
             if (_data.Normalized != null && _data.Y_eval_norm != null)
-            new Graphics(_maxMeterageCount, _data.Normalized.Y, _data.Y_eval_norm).ShowDialog();
+            new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_data.Normalized != null && _data.Y_eval_norm != null)
+                new Graphics(_maxMeterageCount, _data.Normalized.Y, _data.Y_eval_norm).ShowDialog();
         }
     }
 }
