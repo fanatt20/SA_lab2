@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using Algorithms;
 using Algorithms.Extensions;
@@ -54,7 +53,7 @@ namespace UI
             Log.WriteLine();
         }
 
-        private PolinomType _polinomType
+        private PolinomType PolinomType
         {
             get { return _polinomRadioButtons.First(pair => pair.Value.Checked).Key; }
         }
@@ -118,6 +117,7 @@ namespace UI
                 _data.SetVariables(MatrixFileReader.ReadAsMatrix(path), _variablesDimension.ToArray());
                 numMeterageCount.Value = _maxMeterageCount = _data.AllVariables[0].Length;
                 txtVarCount.Text = _data.AllVariables.Count().ToString();
+                txtStatus.Text = _data.Y == null ? "Ожидаем ввода функций" : "Готов к вычислениям";
             }
             catch (IOException exc)
             {
@@ -173,6 +173,7 @@ namespace UI
             {
                 var func = MatrixFileReader.ReadAsMatrix(path);
                 _data.SetFunctions(func);
+                txtStatus.Text = "Готов к вычислениям";
             }
             catch (IOException exc)
             {
@@ -212,27 +213,31 @@ namespace UI
             return sumOfDimensions <= int.Parse(txtVarCount.Text);
         }
 
+        private void ChangeStatus(string status)
+        {
+            txtStatus.Text = status;
+        }
         private void btnCalculate_Click(object sender, EventArgs e)
         {
             if (_data.AllVariables == null || _data.Y == null)
                 return;
-            int method = 0;
-            if (radioButton1.Checked) method = 0;
-            if (radioButton2.Checked) method = 1;
-            var rnd = new Random();
-            var polinomType = _polinomType;
+            ChangeStatus("Подождите, пожалуйста, пока ведутся вычисления");
+            
+            int method = radioButton1.Checked ? 0 : 1;
+
+            var polinomType = PolinomType;
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First(btn => btn.Value.Checked).Key,
                 _data.Normalized.Y.Transpone());
 
-            //Log.Write("Matrix B:\n" + bMatrix.AsString());
+            Log.Write("Matrix B:\n" + bMatrix.AsString());
             var numPolinomPowerVals = new int[3];
             numPolinomPowerVals[0] = (int)numPolinomPowerX1.Value;
             numPolinomPowerVals[1] = (int)numPolinomPowerX2.Value;
             numPolinomPowerVals[2] = (int)numPolinomPowerX3.Value;
             var aMatrix = Matrix.A_Create(numPolinomPowerVals,
-                _polinomRadioButtons.First(pair => pair.Value.Checked).Key, _data.Normalized.X1.Transpone(),
+                polinomType, _data.Normalized.X1.Transpone(),
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            //Log.Write("Matrix A:\n" + aMatrix.AsString());
+            Log.Write("Matrix A:\n" + aMatrix.AsString());
             var a1Matrix = Matrix.Al_Create(1, numPolinomPowerVals[0], polinomType, _data.Normalized.X1.Transpone(),
                 _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
             var a2Matrix = Matrix.Al_Create(2, numPolinomPowerVals[1], polinomType, _data.Normalized.X1.Transpone(),
@@ -247,12 +252,10 @@ namespace UI
             {
                 for (int i = 0; i < lambdaCount; i++)
                 {
-                    lambda[i] = method== 0 ? 
+                    lambda[i] = method == 0 ?
                         SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]) :
                         Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
-                    Log.Write(i + " solved, ");//todo delete
-                }
-
+                } 
             }
             else
             {
@@ -301,45 +304,46 @@ namespace UI
                 foreach (var vector in aRes[j])
                 {
                     Log.WriteLine("    for X" + (++k) + ":");
-                    Log.Write(aRes[j][k-1]);
+                    Log.Write(aRes[j][k - 1]);
                 }
             }
-            var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
-            printF(F);
-            var c = Matrix.C_Get(_data.Normalized.Y, F, method);
-            Log.WriteLine("Matrix c:\n" + c.AsString());
-            _data.Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
-            Log.Write("Approximated normalized Y:\n" + _data.Y_eval_norm.Transpone().AsString());
-            Log.WriteLine("Squared error:");
-            double[] err = new double[_data.Normalized.Y.Length];
-            for (int i = 0; i < err.Length; i++)
-            {
-                err[i] = Matrix.sq_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
-                Log.WriteLine("For Y" + (i + 1).ToString() + " sq_err = " + err[i].ToString());
+                var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
+                printF(F);
+                var c = Matrix.C_Get(_data.Normalized.Y, F, method);
+                Log.WriteLine("Matrix c:\n" + c.AsString());
+                _data.Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
+                Log.Write("Апроксимированное нормализованное Y:\n" + _data.Y_eval_norm.Transpone().AsString());
+                Log.WriteLine("Квадратичная ошибка:");
+                double[] err = new double[_data.Normalized.Y.Length];
+                for (int i = 0; i < err.Length; i++)
+                {
+                    err[i] = Matrix.sq_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
+                    Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + err[i].ToString());
+                }
+                Log.WriteLine("Максимальная абсолютная ошибка:");
+                double[] errr = new double[_data.Normalized.Y.Length];
+                for (int i = 0; i < errr.Length; i++)
+                {
+                    errr[i] = Matrix.max_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
+                    Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + errr[i].ToString());
+                }
+                _data.Y_eval = new double[_data.Normalized.Y.Length][];
+                for (int i = 0; i < _data.Y_eval.Length; i++)
+                {
+                    _data.Y_eval[i] = new double[_data.Normalized.Y[i].Length];
+                    _data.Y_eval[i] = DataNormalizer.Denormalize(_data.Y_eval_norm[i], _data.Y[i].Min(), _data.Y[i].Max());
+                }
+                Log.Write("Апроксимированное Y:\n" + _data.Y_eval.Transpone().AsString());
+                Log.WriteLine("Максимальная ошибка:");
+                double[] err2 = new double[_data.Y.Length];
+                for (int i = 0; i < err.Length; i++)
+                {
+                    err2[i] = Matrix.max_err(_data.Y[i], _data.Y_eval[i]);
+                    Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + err2[i].ToString());
+                }
+                txtStatus.Text = "Готово";
+                new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
             }
-            Log.WriteLine("Max abs error:");
-            double[] errr = new double[_data.Normalized.Y.Length];
-            for (int i = 0; i < errr.Length; i++)
-            {
-                errr[i] = Matrix.max_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
-                Log.WriteLine("For Y" + (i + 1).ToString() + " max_err = " + errr[i].ToString());
-            }
-            _data.Y_eval = new double[_data.Normalized.Y.Length][];
-            for (int i = 0; i < _data.Y_eval.Length; i++)
-            {
-                _data.Y_eval[i] = new double[_data.Normalized.Y[i].Length];
-                _data.Y_eval[i] = DataNormalizer.Denormalize(_data.Y_eval_norm[i], _data.Y[i].Min(), _data.Y[i].Max());
-            }
-            Log.Write("Approximated Y:\n" + _data.Y_eval.Transpone().AsString());
-            Log.WriteLine("Max abs error:");
-            double[] err2 = new double[_data.Y.Length];
-            for (int i = 0; i < err.Length; i++)
-            {
-                err2[i] = Matrix.max_err(_data.Y[i], _data.Y_eval[i]);
-                Log.WriteLine("For Y" + (i + 1).ToString() + " max_err = " + err2[i].ToString());
-            }
-            new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
-        }
 
         private void printF(double[][][] f)
         {
@@ -347,7 +351,7 @@ namespace UI
             int i1 = 0;
             foreach (double[][] yi in f)
             {
-                Log.WriteLine("  для Y" + (++i1) + ":");
+                Log.WriteLine(" для Y" + (++i1) + ":");
                 for (int i2 = 0; i2 < yi.GetLength(0); i2++)
                 {
                     for (int i3 = 0; i3 < yi[i2].Length; i3++)
@@ -371,8 +375,14 @@ namespace UI
 
         private void btnOpenChart_Click(object sender, EventArgs e)
         {
-            new Graphics(_maxMeterageCount, _data.Normalized.Y, _data.Y_eval_norm).ShowDialog();
-            //new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
+            if (_data.Normalized != null && _data.Y_eval_norm != null)
+            new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_data.Normalized != null && _data.Y_eval_norm != null)
+                new Graphics(_maxMeterageCount, _data.Normalized.Y, _data.Y_eval_norm).ShowDialog();
         }
     }
 }

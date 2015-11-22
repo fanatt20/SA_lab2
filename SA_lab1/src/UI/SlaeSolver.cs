@@ -8,17 +8,17 @@ namespace Algorithms
     //Solving Systems of Linear Algebric Equations (SLAE) AX=B, using method of best probe.
     public class SlaeSolver
     {
-        private const int MAX_ITERS = 200;
+        private const int MAX_ITERS = 150;
         //amount of random vectors
-        private const int M = 500;
+        private const int M = 300;
         //accuracy of calculations for finding solution
         private const double ACCURACY = 0.00001;
         //optional parameter
-        private static readonly double STEP_REDUCE_PARAMETER = 0.85;
+        private static readonly double STEP_REDUCE_PARAMETER = 0.65;
         //input parameters holder
         private static ParameterHolder Params;
         private static Random randomValues;
-        private static readonly double STEP = 100000000000;
+        private static readonly double STEP = 1000000000000;
 
         public static double[] Solve(double[,] a, double[] b)
         {
@@ -32,7 +32,6 @@ namespace Algorithms
             while (Params.Value > ACCURACY && Params.Iteration++ < MAX_ITERS && !Params.Stop)
             {
                 x = GetBestValue(x);
-                Console.Write("[step " + stepC++ + "] d=" + Params.Value + ", ");
             }
             return x;
         }
