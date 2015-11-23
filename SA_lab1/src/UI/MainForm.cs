@@ -334,14 +334,14 @@ namespace UI
                 _data.Y_eval[i] = new double[_data.Normalized.Y[i].Length];
                 _data.Y_eval[i] = DataNormalizer.Denormalize(_data.Y_eval_norm[i], _data.Y[i].Min(), _data.Y[i].Max());
             }
-            //Log.Write("Апроксимированное Y:\n" + _data.Y_eval.Transpone().AsString());
-            //Log.WriteLine("Максимальная ошибка:");
-            //double[] err2 = new double[_data.Y.Length];
-            //for (int i = 0; i < err.Length; i++)
-            //{
-            //    err2[i] = Matrix.max_err(_data.Y[i], _data.Y_eval[i]);
-            //    Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + err2[i].ToString());
-            //}
+            Log.Write("Апроксимированное Y:\n" + _data.Y_eval.Transpone().AsString());
+            Log.WriteLine("Максимальная ошибка:");
+            double[] err2 = new double[_data.Y.Length];
+            for (int i = 0; i < err.Length; i++)
+            {
+                err2[i] = Matrix.max_err(_data.Y[i], _data.Y_eval[i]);
+                Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + err2[i].ToString());
+            }
             txtStatus.Text = "Готово";
             new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
             
