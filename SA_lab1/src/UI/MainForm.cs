@@ -49,7 +49,7 @@ namespace UI
             _variablesDimension[2] = (int)numVar3Dim.Value;
 
             Log.Target = txtLog;
-            Log.WriteLine(DateTime.Now);
+            Log.WriteLine(DateTime.Now + "");
             Log.WriteLine();
         }
 
@@ -252,11 +252,10 @@ namespace UI
             {
                 for (int i = 0; i < lambdaCount; i++)
                 {
-                    lambda[i] = method== 0 ? 
+                    lambda[i] = method == 0 ?
                         SlaeSolver.Solve(aMatrix, bMatrix.Transpone()[i]) :
                         Gradient_method.X(aMatrix, bMatrix.Transpone()[i], ep);
-                    }
-
+                } 
             }
             else
             {
@@ -304,48 +303,47 @@ namespace UI
                 int k = 0;
                 foreach (var vector in aRes[j])
                 {
-                    Log.WriteLine("    For X" + (++k) + ":");
-                    Log.WriteLine(aRes[j][k-1]);
+                    Log.WriteLine("    for X" + (++k) + ":");
+                    Log.Write(aRes[j][k - 1]);
                 }
             }
-            var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
-            printF(F);
-            var c = Matrix.C_Get(_data.Normalized.Y, F, method);
-            Log.WriteLine("Matrix c:\n" + c.AsString());
-            _data.Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
-            Log.Write("Апроксимированное нормализованное Y:\n" + _data.Y_eval_norm.Transpone().AsString());
-            Log.WriteLine("Квадратичная ошибка:");
-            double[] err = new double[_data.Normalized.Y.Length];
-            for (int i = 0; i < err.Length; i++)
-            {
-                err[i] = Matrix.sq_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
-                Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + err[i].ToString());
+                var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
+                printF(F);
+                var c = Matrix.C_Get(_data.Normalized.Y, F, method);
+                Log.WriteLine("Matrix c:\n" + c.AsString());
+                _data.Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
+                Log.Write("Апроксимированное нормализованное Y:\n" + _data.Y_eval_norm.Transpone().AsString());
+                Log.WriteLine("Квадратичная ошибка:");
+                double[] err = new double[_data.Normalized.Y.Length];
+                for (int i = 0; i < err.Length; i++)
+                {
+                    err[i] = Matrix.sq_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
+                    Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + err[i].ToString());
+                }
+                Log.WriteLine("Максимальная абсолютная ошибка:");
+                double[] errr = new double[_data.Normalized.Y.Length];
+                for (int i = 0; i < errr.Length; i++)
+                {
+                    errr[i] = Matrix.max_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
+                    Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + errr[i].ToString());
+                }
+                _data.Y_eval = new double[_data.Normalized.Y.Length][];
+                for (int i = 0; i < _data.Y_eval.Length; i++)
+                {
+                    _data.Y_eval[i] = new double[_data.Normalized.Y[i].Length];
+                    _data.Y_eval[i] = DataNormalizer.Denormalize(_data.Y_eval_norm[i], _data.Y[i].Min(), _data.Y[i].Max());
+                }
+                Log.Write("Апроксимированное Y:\n" + _data.Y_eval.Transpone().AsString());
+                Log.WriteLine("Максимальная ошибка:");
+                double[] err2 = new double[_data.Y.Length];
+                for (int i = 0; i < err.Length; i++)
+                {
+                    err2[i] = Matrix.max_err(_data.Y[i], _data.Y_eval[i]);
+                    Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + err2[i].ToString());
+                }
+                txtStatus.Text = "Готово";
+                new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
             }
-            Log.WriteLine("Максимальная абсолютная ошибка:");
-            double[] errr = new double[_data.Normalized.Y.Length];
-            for (int i = 0; i < errr.Length; i++)
-            {
-                errr[i] = Matrix.max_err(_data.Normalized.Y[i], _data.Y_eval_norm[i]);
-                Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + errr[i].ToString());
-            }
-            _data.Y_eval = new double[_data.Normalized.Y.Length][];
-            for (int i = 0; i < _data.Y_eval.Length; i++)
-            {
-                _data.Y_eval[i] = new double[_data.Normalized.Y[i].Length];
-                _data.Y_eval[i] = DataNormalizer.Denormalize(_data.Y_eval_norm[i], _data.Y[i].Min(), _data.Y[i].Max());
-            }
-            Log.Write("Апроксимированное Y:\n" + _data.Y_eval.Transpone().AsString());
-            Log.WriteLine("Максимальная ошибка:");
-            double[] err2 = new double[_data.Y.Length];
-            for (int i = 0; i < err.Length; i++)
-            {
-                err2[i] = Matrix.max_err(_data.Y[i], _data.Y_eval[i]);
-                Log.WriteLine("Для Y" + (i + 1).ToString() + " ошибка = " + err2[i].ToString());
-            }
-            txtStatus.Text = "Готово";
-            new Graphics(_maxMeterageCount, _data.Y, _data.Y_eval).ShowDialog();
-            
-        }
 
         private void printF(double[][][] f)
         {

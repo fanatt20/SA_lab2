@@ -123,7 +123,7 @@ namespace Algorithms
             {
                 w[i] = new double[p[t - 1].Length];
                 for (int j = 0; j < w[i].Length; j++)
-                    w[i][j] = p[t - 1][j].zn(X[i][j]);
+                    w[i][j] = p[t - 1][j].value(X[i][j]);
             }
             return w;
         }
@@ -174,7 +174,7 @@ namespace Algorithms
         {
             double A = 0;
             for (int i = 0; i < p[y][x].Length; i++)
-                A += (a[y][x][i] * p[y][x][i]).zn(X[q][i]);
+                A += (a[y][x][i] * p[y][x][i]).value(X[q][i]);
             return A;
         }
 

@@ -203,16 +203,19 @@ namespace Algorithms
             {
                 for (int i = this.Count - 1; i > 0; i--)
                 {
-                    s += this[i] + "*"+sx+"^" + i + " + ";
+                    var element = this[i].ToString();
+                    if (element.Equals(""))
+                        element = "0";
+                    s += element + "*"+sx+"^" + i + (this[i-1] >= 0 ? " +" : " ");
                 }
-                s += this[0];
+                var element0 = this[0].ToString();
+                s += (element0.Equals("") ? "0" : element0);
             }
             return s;
         }
 
-        public double zn(double x)
+        public double value(double x)
         {
-
             double rez=0;
             if (this.Count > 0)
             {
