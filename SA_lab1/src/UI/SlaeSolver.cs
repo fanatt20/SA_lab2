@@ -10,15 +10,15 @@ namespace Algorithms
     {
         private const int MAX_ITERS = 150;
         //amount of random vectors
-        private const int M = 300;
+        private const int M = 600;
         //accuracy of calculations for finding solution
         private const double ACCURACY = 0.00001;
         //optional parameter
-        private static readonly double STEP_REDUCE_PARAMETER = 0.65;
+        private static readonly double STEP_REDUCE_PARAMETER = 0.999;
         //input parameters holder
         private static ParameterHolder Params;
         private static Random randomValues;
-        private static readonly double STEP = 1000000000000;
+        private static readonly double STEP = 100;
 
         public static double[] Solve(double[,] a, double[] b)
         {
@@ -29,9 +29,10 @@ namespace Algorithms
             Params.Value = F(x);
             int stepC = 0;
             Console.WriteLine();
-            while (Params.Value > ACCURACY && Params.Iteration++ < MAX_ITERS && !Params.Stop)
+            while (Params.Value > ACCURACY && Params.Iteration++ < MAX_ITERS)
             {
                 x = GetBestValue(x);
+                Console.WriteLine("step[" + stepC++ + "] val=" + Params.Value);
             }
             return x;
         }
@@ -79,7 +80,7 @@ namespace Algorithms
         {
             var result = new LinkedList<double[]>();
             var step = GetStep();
-            for (var i = 0; i < GetVectorsAmount(); i++)
+            for (var i = 0; i < M; i++)
             {
                 var vector = new double[x.Length];
                 for (var j = 0; j < x.Length; j++)
@@ -90,14 +91,7 @@ namespace Algorithms
                 result.AddLast(vector);
             }
             return result;
-        }
-
-        private static int GetVectorsAmount()
-        {
-            if (Params.Iteration > 20)
-                return M;
-            return (30 - Params.Iteration) * M / 10;
-        }
+        }        
 
         //returns pseudorandom value from -1 to 1.
         private static double GetPseudoRandomValue()
@@ -109,8 +103,16 @@ namespace Algorithms
 
         private static double GetStep()
         {
-            Params.Multiplier *= STEP_REDUCE_PARAMETER;
-            return (Params.Iteration < 1 ? Double.MaxValue : STEP) * Params.Multiplier;
+            if (Params.Step > STEP)
+            {
+                Params.Step = Math.Pow(Params.Step, 0.3);
+            }
+            else
+            {
+                Params.Multiplier *= STEP_REDUCE_PARAMETER;
+                Params.Step = Params.Step * Params.Multiplier;
+            }
+            return Params.Step;
         }
 
         private static double GetVectorNorma(double[] vector)
@@ -151,7 +153,7 @@ namespace Algorithms
             public int Iteration;
             public double Value;
             public double Multiplier = 1;
-            public bool Stop = false;
+            public double Step = Double.MaxValue;
 
             public ParameterHolder(double[,] a, double[] b)
             {
