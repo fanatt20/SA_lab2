@@ -21,7 +21,7 @@ namespace UI
             InitializeComponent();
             for (int i = 0; i <  _secondPlot.Length; i++)
             {
-                listBox1.Items.Add("Функция " + i);
+                listBox1.Items.Add("Функция " + (i+1).ToString());
             }
             if (listBox1.Items.Count > 0)
             {
