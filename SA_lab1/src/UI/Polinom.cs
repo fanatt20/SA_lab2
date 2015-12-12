@@ -160,7 +160,13 @@ namespace Algorithms
             }
         }
 
-        static public Polinom operator + (Polinom p1, Polinom p2)
+        static public Polinom operator +(double p1, Polinom p2)
+        {
+            p2[p2.Count - 1] += p1;
+            return p2;
+        }
+
+        static public Polinom operator +(Polinom p1, Polinom p2)
         {
             int max;
             if (p1.Count > p2.Count) max = p1.Count;
@@ -168,7 +174,7 @@ namespace Algorithms
             Polinom p = new Polinom();
             for (int i = 0; i < max; i++)
             {
-                double rez=0;
+                double rez = 0;
                 if (i < p1.Count) rez += p1[i];
                 if (i < p2.Count) rez += p2[i];
                 p.Add(rez);

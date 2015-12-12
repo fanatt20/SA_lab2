@@ -115,7 +115,7 @@ namespace Algorithms
         /*
         Xt = Data.Xt {t : 1,2,3}
             */
-        static double[][] W(Polinom[][] p, double[][] X, int t)
+        static double[][] W(Psi[][] p, double[][] X, int t)
         {
             double[][] w;
             w = new double[X.Length][];
@@ -128,7 +128,7 @@ namespace Algorithms
             return w;
         }
 
-        public static double[][][] A_Get(double[][][]x, double[][] yt, Polinom[][][] psi, int method)
+        public static double[][][] A_Get(double[][][]x, double[][] yt, Psi[][][] psi, int method)
         {
             double[][][] a = new double[yt.Length][][];
 
@@ -152,7 +152,7 @@ namespace Algorithms
             return a;
         }
 
-        public static double[][][] F_Get(double [][][]x, double[][] y, double[][] yt, double[][][] a, Polinom[][][] psi)
+        public static double[][][] F_Get(double [][][]x, double[][] y, double[][] yt, double[][][] a, Psi[][][] psi)
         {
             double[][][] tF = new double[yt.Length][][];
             for (int i = 0; i < tF.Length; i++)
@@ -170,11 +170,11 @@ namespace Algorithms
             return tF;
         }
 
-        private static double F(Polinom[][][] p, double[][] X, double[][][] a, int x, int y, int q)
+        private static double F(Psi[][][] p, double[][] X, double[][][] a, int x, int y, int q)
         {
             double A = 0;
             for (int i = 0; i < p[y][x].Length; i++)
-                A += (a[y][x][i] * p[y][x][i]).value(X[q][i]);
+                A += a[y][x][i] * ( p[y][x][i]).value(X[q][i]);
             return A;
         }
 
@@ -196,7 +196,7 @@ namespace Algorithms
             return c;
         }
 
-        public static double[][] Y_Get(double[][][] a, double[][][] x, double[][] c, Polinom[][][] psi, int length, int length2)
+        public static double[][] Y_Get(double[][][] a, double[][][] x, double[][] c, Psi[][][] psi, int length, int length2)
         {
             var Yo = new double[length][];
             for (int i = 0; i < Yo.Length; i++)
@@ -209,7 +209,7 @@ namespace Algorithms
             }
             return Yo;
         }
-        private static double f(Polinom[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q)
+        private static double f(Psi[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q)
         {
             double A = 0;
             for (int i = 0; i < c[y].Length; i++)
