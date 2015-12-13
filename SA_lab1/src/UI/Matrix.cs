@@ -240,9 +240,10 @@ namespace Algorithms
             return a;
         }
 
-        public static double[][][] F_Get(double [][][]x, double[][] y, double[][] yt, double[][][] a, Psi[][][] psi)
+        public static double[][][] F_Get(double [][][]x, double[][] y, double[][] yt, double[][][] a, Psi[][][] psi, bool multiplicative)
         {
             double[][][] tF = new double[yt.Length][][];
+            var e = 0;
             for (int i = 0; i < tF.Length; i++)
             {
                 tF[i] = new double[y.Length][];
@@ -251,19 +252,33 @@ namespace Algorithms
                     tF[i][j] = new double[3];
                     for (int k = 0; k < 3; k++)
                     {
-                        tF[i][j][k] = F(psi, x[k], a, k, i, j);
+                        if(!multiplicative)
+                            tF[i][j][k] = F(psi, x[k], a, k, i, j, multiplicative);
+                        else tF[i][j][k] = Math.Log(1+e+F(psi, x[k], a, k, i, j, multiplicative));
                     }
                 }
             }
             return tF;
         }
 
-        private static double F(Psi[][][] p, double[][] X, double[][][] a, int x, int y, int q)
+        private static double F(Psi[][][] p, double[][] X, double[][][] a, int x, int y, int q, bool multiplicative)
         {
-            double A = 0;
-            for (int i = 0; i < p[y][x].Length; i++)
-                A += a[y][x][i] * ( p[y][x][i]).value(X[q][i]);
-            return A;
+            var e = 0;
+            if(!multiplicative)
+            {
+                double A = 0;
+                for (int i = 0; i < p[y][x].Length; i++)
+                    A += a[y][x][i] * (p[y][x][i]).value(X[q][i]);
+                return A;
+            }
+            else
+            {
+                double A = 1;
+                for (int i = 0; i < p[y][x].Length; i++)
+                    A *= Math.Pow(1+e+(p[y][x][i]).value(X[q][i]), a[y][x][i]);
+                A -= 1 + e;
+                return A;
+            }
         }
 
         public static double[][] C_Get(double[][] yt, double[][][] f, int method)
@@ -284,7 +299,7 @@ namespace Algorithms
             return c;
         }
 
-        public static double[][] Y_Get(double[][][] a, double[][][] x, double[][] c, Psi[][][] psi, int length, int length2)
+        public static double[][] Y_Get(double[][][] a, double[][][] x, double[][] c, Psi[][][] psi, int length, int length2, bool multiplicative)
         {
             var Yo = new double[length][];
             for (int i = 0; i < Yo.Length; i++)
@@ -292,16 +307,16 @@ namespace Algorithms
                 Yo[i] = new double[length2];
                 for (int j = 0; j < Yo[i].Length; j++)
                 {
-                    Yo[i][j] = f(psi, x, a, c, i, j);
+                    Yo[i][j] = f(psi, x, a, c, i, j, multiplicative);
                 }
             }
             return Yo;
         }
-        private static double f(Psi[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q)
+        private static double f(Psi[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q, bool multiplicative)
         {
             double A = 0;
             for (int i = 0; i < c[y].Length; i++)
-                A += c[y][i] * F(psi, x[i], a, i, y, q);
+                A += c[y][i] * F(psi, x[i], a, i, y, q, multiplicative);
             return A;
 
         }
@@ -329,10 +344,10 @@ namespace Algorithms
                 if (i < t1.Length)
                     rez[i] = t1[i];
                 else
-                    if (i < t2.Length)
-                        rez[i] = t2[i];
+                    if (i < t1.Length + t2.Length)
+                        rez[i] = t2[i - t1.Length];
                     else
-                        rez[i] = t3.Length;
+                        rez[i] = t3[i - t1.Length - t2.Length];
             }
             return rez;
         }

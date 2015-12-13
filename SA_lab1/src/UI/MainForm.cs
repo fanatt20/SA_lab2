@@ -326,11 +326,11 @@ namespace UI
                     Log.Write(aRes[j][k - 1]);
                 }
             }
-                var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi);
+                var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi, multiplicative);
                 printF(F);
                 var c = Matrix.C_Get(_data.Normalized.Y, F, method);
                 Log.WriteLine("Matrix c:\n" + c.AsString());
-                _data.Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length);
+                _data.Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length, multiplicative);
                 Log.Write("Апроксимированное нормализованное Y:\n" + _data.Y_eval_norm.Transpone().AsString());
                 Log.WriteLine("Квадратичная ошибка:");
                 double[] err = new double[_data.Normalized.Y.Length];
