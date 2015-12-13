@@ -60,7 +60,7 @@ namespace Algorithms
             double[] rez = new double[vec.Length];
             for (int i = 0; i < rez.Length; i++)
             {
-                rez[i] = Math.Log(Math.Asin(vec[i]) + 1);
+                rez[i] = Math.Log(Math.Asin(vec[i]) + 1.6);
             }
             return rez;
         }
@@ -201,6 +201,47 @@ namespace Algorithms
             return A;
         }
 
+        public static double[][] Alms_Create(int matrix_number, int rang, PolinomType p_type, double[][] X1, double[][] X2,
+    double[][] X3, double[][] Y)
+        {
+            var A = new double[Y.Length][];
+            switch (matrix_number)
+            {
+                case 1:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X1[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X1[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = Math.Log(1.6 + Math.Asin(new Polynom().Calculate(X1[i][j], k, p_type)));
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X2[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X2[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = Math.Log(1.6 + Math.Asin(new Polynom().Calculate(X2[i][j], k,
+                            p_type)));
+                        }
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X3[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X3[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = Math.Log(1.6 + Math.Asin(new Polynom().Calculate(X3[i][j], k, p_type)));
+                        }
+                    }
+                    break;
+            }
+            return A;
+        }
+
         /*
         Xt = Data.Xt {t : 1,2,3}
             */
@@ -217,7 +258,7 @@ namespace Algorithms
                     if (multiplicative == 0)
                         w[i][j] = p[t - 1][j].value(X[i][j]);
                     else if (multiplicative == 1) w[i][j] = Math.Log(1 + e + p[t - 1][j].value(X[i][j]));
-                    else w[i][j] = Math.Log(1 + Math.Asin(p[t - 1][j].value(X[i][j])));
+                    else w[i][j] = Math.Log(1.6 + Math.Asin(p[t - 1][j].value(X[i][j])));
                 }
             }
             return w;
@@ -268,7 +309,7 @@ namespace Algorithms
                         if (multiplicative == 0)
                             tF[i][j][k] = F(psi, x[k], a, k, i, j, multiplicative);
                         else if (multiplicative == 1) tF[i][j][k] = Math.Log(1 + e + F(psi, x[k], a, k, i, j, multiplicative));
-                        else tF[i][j][k] = Math.Log(1 + Math.Asin(F(psi, x[k], a, k, i, j, multiplicative)));
+                        else tF[i][j][k] = Math.Log(1.6 + Math.Asin(F(psi, x[k], a, k, i, j, multiplicative)));
                     }
                 }
             }
@@ -297,8 +338,8 @@ namespace Algorithms
             {
                 double A = 1;
                 for (int i = 0; i < p[y][x].Length; i++)
-                    A *= Math.Pow(1 + Math.Asin((p[y][x][i]).value(X[q][i])), a[y][x][i]);
-                A -= 1;
+                    A *= Math.Pow(1.6 + Math.Asin((p[y][x][i]).value(X[q][i])), a[y][x][i]);
+                A -= 1.6;
                 return Math.Sin(A);
             }
         }
@@ -362,8 +403,8 @@ namespace Algorithms
             {
                 double A = 1;
                 for (int i = 0; i < c[y].Length; i++)
-                    A *= Math.Pow(1 + Math.Asin(F(psi, x[i], a, i, y, q, multiplicative)), c[y][i]);
-                A -= 1;
+                    A *= Math.Pow(1.6 + Math.Asin(F(psi, x[i], a, i, y, q, multiplicative)), c[y][i]);
+                A -= 1.6;
                 return Math.Sin(A);
             }
 

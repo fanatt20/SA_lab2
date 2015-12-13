@@ -235,10 +235,16 @@ namespace UI
             var polinomType = PolinomType;
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First(btn => btn.Value.Checked).Key,
                 _data.Normalized.Y.Transpone());
-            if(multiplicative!=0)
+            if(multiplicative==1)
             {
                 var bMatrixT = bMatrix.Transpone();
                 for (int i = 0; i < bMatrixT.Length; i++) bMatrixT[i] = Matrix.log(bMatrixT[i]);
+                bMatrix = bMatrixT.Transpone();
+            }
+            if (multiplicative == 2)
+            {
+                var bMatrixT = bMatrix.Transpone();
+                for (int i = 0; i < bMatrixT.Length; i++) bMatrixT[i] = Matrix.Asin(bMatrixT[i]);
                 bMatrix = bMatrixT.Transpone();
             }
             Log.Write("Matrix B:\n" + bMatrix.AsString());
@@ -256,7 +262,7 @@ namespace UI
                     _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
                 var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], polinomType, _data.Normalized.X1.Transpone(),
                     _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            if(multiplicative!=0)
+            if(multiplicative==1)
             {
                 aMatrix = Matrix.Am_Create(numPolinomPowerVals,
                         polinomType, _data.Normalized.X1.Transpone(),
@@ -267,6 +273,19 @@ namespace UI
                 a2Matrix = Matrix.Alm_Create(2, numPolinomPowerVals[1], polinomType, _data.Normalized.X1.Transpone(),
                     _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
                 a3Matrix = Matrix.Alm_Create(3, numPolinomPowerVals[2], polinomType, _data.Normalized.X1.Transpone(),
+                    _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+            }
+            if (multiplicative == 2)
+            {
+                aMatrix = Matrix.Am_Create(numPolinomPowerVals,
+                        polinomType, _data.Normalized.X1.Transpone(),
+                        _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+                Log.Write("Matrix A:\n" + aMatrix.AsString());
+                a1Matrix = Matrix.Alms_Create(1, numPolinomPowerVals[0], polinomType, _data.Normalized.X1.Transpone(),
+                    _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+                a2Matrix = Matrix.Alms_Create(2, numPolinomPowerVals[1], polinomType, _data.Normalized.X1.Transpone(),
+                    _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
+                a3Matrix = Matrix.Alms_Create(3, numPolinomPowerVals[2], polinomType, _data.Normalized.X1.Transpone(),
                     _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
             }
             var lambdaCount = _data.Normalized.Y.Length;

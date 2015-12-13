@@ -41,9 +41,9 @@ namespace Algorithms
                     rez = 1;
                     for (int i = 0; i < this.Count; i++)
                     {
-                        rez *= Math.Pow(1 + Math.Asin(this[i].value(x)), lambda[i]);
+                        rez *= Math.Pow(1.6 + Math.Asin(this[i].value(x)), lambda[i]);
                     }
-                    rez -= 1;
+                    rez -= 1.6;
                     return Math.Sin(rez);
                 default:
                     throw (new Exception(""));

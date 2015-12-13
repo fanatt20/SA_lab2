@@ -609,7 +609,7 @@
             this.numVar3Dim.Size = new System.Drawing.Size(69, 22);
             this.numVar3Dim.TabIndex = 9;
             this.numVar3Dim.Value = new decimal(new int[] {
-            3,
+            1,
             0,
             0,
             0});
@@ -628,7 +628,7 @@
             this.numVar2Dim.Size = new System.Drawing.Size(69, 22);
             this.numVar2Dim.TabIndex = 8;
             this.numVar2Dim.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -647,7 +647,7 @@
             this.numVar1Dim.Size = new System.Drawing.Size(69, 22);
             this.numVar1Dim.TabIndex = 7;
             this.numVar1Dim.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
