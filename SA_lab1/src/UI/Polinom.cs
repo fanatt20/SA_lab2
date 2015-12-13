@@ -50,40 +50,31 @@ namespace Algorithms
                     switch (rang)
                     {
                         case 0:
-                            this.Add(1);
+                            this.Add(0.5);
                             break;
                         case 1:
-                            this.Add(-1);
-                            this.Add(2);
+                            this.Add(0);
+                            this.Add(1);
                             break;
                         case 2:
-                            this.Add(-1);
-                            this.Add(6);
-                            this.Add(-6);
+                            this.Add(-0.5);
+                            this.Add(0);
+                            this.Add(1.5);
                             break;
                         case 3:
-                            this.Add(-1);
-                            this.Add(12);
-                            this.Add(-30);
-                            this.Add(20);
-                            break;
-                        case 4:
-                            this.Add(-1);
-                            this.Add(20);
-                            this.Add(-90);
-                            this.Add(140);
-                            this.Add(-70);
-                            break;
-                        case 5:
-                            this.Add(-1);
-                            this.Add(30);
-                            this.Add(-210);
-                            this.Add(560);
-                            this.Add(-630);
-                            this.Add(252);
+                            this.Add(0);
+                            this.Add(-1.5);
+                            this.Add(0);
+                            this.Add(2.5);
                             break;
                         default:
-                            throw new Exception("Неверный порядок полинома");
+                            Polinom p = new Polinom();
+                            p.Add(0);
+                            p.Add(1);
+                            Polinom pp = (1 / (double)rang) * (((2 * (rang - 1) + 1) * p * (new Polinom(type, rang - 1))) + ((-1) * (rang - 1) * (new Polinom(type, rang - 2))));
+                            for (int i = 0; i < pp.Count; i++)
+                                this.Add(pp[i]);
+                            break;
                     }
                     break;
                 case PolinomType.Lagger:
