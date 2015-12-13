@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Algorithms
 {
-    public class Gradient_method
+    class Gradient_method
     {
-        static public double[] X(Double[][] A, Double[] f,double eps)
+        static public double[] X(Double[][] A, Double[] f, double eps)
         {
-            Double[] x=new double[A[0].Length];
+            Double[] x = new double[A[0].Length];
             Double[] xn;
-            for (int i=0;i<x.Length;i++) x[i]=0;
-            do 
+            for (int i = 0; i < x.Length; i++) x[i] = 0;
+            do
             {
                 xn = new double[x.Length];
                 double[] grad = gradientF(A, f, x);
@@ -26,16 +26,17 @@ namespace Algorithms
                         tmp += ges[k][h] * grad[k] * grad[h];
                 a /= tmp;
                 for (int i = 0; i < x.Length; i++) xn[i] = x[i] - a * grad[i];
-                if (dif(x, xn) > eps) x = xn;
-                else break;
+                if (F(A, f, xn) > F(A, f, x)) return x;
+                if ((dif(x, xn) > eps) && (F(A, f, xn) > eps)) x = xn;
+                else { x = xn; break; }
             } while (true);
             return x;
         }
 
         static double dif(double[] x1, double[] x2)
         {
-            double rez = 0 ;
-            for (int i = 0; i < x1.Length; i++) rez += Math.Pow(x1[i]-x2[i],2);
+            double rez = 0;
+            for (int i = 0; i < x1.Length; i++) rez += Math.Pow(x1[i] - x2[i], 2);
             return Math.Sqrt(rez);
         }
 
@@ -44,8 +45,8 @@ namespace Algorithms
             double rez = 0;
             for (int i = 0; i < f.Length; i++)
             {
-                double tmp=0;
-                for (int j = 0; j < x.Length; j++) { tmp += A[i][j] * x[j];  }
+                double tmp = 0;
+                for (int j = 0; j < x.Length; j++) { tmp += A[i][j] * x[j]; }
                 tmp -= f[i];
                 rez += tmp * tmp;
             }
@@ -59,11 +60,11 @@ namespace Algorithms
             {
                 double rez = 0;
                 for (int i = 0; i < A.Length; i++)
-                {   
-                    double tmp=0;                 
+                {
+                    double tmp = 0;
                     for (int j = 0; j < x.Length; j++) tmp += A[i][j] * x[j];
                     tmp -= f[i];
-                    tmp= 2 * A[i][k] * tmp;
+                    tmp = 2 * A[i][k] * tmp;
                     rez += tmp;
                 }
                 grad[k] = rez;
@@ -79,10 +80,10 @@ namespace Algorithms
                 for (int j = 0; j < ges[k].Length; j++)
                 {
                     double tmp = 0;
-                    for (int i=0;i<A.Length;i++) tmp+= A[i][k]*A[i][j];
-                    ges[k][j] = 2*tmp;
+                    for (int i = 0; i < A.Length; i++) tmp += A[i][k] * A[i][j];
+                    ges[k][j] = 2 * tmp;
                 }
-           return ges;
+            return ges;
         }
     }
 }

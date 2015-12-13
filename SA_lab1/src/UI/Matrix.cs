@@ -44,6 +44,17 @@ namespace Algorithms
             return B;
         }
 
+        public static double[] log(double[] vec)
+        {
+            var e = 0;           
+            double[] rez = new double[vec.Length];
+            for (int i = 0; i < rez.Length; i++)
+            {
+                rez[i] = Math.Log(vec[i] + 1 + e);
+            }
+            return rez;
+        }
+
         public static double[][] A_Create(int[] rang, PolinomType p_type, double[][] X1, double[][] X2,
             double[][] X3, double[][] Y)
         {
@@ -67,6 +78,33 @@ namespace Algorithms
                     for (var k = 0; k < rang_3 + 1; k++)
                         A[i][(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + j * (rang_3 + 1) + k] =
                             new Polynom().Calculate(X3[i][j], k, p_type);
+            }
+            return A;
+        }
+
+        public static double[][] Am_Create(int[] rang, PolinomType p_type, double[][] X1, double[][] X2,
+            double[][] X3, double[][] Y)
+        {
+            var rang_1 = rang[0];
+            var rang_2 = rang[1];
+            var rang_3 = rang[2];
+            var A = new double[Y.Length][];
+            for (var i = 0; i < A.Length; i++)
+                A[i] =
+                    new double[(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + (rang_3 + 1) * (X3[0].Length)];
+            for (var i = 0; i < A.Length; i++)
+            {
+                for (var j = 0; j < X1[0].Length; j++)
+                    for (var k = 0; k < rang_1 + 1; k++)
+                        A[i][j * (rang_1 + 1) + k] = Math.Log(1+ new Polynom().Calculate(X1[i][j], k, p_type));
+                for (var j = 0; j < X2[0].Length; j++)
+                    for (var k = 0; k < rang_2 + 1; k++)
+                        A[i][(rang_1 + 1) * (X1[0].Length) + j * (rang_2 + 1) + k] = Math.Log(1+ new Polynom().Calculate(X2[i][j], k,
+                            p_type));
+                for (var j = 0; j < X3[0].Length; j++)
+                    for (var k = 0; k < rang_3 + 1; k++)
+                        A[i][(rang_1 + 1) * (X1[0].Length) + (rang_2 + 1) * (X2[0].Length) + j * (rang_3 + 1) + k] =
+                            Math.Log(1+new Polynom().Calculate(X3[i][j], k, p_type));
             }
             return A;
         }
@@ -105,6 +143,47 @@ namespace Algorithms
                         for (int j = 0; j < X3[0].Length; j++)
                         {
                             for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = new Polynom().Calculate(X3[i][j], k, p_type);
+                        }
+                    }
+                    break;
+            }
+            return A;
+        }
+
+        public static double[][] Alm_Create(int matrix_number, int rang, PolinomType p_type, double[][] X1, double[][] X2,
+            double[][] X3, double[][] Y)
+        {
+            var A = new double[Y.Length][];
+            switch (matrix_number)
+            {
+                case 1:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X1[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X1[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = Math.Log(1+new Polynom().Calculate(X1[i][j], k, p_type));
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X2[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X2[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = Math.Log(1+new Polynom().Calculate(X2[i][j], k,
+                            p_type));
+                        }
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i < A.Length; i++) A[i] = new double[(rang + 1) * (X3[0].Length)];
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        for (int j = 0; j < X3[0].Length; j++)
+                        {
+                            for (int k = 0; k < rang + 1; k++) A[i][j * (rang + 1) + k] = Math.Log(1+new Polynom().Calculate(X3[i][j], k, p_type));
                         }
                     }
                     break;
