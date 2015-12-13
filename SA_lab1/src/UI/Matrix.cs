@@ -318,10 +318,23 @@ namespace Algorithms
         }
         private static double f(Psi[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q, bool multiplicative)
         {
-            double A = 0;
-            for (int i = 0; i < c[y].Length; i++)
-                A += c[y][i] * F(psi, x[i], a, i, y, q, multiplicative);
-            return A;
+            var e = 0;
+            if(!multiplicative)
+            {
+                double A = 0;
+                for (int i = 0; i < c[y].Length; i++)
+                    A += c[y][i] * F(psi, x[i], a, i, y, q, multiplicative);
+                return A;
+            }
+            else
+            {
+                double A = 1;
+                for (int i = 0; i < c[y].Length; i++)
+                    A *= Math.Pow(1+e+F(psi, x[i], a, i, y, q, multiplicative), c[y][i]);
+                A -= 1 + e;
+                return A;
+            }
+
 
         }
         public static double sq_err(double[] y1, double[] y2)
