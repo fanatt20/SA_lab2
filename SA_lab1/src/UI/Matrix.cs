@@ -281,7 +281,7 @@ namespace Algorithms
             }
         }
 
-        public static double[][] C_Get(double[][] yt, double[][][] f, int method)
+        public static double[][] C_Get(double[][] yt, double[][][] f, int method, bool multiplicative)
         {
             double[][] c = new double[yt.Length][];
             for (int i = 0; i < c.Length; i++)
@@ -289,10 +289,14 @@ namespace Algorithms
                 switch (method)
                 {
                     case 0:
-                        c[i] = SlaeSolver.Solve(f[i], yt[i]);
+                        if(multiplicative)
+                            c[i] = SlaeSolver.Solve(f[i], log(yt[i]));
+                        else c[i] = SlaeSolver.Solve(f[i], yt[i]);
                         break;
                     case 1:
-                        c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
+                        if(multiplicative)
+                            c[i] = Gradient_method.X(f[i], log(yt[i]), 0.00001);
+                        else c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
                         break;
                 }         
             }

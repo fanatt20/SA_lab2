@@ -328,7 +328,7 @@ namespace UI
             }
                 var F = Matrix.F_Get(X, _data.Normalized.Y.Transpone(), _data.Normalized.Y, aRes, psi, multiplicative);
                 printF(F);
-                var c = Matrix.C_Get(_data.Normalized.Y, F, method);
+                var c = Matrix.C_Get(_data.Normalized.Y, F, method, multiplicative);
                 Log.WriteLine("Matrix c:\n" + c.AsString());
                 _data.Y_eval_norm = Matrix.Y_Get(aRes, X, c, psi, _data.Normalized.Y.Length, _data.Normalized.Y.Transpone().Length, multiplicative);
                 Log.Write("Апроксимированное нормализованное Y:\n" + _data.Y_eval_norm.Transpone().AsString());
