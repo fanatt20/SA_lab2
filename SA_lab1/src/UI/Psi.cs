@@ -18,24 +18,21 @@ namespace Algorithms
 
         public double value(double x)
         {
-            double rez;
+            double rez=0;
             switch (type)
             {
                 case 0:
-                    rez = 0;
                     for (int i = 0; i < this.Count; i++)
                     {
                         rez += lambda[i] * this[i].value(x);
                     }
                     return rez;
                 case 1:
-                    rez = 1;
                     for (int i = 0; i < this.Count; i++)
                     {
-                        rez *= Math.Pow(1 + Math.E + this[i].value(x), lambda[i]);
+                        rez *= Math.Pow(1 + this[i].value(x), lambda[i]);
                     }
-                    rez -= 1 + Math.E;
-                    return rez;
+                    return rez - 1;
                 default:
                     throw (new Exception(""));
             }

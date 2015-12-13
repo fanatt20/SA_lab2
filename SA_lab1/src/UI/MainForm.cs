@@ -285,7 +285,7 @@ namespace UI
             Log.WriteLine("Polinomial Psi");
             var X = new[]
             {_data.Normalized.X1.Transpone(), _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone()};
-            var useFrom2Lab = false;//calculate the way we did in lab2
+            var multiplicative = checkBox2.Checked;//calculate the way we did in lab2
             var psi = PolynomialCalculus.CalculatePsi(
                 lambda,
                 polinomType,
@@ -295,8 +295,8 @@ namespace UI
                     _data.Normalized.X1.Length,
                     _data.Normalized.X2.Length,
                     _data.Normalized.X3.Length
-                }, 
-                useFrom2Lab);
+                },
+                multiplicative);
             var aRes = Matrix.A_Get(X, _data.Normalized.Y, psi, method);
             Log.WriteLine("Matrix a:\n");
             for (int j = 0; j < _data.Normalized.Y.Length; j++)
