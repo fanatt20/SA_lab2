@@ -91,6 +91,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -114,6 +117,7 @@
             this.groupBox5.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox16.SuspendLayout();
+            this.groupBox17.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtVariablePath
@@ -176,9 +180,10 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.groupBox17);
+            this.groupBox3.Controls.Add(this.checkBox2);
             this.groupBox3.Controls.Add(this.groupBox13);
             this.groupBox3.Controls.Add(this.groupBox10);
-            this.groupBox3.Controls.Add(this.btnCalculate);
             this.groupBox3.Controls.Add(this.btnShowNormalizeInputInTables);
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.btnShowInputInTables);
@@ -188,21 +193,20 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox3.Size = new System.Drawing.Size(757, 526);
+            this.groupBox3.Size = new System.Drawing.Size(767, 540);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Входные данные";
             // 
             // groupBox13
             // 
-            this.groupBox13.Controls.Add(this.checkBox2);
             this.groupBox13.Controls.Add(this.checkBox1);
             this.groupBox13.Controls.Add(this.groupBox14);
             this.groupBox13.Location = new System.Drawing.Point(453, 257);
             this.groupBox13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox13.Size = new System.Drawing.Size(287, 206);
+            this.groupBox13.Size = new System.Drawing.Size(287, 177);
             this.groupBox13.TabIndex = 10;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Формируем матрицу B";
@@ -212,7 +216,7 @@
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(8, 177);
+            this.checkBox2.Location = new System.Drawing.Point(45, 469);
             this.checkBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(211, 21);
@@ -456,7 +460,7 @@
             // 
             // btnCalculate
             // 
-            this.btnCalculate.Location = new System.Drawing.Point(8, 468);
+            this.btnCalculate.Location = new System.Drawing.Point(9, 560);
             this.btnCalculate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCalculate.Name = "btnCalculate";
             this.btnCalculate.Size = new System.Drawing.Size(744, 50);
@@ -768,7 +772,7 @@
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.txtLog);
-            this.groupBox8.Location = new System.Drawing.Point(13, 546);
+            this.groupBox8.Location = new System.Drawing.Point(13, 616);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -908,13 +912,47 @@
             this.label17.TabIndex = 10;
             this.label17.Text = "Статус";
             // 
+            // groupBox17
+            // 
+            this.groupBox17.Controls.Add(this.radioButton4);
+            this.groupBox17.Controls.Add(this.radioButton3);
+            this.groupBox17.Location = new System.Drawing.Point(460, 441);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(297, 92);
+            this.groupBox17.TabIndex = 11;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Структура функций";
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Checked = true;
+            this.radioButton3.Location = new System.Drawing.Point(9, 28);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(128, 21);
+            this.radioButton3.TabIndex = 0;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "Предложенная";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(9, 65);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(61, 21);
+            this.radioButton4.TabIndex = 1;
+            this.radioButton4.Text = "Своя";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1303, 780);
+            this.ClientSize = new System.Drawing.Size(1303, 865);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.txtStatus);
+            this.Controls.Add(this.btnCalculate);
             this.Controls.Add(this.groupBox16);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox8);
@@ -930,6 +968,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             this.groupBox14.ResumeLayout(false);
@@ -959,6 +998,8 @@
             this.groupBox8.ResumeLayout(false);
             this.groupBox16.ResumeLayout(false);
             this.groupBox16.PerformLayout();
+            this.groupBox17.ResumeLayout(false);
+            this.groupBox17.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1029,6 +1070,9 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.GroupBox groupBox17;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButton3;
     }
 }
 

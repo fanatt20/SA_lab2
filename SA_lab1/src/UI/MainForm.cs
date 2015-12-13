@@ -224,11 +224,18 @@ namespace UI
             ChangeStatus("Подождите, пожалуйста, пока ведутся вычисления");
             
             int method = radioButton1.Checked ? 0 : 1;
-            var multiplicative = checkBox2.Checked;
+            int multiplicative = 1;
+            if (checkBox2.Checked)
+            {
+                if (radioButton3.Checked)
+                    multiplicative = 1;
+                else if(radioButton4.Checked) multiplicative = 2;
+            }
+            else multiplicative = 0;
             var polinomType = PolinomType;
             var bMatrix = Matrix.B_Create(_matrixBRadioButtons.First(btn => btn.Value.Checked).Key,
                 _data.Normalized.Y.Transpone());
-            if(multiplicative)
+            if(multiplicative!=0)
             {
                 var bMatrixT = bMatrix.Transpone();
                 for (int i = 0; i < bMatrixT.Length; i++) bMatrixT[i] = Matrix.log(bMatrixT[i]);
@@ -249,7 +256,7 @@ namespace UI
                     _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
                 var a3Matrix = Matrix.Al_Create(3, numPolinomPowerVals[2], polinomType, _data.Normalized.X1.Transpone(),
                     _data.Normalized.X2.Transpone(), _data.Normalized.X3.Transpone(), _data.Normalized.Y.Transpone());
-            if(multiplicative)
+            if(multiplicative!=0)
             {
                 aMatrix = Matrix.Am_Create(numPolinomPowerVals,
                         polinomType, _data.Normalized.X1.Transpone(),

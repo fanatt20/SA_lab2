@@ -194,7 +194,7 @@ namespace Algorithms
         /*
         Xt = Data.Xt {t : 1,2,3}
             */
-        static double[][] W(Psi[][] p, double[][] X, int t, bool multiplicative)
+        static double[][] W(Psi[][] p, double[][] X, int t, int multiplicative)
         {
             double[][] w;
             var e = 0;
@@ -204,7 +204,7 @@ namespace Algorithms
                 w[i] = new double[p[t - 1].Length];
                 for (int j = 0; j < w[i].Length; j++)
                 {
-                    if (!multiplicative)
+                    if (multiplicative==0)
                         w[i][j] = p[t - 1][j].value(X[i][j]);
                     else w[i][j] = Math.Log(1+e+p[t - 1][j].value(X[i][j]));
                 }
@@ -212,7 +212,7 @@ namespace Algorithms
             return w;
         }
 
-        public static double[][][] A_Get(double[][][]x, double[][] yt, Psi[][][] psi, int method, bool multiplicative)
+        public static double[][][] A_Get(double[][][]x, double[][] yt, Psi[][][] psi, int method, int multiplicative)
         {
             double[][][] a = new double[yt.Length][][];
 
@@ -225,12 +225,12 @@ namespace Algorithms
                     switch (method)
                     {
                         case 0:
-                            if (!multiplicative)
+                            if (multiplicative ==0)
                                 a[i][j] = SlaeSolver.Solve(w, yt[i]);
                             else a[i][j] = SlaeSolver.Solve(w, log(yt[i]));
                             break;
                         case 1:
-                            if (!multiplicative)
+                            if (multiplicative==0)
                                 a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
                             else a[i][j] = Gradient_method.X(w, log(yt[i]), 0.00001);
                             break;
@@ -240,7 +240,7 @@ namespace Algorithms
             return a;
         }
 
-        public static double[][][] F_Get(double [][][]x, double[][] y, double[][] yt, double[][][] a, Psi[][][] psi, bool multiplicative)
+        public static double[][][] F_Get(double [][][]x, double[][] y, double[][] yt, double[][][] a, Psi[][][] psi, int multiplicative)
         {
             double[][][] tF = new double[yt.Length][][];
             var e = 0;
@@ -252,7 +252,7 @@ namespace Algorithms
                     tF[i][j] = new double[3];
                     for (int k = 0; k < 3; k++)
                     {
-                        if(!multiplicative)
+                        if(multiplicative==0)
                             tF[i][j][k] = F(psi, x[k], a, k, i, j, multiplicative);
                         else tF[i][j][k] = Math.Log(1+e+F(psi, x[k], a, k, i, j, multiplicative));
                     }
@@ -261,10 +261,10 @@ namespace Algorithms
             return tF;
         }
 
-        private static double F(Psi[][][] p, double[][] X, double[][][] a, int x, int y, int q, bool multiplicative)
+        private static double F(Psi[][][] p, double[][] X, double[][][] a, int x, int y, int q, int multiplicative)
         {
             var e = 0;
-            if(!multiplicative)
+            if(multiplicative==0)
             {
                 double A = 0;
                 for (int i = 0; i < p[y][x].Length; i++)
@@ -281,7 +281,7 @@ namespace Algorithms
             }
         }
 
-        public static double[][] C_Get(double[][] yt, double[][][] f, int method, bool multiplicative)
+        public static double[][] C_Get(double[][] yt, double[][][] f, int method, int multiplicative)
         {
             double[][] c = new double[yt.Length][];
             for (int i = 0; i < c.Length; i++)
@@ -289,12 +289,12 @@ namespace Algorithms
                 switch (method)
                 {
                     case 0:
-                        if(multiplicative)
+                        if(multiplicative!=0)
                             c[i] = SlaeSolver.Solve(f[i], log(yt[i]));
                         else c[i] = SlaeSolver.Solve(f[i], yt[i]);
                         break;
                     case 1:
-                        if(multiplicative)
+                        if(multiplicative!=0)
                             c[i] = Gradient_method.X(f[i], log(yt[i]), 0.00001);
                         else c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
                         break;
@@ -303,7 +303,7 @@ namespace Algorithms
             return c;
         }
 
-        public static double[][] Y_Get(double[][][] a, double[][][] x, double[][] c, Psi[][][] psi, int length, int length2, bool multiplicative)
+        public static double[][] Y_Get(double[][][] a, double[][][] x, double[][] c, Psi[][][] psi, int length, int length2, int multiplicative)
         {
             var Yo = new double[length][];
             for (int i = 0; i < Yo.Length; i++)
@@ -316,10 +316,10 @@ namespace Algorithms
             }
             return Yo;
         }
-        private static double f(Psi[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q, bool multiplicative)
+        private static double f(Psi[][][] psi, double[][][]x, double[][][] a, double[][] c, int y, int q, int multiplicative)
         {
             var e = 0;
-            if(!multiplicative)
+            if(multiplicative==0)
             {
                 double A = 0;
                 for (int i = 0; i < c[y].Length; i++)
