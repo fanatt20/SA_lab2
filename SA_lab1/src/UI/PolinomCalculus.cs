@@ -12,8 +12,6 @@ namespace Algorithms
         public static Psi[][][] CalculatePsi(double[][] lambda, PolinomType p_type, int[] rang, int[] x, int multiplicative)
         {
             Psi[][][] result = new Psi[lambda.Length][][];
-            bool m=false;
-            if (multiplicative != 0) m = true;
             for (int i = 0; i < result.Length; i++)
             {
                 result[i] = new Psi[3][];
@@ -23,7 +21,7 @@ namespace Algorithms
                     result[i][l] = new Psi[x[l]];
                     for (int j = 0; j < result[i][l].Length; j++)
                     {
-                        result[i][l][j] = new Psi(m ? 1 : 0);
+                        result[i][l][j] = new Psi(multiplicative);
                         for (int k = 0; k <= rang[l]; k++)
                         {
                             int index = (j+2*l) * (rang[l] + 1) + k;

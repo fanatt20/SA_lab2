@@ -37,6 +37,14 @@ namespace Algorithms
                     }
                     rez -= 1 + e;
                     return rez;
+                case 2:
+                    rez = 1;
+                    for (int i = 0; i < this.Count; i++)
+                    {
+                        rez *= Math.Pow(1 + Math.Asin(this[i].value(x)), lambda[i]);
+                    }
+                    rez -= 1;
+                    return Math.Sin(rez);
                 default:
                     throw (new Exception(""));
             }

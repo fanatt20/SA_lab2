@@ -55,6 +55,16 @@ namespace Algorithms
             return rez;
         }
 
+        public static double[] Asin(double[] vec)
+        {
+            double[] rez = new double[vec.Length];
+            for (int i = 0; i < rez.Length; i++)
+            {
+                rez[i] = Math.Log(Math.Asin(vec[i]) + 1);
+            }
+            return rez;
+        }
+
         public static double[][] A_Create(int[] rang, PolinomType p_type, double[][] X1, double[][] X2,
             double[][] X3, double[][] Y)
         {
@@ -204,9 +214,10 @@ namespace Algorithms
                 w[i] = new double[p[t - 1].Length];
                 for (int j = 0; j < w[i].Length; j++)
                 {
-                    if (multiplicative==0)
+                    if (multiplicative == 0)
                         w[i][j] = p[t - 1][j].value(X[i][j]);
-                    else w[i][j] = Math.Log(1+e+p[t - 1][j].value(X[i][j]));
+                    else if (multiplicative == 1) w[i][j] = Math.Log(1 + e + p[t - 1][j].value(X[i][j]));
+                    else w[i][j] = Math.Log(1 + Math.Asin(p[t - 1][j].value(X[i][j])));
                 }
             }
             return w;
@@ -227,12 +238,14 @@ namespace Algorithms
                         case 0:
                             if (multiplicative ==0)
                                 a[i][j] = SlaeSolver.Solve(w, yt[i]);
-                            else a[i][j] = SlaeSolver.Solve(w, log(yt[i]));
+                            else if(multiplicative==1) a[i][j] = SlaeSolver.Solve(w, log(yt[i]));
+                            else if (multiplicative == 2) a[i][j] = SlaeSolver.Solve(w, Asin(yt[i]));
                             break;
                         case 1:
                             if (multiplicative==0)
                                 a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
-                            else a[i][j] = Gradient_method.X(w, log(yt[i]), 0.00001);
+                            else if(multiplicative==1) a[i][j] = Gradient_method.X(w, log(yt[i]), 0.00001);
+                            else if (multiplicative == 2) a[i][j] = Gradient_method.X(w, Asin(yt[i]), 0.00001);
                             break;
                     }            
                 }
@@ -252,9 +265,10 @@ namespace Algorithms
                     tF[i][j] = new double[3];
                     for (int k = 0; k < 3; k++)
                     {
-                        if(multiplicative==0)
+                        if (multiplicative == 0)
                             tF[i][j][k] = F(psi, x[k], a, k, i, j, multiplicative);
-                        else tF[i][j][k] = Math.Log(1+e+F(psi, x[k], a, k, i, j, multiplicative));
+                        else if (multiplicative == 1) tF[i][j][k] = Math.Log(1 + e + F(psi, x[k], a, k, i, j, multiplicative));
+                        else tF[i][j][k] = Math.Log(1 + Math.Asin(F(psi, x[k], a, k, i, j, multiplicative)));
                     }
                 }
             }
@@ -271,13 +285,21 @@ namespace Algorithms
                     A += a[y][x][i] * (p[y][x][i]).value(X[q][i]);
                 return A;
             }
-            else
+            else if(multiplicative==1)
             {
                 double A = 1;
                 for (int i = 0; i < p[y][x].Length; i++)
                     A *= Math.Pow(1+e+(p[y][x][i]).value(X[q][i]), a[y][x][i]);
                 A -= 1 + e;
                 return A;
+            }
+            else
+            {
+                double A = 1;
+                for (int i = 0; i < p[y][x].Length; i++)
+                    A *= Math.Pow(1 + Math.Asin((p[y][x][i]).value(X[q][i])), a[y][x][i]);
+                A -= 1;
+                return Math.Sin(A);
             }
         }
 
@@ -289,14 +311,16 @@ namespace Algorithms
                 switch (method)
                 {
                     case 0:
-                        if(multiplicative!=0)
-                            c[i] = SlaeSolver.Solve(f[i], log(yt[i]));
-                        else c[i] = SlaeSolver.Solve(f[i], yt[i]);
+                        if(multiplicative==0)
+                            c[i] = SlaeSolver.Solve(f[i], yt[i]);
+                        else if(multiplicative==1) c[i] = SlaeSolver.Solve(f[i], log(yt[i]));
+                        else c[i] = SlaeSolver.Solve(f[i], Asin(yt[i]));
                         break;
                     case 1:
-                        if(multiplicative!=0)
-                            c[i] = Gradient_method.X(f[i], log(yt[i]), 0.00001);
-                        else c[i] = Gradient_method.X(f[i], yt[i], 0.00001);
+                        if(multiplicative==0)
+                            c[i] = Gradient_method.X(f[i], yt[i], 0.00001);                        
+                        else if(multiplicative==1) c[i] = Gradient_method.X(f[i], log(yt[i]), 0.00001);
+                        else c[i] = Gradient_method.X(f[i], Asin(yt[i]), 0.00001);
                         break;
                 }         
             }
@@ -326,13 +350,21 @@ namespace Algorithms
                     A += c[y][i] * F(psi, x[i], a, i, y, q, multiplicative);
                 return A;
             }
-            else
+            else if(multiplicative==1)
             {
                 double A = 1;
                 for (int i = 0; i < c[y].Length; i++)
                     A *= Math.Pow(1+e+F(psi, x[i], a, i, y, q, multiplicative), c[y][i]);
                 A -= 1 + e;
                 return A;
+            }
+            else
+            {
+                double A = 1;
+                for (int i = 0; i < c[y].Length; i++)
+                    A *= Math.Pow(1 + Math.Asin(F(psi, x[i], a, i, y, q, multiplicative)), c[y][i]);
+                A -= 1;
+                return Math.Sin(A);
             }
 
 

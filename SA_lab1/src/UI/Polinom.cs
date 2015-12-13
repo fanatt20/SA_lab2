@@ -18,29 +18,29 @@ namespace Algorithms
                 case PolinomType.Chebyshev:
                     switch (rang)
                     {
-                        case 0:
+                        case 0:                            
                             this.Add(0.5);
                             break;
                         case 1:
-                            this.Add(-1);
-                            this.Add(2);
+                            this.Add(0);
+                            this.Add(1);
                             break;
                         case 2:
-                            this.Add(1);
-                            this.Add(-8);
-                            this.Add(8);
+                            this.Add(-1);
+                            this.Add(0);
+                            this.Add(2);
                             break;
                         case 3:
-                            this.Add(-1);
-                            this.Add(18);
-                            this.Add(-48);
-                            this.Add(32);
+                            this.Add(0);
+                            this.Add(-3);
+                            this.Add(0);
+                            this.Add(4);
                             break;
                         default:
                             Polinom p = new Polinom();
-                            p.Add(-1);
+                            p.Add(0);
                             p.Add(2);
-                            Polinom pp = 2 * p * (new Polinom(type, rang - 1)) + (-1) * (new Polinom(type, rang - 2));
+                            Polinom pp = p * (new Polinom(type, rang - 1)) + (-1) * (new Polinom(type, rang - 2));
                             for (int i = 0; i < pp.Count; i++)
                                 this.Add(pp[i]);
                             break;
