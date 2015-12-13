@@ -314,7 +314,7 @@ namespace UI
                     _data.Normalized.X3.Length
                 },
                 multiplicative);
-            var aRes = Matrix.A_Get(X, _data.Normalized.Y, psi, method);
+            var aRes = Matrix.A_Get(X, _data.Normalized.Y, psi, method, multiplicative);
             Log.WriteLine("Matrix a:\n");
             for (int j = 0; j < _data.Normalized.Y.Length; j++)
             {

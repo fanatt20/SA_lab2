@@ -194,20 +194,25 @@ namespace Algorithms
         /*
         Xt = Data.Xt {t : 1,2,3}
             */
-        static double[][] W(Psi[][] p, double[][] X, int t)
+        static double[][] W(Psi[][] p, double[][] X, int t, bool multiplicative)
         {
             double[][] w;
+            var e = 0;
             w = new double[X.Length][];
             for (int i = 0; i < w.Length; i++)
             {
                 w[i] = new double[p[t - 1].Length];
                 for (int j = 0; j < w[i].Length; j++)
-                    w[i][j] = p[t - 1][j].value(X[i][j]);
+                {
+                    if (!multiplicative)
+                        w[i][j] = p[t - 1][j].value(X[i][j]);
+                    else w[i][j] = Math.Log(1+e+p[t - 1][j].value(X[i][j]));
+                }
             }
             return w;
         }
 
-        public static double[][][] A_Get(double[][][]x, double[][] yt, Psi[][][] psi, int method)
+        public static double[][][] A_Get(double[][][]x, double[][] yt, Psi[][][] psi, int method, bool multiplicative)
         {
             double[][][] a = new double[yt.Length][][];
 
@@ -216,14 +221,18 @@ namespace Algorithms
                 a[i] = new double[3][];
                 for (int j = 0; j < 3; j++)
                 {
-                    double[][] w = W(psi[i], x[j], j + 1);
+                    double[][] w = W(psi[i], x[j], j + 1, multiplicative);
                     switch (method)
                     {
                         case 0:
-                            a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                            if (!multiplicative)
+                                a[i][j] = SlaeSolver.Solve(w, yt[i]);
+                            else a[i][j] = SlaeSolver.Solve(w, log(yt[i]));
                             break;
                         case 1:
-                            a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
+                            if (!multiplicative)
+                                a[i][j] = Gradient_method.X(w, yt[i], 0.00001);
+                            else a[i][j] = Gradient_method.X(w, log(yt[i]), 0.00001);
                             break;
                     }            
                 }
